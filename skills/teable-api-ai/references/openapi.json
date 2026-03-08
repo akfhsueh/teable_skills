@@ -1,0 +1,1126 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/api/{baseId}/ai/generate-stream": {
+      "post": {
+        "description": "Generate ai stream",
+        "tags": [
+          "ai"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "task": {
+                    "type": "string",
+                    "enum": [
+                      "coding",
+                      "embedding",
+                      "translation"
+                    ],
+                    "description": "Quick model selection via predefined task type",
+                    "example": "coding"
+                  },
+                  "modelKey": {
+                    "type": "string",
+                    "description": "Specify an exact model configuration to use",
+                    "example": "openai@gpt-4o@custom-name"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns ai generate stream.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "result"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/api/%7BbaseId%7D/ai/generate-stream \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"prompt\":\"string\",\"task\":\"coding\",\"modelKey\":\"openai@gpt-4o@custom-name\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/api/%7BbaseId%7D/ai/generate-stream';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"prompt\":\"string\",\"task\":\"coding\",\"modelKey\":\"openai@gpt-4o@custom-name\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/api/%7BbaseId%7D/ai/generate-stream',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({prompt: 'string', task: 'coding', modelKey: 'openai@gpt-4o@custom-name'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"prompt\\\":\\\"string\\\",\\\"task\\\":\\\"coding\\\",\\\"modelKey\\\":\\\"openai@gpt-4o@custom-name\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/api/%7BbaseId%7D/ai/generate-stream\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/{baseId}/ai/config": {
+      "get": {
+        "description": "Get the configuration of ai, including instance and space configuration",
+        "tags": [
+          "ai"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the configuration of ai.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "llmProviders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "openai",
+                              "anthropic",
+                              "google",
+                              "azure",
+                              "cohere",
+                              "mistral",
+                              "deepseek",
+                              "qwen",
+                              "zhipu",
+                              "lingyiwanwu",
+                              "xai",
+                              "togetherai",
+                              "ollama",
+                              "amazonBedrock",
+                              "openRouter",
+                              "openaiCompatible",
+                              "aiGateway"
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "apiKey": {
+                            "type": "string"
+                          },
+                          "baseUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "models": {
+                            "type": "string",
+                            "default": ""
+                          },
+                          "isInstance": {
+                            "type": "boolean"
+                          },
+                          "modelConfigs": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "string"
+                                },
+                                "pricing": {
+                                  "type": "object",
+                                  "properties": {
+                                    "input": {
+                                      "type": "string"
+                                    },
+                                    "output": {
+                                      "type": "string"
+                                    },
+                                    "inputCacheRead": {
+                                      "type": "string"
+                                    },
+                                    "inputCacheWrite": {
+                                      "type": "string"
+                                    },
+                                    "reasoning": {
+                                      "type": "string"
+                                    },
+                                    "image": {
+                                      "type": "string"
+                                    },
+                                    "webSearch": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "inputRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "outputRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "cacheReadRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "cacheWriteRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "reasoningRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "imageRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "webSearchRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "isImageModel": {
+                                  "type": "boolean"
+                                },
+                                "ability": {
+                                  "type": "object",
+                                  "properties": {
+                                    "image": {
+                                      "anyOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "url": {
+                                              "type": "boolean"
+                                            },
+                                            "base64": {
+                                              "type": "boolean"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "pdf": {
+                                      "anyOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "url": {
+                                              "type": "boolean"
+                                            },
+                                            "base64": {
+                                              "type": "boolean"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "webSearch": {
+                                      "type": "boolean"
+                                    },
+                                    "toolCall": {
+                                      "type": "boolean"
+                                    },
+                                    "reasoning": {
+                                      "type": "boolean"
+                                    },
+                                    "imageGeneration": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                },
+                                "imageAbility": {
+                                  "type": "object",
+                                  "properties": {
+                                    "generation": {
+                                      "type": "boolean"
+                                    },
+                                    "imageToImage": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                },
+                                "testedAt": {
+                                  "type": "number"
+                                },
+                                "ownedBy": {
+                                  "type": "string",
+                                  "enum": [
+                                    "alibaba",
+                                    "amazon",
+                                    "anthropic",
+                                    "arcee-ai",
+                                    "bfl",
+                                    "bytedance",
+                                    "cohere",
+                                    "deepseek",
+                                    "google",
+                                    "inception",
+                                    "kwaipilot",
+                                    "meituan",
+                                    "meta",
+                                    "minimax",
+                                    "mistral",
+                                    "moonshotai",
+                                    "morph",
+                                    "nvidia",
+                                    "openai",
+                                    "perplexity",
+                                    "prime-intellect",
+                                    "stealth",
+                                    "vercel",
+                                    "voyage",
+                                    "xai",
+                                    "xiaomi",
+                                    "zai"
+                                  ]
+                                },
+                                "modelType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "language",
+                                    "embedding",
+                                    "image"
+                                  ]
+                                },
+                                "tags": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "reasoning",
+                                      "tool-use",
+                                      "vision",
+                                      "file-input",
+                                      "image-generation",
+                                      "implicit-caching"
+                                    ]
+                                  }
+                                },
+                                "contextWindow": {
+                                  "type": "number"
+                                },
+                                "maxTokens": {
+                                  "type": "number"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "name"
+                        ]
+                      },
+                      "default": []
+                    },
+                    "embeddingModel": {
+                      "type": "string"
+                    },
+                    "translationModel": {
+                      "type": "string"
+                    },
+                    "gatewayModels": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean",
+                            "default": true
+                          },
+                          "capabilities": {
+                            "type": "object",
+                            "properties": {
+                              "image": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "pdf": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "webSearch": {
+                                "type": "boolean"
+                              },
+                              "toolCall": {
+                                "type": "boolean"
+                              },
+                              "reasoning": {
+                                "type": "boolean"
+                              },
+                              "imageGeneration": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "pricing": {
+                            "type": "object",
+                            "properties": {
+                              "input": {
+                                "type": "string"
+                              },
+                              "output": {
+                                "type": "string"
+                              },
+                              "inputCacheRead": {
+                                "type": "string"
+                              },
+                              "inputCacheWrite": {
+                                "type": "string"
+                              },
+                              "reasoning": {
+                                "type": "string"
+                              },
+                              "image": {
+                                "type": "string"
+                              },
+                              "webSearch": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "rates": {
+                            "type": "object",
+                            "properties": {
+                              "inputRate": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "outputRate": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "cacheReadRate": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "cacheWriteRate": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "reasoningRate": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "imageRate": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "webSearchRate": {
+                                "type": "number",
+                                "minimum": 0
+                              }
+                            }
+                          },
+                          "isImageModel": {
+                            "type": "boolean"
+                          },
+                          "defaultFor": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "chatLg",
+                                "chatMd",
+                                "chatSm",
+                                "aiFieldText",
+                                "aiFieldImage"
+                              ]
+                            }
+                          },
+                          "testedAt": {
+                            "type": "number"
+                          },
+                          "ownedBy": {
+                            "type": "string",
+                            "enum": [
+                              "alibaba",
+                              "amazon",
+                              "anthropic",
+                              "arcee-ai",
+                              "bfl",
+                              "bytedance",
+                              "cohere",
+                              "deepseek",
+                              "google",
+                              "inception",
+                              "kwaipilot",
+                              "meituan",
+                              "meta",
+                              "minimax",
+                              "mistral",
+                              "moonshotai",
+                              "morph",
+                              "nvidia",
+                              "openai",
+                              "perplexity",
+                              "prime-intellect",
+                              "stealth",
+                              "vercel",
+                              "voyage",
+                              "xai",
+                              "xiaomi",
+                              "zai"
+                            ]
+                          },
+                          "modelType": {
+                            "type": "string",
+                            "enum": [
+                              "language",
+                              "embedding",
+                              "image"
+                            ]
+                          },
+                          "tags": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "reasoning",
+                                "tool-use",
+                                "vision",
+                                "file-input",
+                                "image-generation",
+                                "implicit-caching"
+                              ]
+                            }
+                          },
+                          "contextWindow": {
+                            "type": "number"
+                          },
+                          "maxTokens": {
+                            "type": "number"
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label"
+                        ]
+                      }
+                    },
+                    "capabilities": {
+                      "type": "object",
+                      "properties": {
+                        "disableActions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "aiGatewayApiKey": {
+                      "type": "string"
+                    },
+                    "aiGatewayBaseUrl": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "attachmentTest": {
+                      "type": "object",
+                      "properties": {
+                        "urlMode": {
+                          "type": "object",
+                          "properties": {
+                            "success": {
+                              "type": "boolean"
+                            },
+                            "errorMessage": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "success"
+                          ]
+                        },
+                        "base64Mode": {
+                          "type": "object",
+                          "properties": {
+                            "success": {
+                              "type": "boolean"
+                            },
+                            "errorMessage": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "success"
+                          ]
+                        },
+                        "testedAt": {
+                          "type": "string"
+                        },
+                        "testedOrigin": {
+                          "type": "string"
+                        },
+                        "recommendedMode": {
+                          "type": "string",
+                          "enum": [
+                            "url",
+                            "base64"
+                          ]
+                        }
+                      }
+                    },
+                    "attachmentTransferMode": {
+                      "type": "string",
+                      "enum": [
+                        "url",
+                        "base64"
+                      ],
+                      "default": "url"
+                    },
+                    "aiGatewayApiKeys": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "vertexByokCredential": {
+                      "type": "object",
+                      "properties": {
+                        "project": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        },
+                        "googleCredentials": {
+                          "type": "object",
+                          "properties": {
+                            "privateKey": {
+                              "type": "string"
+                            },
+                            "clientEmail": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "privateKey",
+                            "clientEmail"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "project",
+                        "location",
+                        "googleCredentials"
+                      ]
+                    },
+                    "concurrencyGroups": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "taskTypes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "text",
+                                "image"
+                              ]
+                            },
+                            "default": []
+                          },
+                          "keys": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "apiKey": {
+                                  "type": "string"
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "verified",
+                                    "untested",
+                                    "error"
+                                  ],
+                                  "default": "untested"
+                                }
+                              },
+                              "required": [
+                                "apiKey"
+                              ]
+                            },
+                            "default": []
+                          },
+                          "perKey": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 100,
+                            "default": 5
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    },
+                    "concurrencyPerKey": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "modelDefinationMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "inputRate": {
+                                "type": "number",
+                                "example": 0.001,
+                                "description": "The number of credits spent using a prompt token"
+                              },
+                              "outputRate": {
+                                "type": "number",
+                                "example": 0.0025,
+                                "description": "The number of credits spent using a completion token"
+                              },
+                              "visionEnable": {
+                                "type": "boolean",
+                                "description": "Whether to enable vision"
+                              },
+                              "audioEnable": {
+                                "type": "boolean",
+                                "description": "Whether to enable audio"
+                              },
+                              "videoEnable": {
+                                "type": "boolean",
+                                "description": "Whether to enable video"
+                              },
+                              "deepThinkEnable": {
+                                "type": "boolean",
+                                "description": "Whether to enable deep think"
+                              }
+                            },
+                            "required": [
+                              "inputRate",
+                              "outputRate"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "usagePerUnit": {
+                                "type": "number",
+                                "example": 100,
+                                "description": "The number of credits spent for generating one image"
+                              },
+                              "outputType": {
+                                "type": "string",
+                                "enum": [
+                                  "image",
+                                  "audio",
+                                  "video"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "usagePerUnit",
+                              "outputType"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "chatModel": {
+                      "type": "object",
+                      "properties": {
+                        "lg": {
+                          "type": "string"
+                        },
+                        "md": {
+                          "type": "string"
+                        },
+                        "sm": {
+                          "type": "string"
+                        },
+                        "ability": {
+                          "type": "object",
+                          "properties": {
+                            "image": {
+                              "anyOf": [
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "url": {
+                                      "type": "boolean"
+                                    },
+                                    "base64": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "pdf": {
+                              "anyOf": [
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "url": {
+                                      "type": "boolean"
+                                    },
+                                    "base64": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "webSearch": {
+                              "type": "boolean"
+                            },
+                            "toolCall": {
+                              "type": "boolean"
+                            },
+                            "reasoning": {
+                              "type": "boolean"
+                            },
+                            "imageGeneration": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": [
+                              "reasoning",
+                              "tool-use",
+                              "vision",
+                              "file-input",
+                              "image-generation",
+                              "implicit-caching"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/%7BbaseId%7D/ai/config \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/%7BbaseId%7D/ai/config';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/%7BbaseId%7D/ai/config',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/%7BbaseId%7D/ai/config\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/{baseId}/ai/disable-ai-actions": {
+      "get": {
+        "description": "Get the disable ai actions",
+        "tags": [
+          "ai"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the configuration of ai.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "disableActions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "disableActions"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/%7BbaseId%7D/ai/disable-ai-actions \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/%7BbaseId%7D/ai/disable-ai-actions';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/%7BbaseId%7D/ai/disable-ai-actions',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/%7BbaseId%7D/ai/disable-ai-actions\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/api/{baseId}/ai/generate": {
+      "post": {
+        "description": "Generate AI text (non-streaming)",
+        "tags": [
+          "ai"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "task": {
+                    "type": "string",
+                    "enum": [
+                      "coding",
+                      "embedding",
+                      "translation"
+                    ],
+                    "description": "Quick model selection via predefined task type",
+                    "example": "coding"
+                  },
+                  "modelKey": {
+                    "type": "string",
+                    "description": "Specify an exact model configuration to use",
+                    "example": "openai@gpt-4o@custom-name"
+                  }
+                },
+                "required": [
+                  "prompt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns generated AI text.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "result"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/api/%7BbaseId%7D/ai/generate \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"prompt\":\"string\",\"task\":\"coding\",\"modelKey\":\"openai@gpt-4o@custom-name\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/api/%7BbaseId%7D/ai/generate';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"prompt\":\"string\",\"task\":\"coding\",\"modelKey\":\"openai@gpt-4o@custom-name\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/api/%7BbaseId%7D/ai/generate',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({prompt: 'string', task: 'coding', modelKey: 'openai@gpt-4o@custom-name'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"prompt\\\":\\\"string\\\",\\\"task\\\":\\\"coding\\\",\\\"modelKey\\\":\\\"openai@gpt-4o@custom-name\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/api/%7BbaseId%7D/ai/generate\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

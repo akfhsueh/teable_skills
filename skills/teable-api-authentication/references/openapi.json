@@ -1,0 +1,904 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/enterprise/{organizationId}/authentication/{id}": {
+      "get": {
+        "description": "Get a authentication",
+        "tags": [
+          "enterprise",
+          "authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "organizationId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "feishu"
+                          ]
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "appId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "appSecret": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "appId",
+                            "appSecret"
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "config",
+                        "id",
+                        "name"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "oidc"
+                          ]
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "clientId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "clientSecret": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "authorizationUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "tokenUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "userInfoUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "issuer": {
+                              "type": "string",
+                              "format": "uri"
+                            }
+                          },
+                          "required": [
+                            "clientId",
+                            "clientSecret",
+                            "authorizationUrl",
+                            "tokenUrl",
+                            "userInfoUrl",
+                            "issuer"
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "config",
+                        "id",
+                        "name"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "put": {
+        "description": "Update a authentication",
+        "tags": [
+          "enterprise",
+          "authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "organizationId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "feishu"
+                        ]
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "appId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "appSecret": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "appId",
+                          "appSecret"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "config",
+                      "name"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "oidc"
+                        ]
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "clientId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "clientSecret": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "authorizationUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "tokenUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "userInfoUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "issuer": {
+                            "type": "string",
+                            "format": "uri"
+                          }
+                        },
+                        "required": [
+                          "clientId",
+                          "clientSecret",
+                          "authorizationUrl",
+                          "tokenUrl",
+                          "userInfoUrl",
+                          "issuer"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "config",
+                      "name"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PUT \\\n  --url http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"type\":\"feishu\",\"config\":{\"appId\":\"string\",\"appSecret\":\"string\"},\"id\":\"string\",\"name\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D';\nconst options = {\n  method: 'PUT',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"type\":\"feishu\",\"config\":{\"appId\":\"string\",\"appSecret\":\"string\"},\"id\":\"string\",\"name\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PUT',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  type: 'feishu',\n  config: {appId: 'string', appSecret: 'string'},\n  id: 'string',\n  name: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"type\\\":\\\"feishu\\\",\\\"config\\\":{\\\"appId\\\":\\\"string\\\",\\\"appSecret\\\":\\\"string\\\"},\\\"id\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PUT\", \"/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a authentication",
+        "tags": [
+          "enterprise",
+          "authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "organizationId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful deleted"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/enterprise/%7BorganizationId%7D/authentication/%7Bid%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/enterprise/{organizationId}/authentication": {
+      "get": {
+        "description": "Get a authentication list",
+        "tags": [
+          "enterprise",
+          "authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "organizationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "feishu"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "appId": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "appSecret": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "appId",
+                              "appSecret"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "config",
+                          "id",
+                          "name"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "oidc"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "clientId": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "clientSecret": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "authorizationUrl": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "tokenUrl": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "userInfoUrl": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "issuer": {
+                                "type": "string",
+                                "format": "uri"
+                              }
+                            },
+                            "required": [
+                              "clientId",
+                              "clientSecret",
+                              "authorizationUrl",
+                              "tokenUrl",
+                              "userInfoUrl",
+                              "issuer"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "config",
+                          "id",
+                          "name"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/enterprise/%7BorganizationId%7D/authentication',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/enterprise/%7BorganizationId%7D/authentication\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "post": {
+        "description": "Create a authentication",
+        "tags": [
+          "enterprise",
+          "authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "resourceId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "feishu"
+                        ]
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "appId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "appSecret": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "appId",
+                          "appSecret"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "config",
+                      "name"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "oidc"
+                        ]
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "clientId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "clientSecret": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "authorizationUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "tokenUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "userInfoUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "issuer": {
+                            "type": "string",
+                            "format": "uri"
+                          }
+                        },
+                        "required": [
+                          "clientId",
+                          "clientSecret",
+                          "authorizationUrl",
+                          "tokenUrl",
+                          "userInfoUrl",
+                          "issuer"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "config",
+                      "name"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "feishu"
+                          ]
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "appId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "appSecret": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "appId",
+                            "appSecret"
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "config",
+                        "id",
+                        "name"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "oidc"
+                          ]
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "clientId": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "clientSecret": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "authorizationUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "tokenUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "userInfoUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "issuer": {
+                              "type": "string",
+                              "format": "uri"
+                            }
+                          },
+                          "required": [
+                            "clientId",
+                            "clientSecret",
+                            "authorizationUrl",
+                            "tokenUrl",
+                            "userInfoUrl",
+                            "issuer"
+                          ]
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "config",
+                        "id",
+                        "name"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"type\":\"feishu\",\"config\":{\"appId\":\"string\",\"appSecret\":\"string\"},\"id\":\"string\",\"name\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"type\":\"feishu\",\"config\":{\"appId\":\"string\",\"appSecret\":\"string\"},\"id\":\"string\",\"name\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/enterprise/%7BorganizationId%7D/authentication',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  type: 'feishu',\n  config: {appId: 'string', appSecret: 'string'},\n  id: 'string',\n  name: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"type\\\":\\\"feishu\\\",\\\"config\\\":{\\\"appId\\\":\\\"string\\\",\\\"appSecret\\\":\\\"string\\\"},\\\"id\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/enterprise/%7BorganizationId%7D/authentication\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/enterprise/{organizationId}/authentication/providers": {
+      "get": {
+        "description": "Get providers",
+        "tags": [
+          "enterprise",
+          "authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "organizationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "oidc",
+                          "feishu"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "type"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/providers \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/enterprise/%7BorganizationId%7D/authentication/providers';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/enterprise/%7BorganizationId%7D/authentication/providers',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/enterprise/%7BorganizationId%7D/authentication/providers\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

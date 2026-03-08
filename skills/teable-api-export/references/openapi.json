@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/export/{tableId}": {
+      "get": {
+        "description": "export csv from table",
+        "tags": [
+          "export"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of sort objects that specifies how the records should be ordered."
+            },
+            "required": false,
+            "description": "An array of sort objects that specifies how the records should be ordered.",
+            "name": "orderBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group objects that specifies how the records should be grouped."
+            },
+            "required": false,
+            "description": "An array of group objects that specifies how the records should be grouped.",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id"
+            },
+            "required": false,
+            "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id",
+            "name": "projection",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "When ignoreViewQuery is true, use this columnMeta to sort fields by order. Format: { fieldId: { order: number } }"
+            },
+            "required": false,
+            "description": "When ignoreViewQuery is true, use this columnMeta to sort fields by order. Format: { fieldId: { order: number } }",
+            "name": "columnMeta",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Download successful"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/export/%7BtableId%7D?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filter=SOME_STRING_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&projection=SOME_ARRAY_VALUE&columnMeta=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/export/%7BtableId%7D?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filter=SOME_STRING_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&projection=SOME_ARRAY_VALUE&columnMeta=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/export/%7BtableId%7D?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filter=SOME_STRING_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&projection=SOME_ARRAY_VALUE&columnMeta=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/export/%7BtableId%7D?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filter=SOME_STRING_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&projection=SOME_ARRAY_VALUE&columnMeta=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

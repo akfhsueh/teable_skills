@@ -1,0 +1,456 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/import/analyze": {
+      "get": {
+        "description": "Get a column info from analyze sheet",
+        "tags": [
+          "import"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "attachmentUrl",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "csv",
+                "excel"
+              ]
+            },
+            "required": true,
+            "name": "fileType",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns columnHeader analyze from file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "worksheets": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "columns": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "singleLineText",
+                                    "longText",
+                                    "user",
+                                    "attachment",
+                                    "checkbox",
+                                    "multipleSelect",
+                                    "singleSelect",
+                                    "date",
+                                    "number",
+                                    "rating",
+                                    "formula",
+                                    "rollup",
+                                    "conditionalRollup",
+                                    "link",
+                                    "createdTime",
+                                    "lastModifiedTime",
+                                    "createdBy",
+                                    "lastModifiedBy",
+                                    "autoNumber",
+                                    "button"
+                                  ]
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "name"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "columns"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "worksheets"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/import/analyze?attachmentUrl=SOME_STRING_VALUE&fileType=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/import/analyze?attachmentUrl=SOME_STRING_VALUE&fileType=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/import/analyze?attachmentUrl=SOME_STRING_VALUE&fileType=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/import/analyze?attachmentUrl=SOME_STRING_VALUE&fileType=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/import/{baseId}": {
+      "post": {
+        "description": "create table from file",
+        "tags": [
+          "import"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "worksheets": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "columns": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "singleLineText",
+                                  "longText",
+                                  "user",
+                                  "attachment",
+                                  "checkbox",
+                                  "multipleSelect",
+                                  "singleSelect",
+                                  "date",
+                                  "number",
+                                  "rating",
+                                  "formula",
+                                  "rollup",
+                                  "conditionalRollup",
+                                  "link",
+                                  "createdTime",
+                                  "lastModifiedTime",
+                                  "createdBy",
+                                  "lastModifiedBy",
+                                  "autoNumber",
+                                  "button"
+                                ]
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "sourceColumnIndex": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "name",
+                              "sourceColumnIndex"
+                            ]
+                          }
+                        },
+                        "useFirstRowAsHeader": {
+                          "type": "boolean"
+                        },
+                        "importData": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "columns",
+                        "useFirstRowAsHeader",
+                        "importData"
+                      ]
+                    }
+                  },
+                  "attachmentUrl": {
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "type": "string",
+                    "enum": [
+                      "csv",
+                      "excel"
+                    ]
+                  },
+                  "notification": {
+                    "type": "boolean"
+                  },
+                  "tz": {
+                    "type": "string",
+                    "description": "The time zone that should be used to format dates"
+                  }
+                },
+                "required": [
+                  "worksheets",
+                  "attachmentUrl",
+                  "fileType",
+                  "tz"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns data about a table without records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The id of table."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the table."
+                    },
+                    "dbTableName": {
+                      "type": "string",
+                      "pattern": "^[a-z]\\w{0,62}$/i",
+                      "description": "Table name in backend database. Limitation: 1-63 characters, start with letter, can only contain letters, numbers and underscore, case insensitive, cannot be duplicated with existing db table name in the base."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the table."
+                    },
+                    "icon": {
+                      "type": "string",
+                      "format": "emoji",
+                      "description": "The emoji icon string of the table."
+                    },
+                    "order": {
+                      "type": "number"
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "The last modified time of the table."
+                    },
+                    "defaultViewId": {
+                      "type": "string",
+                      "description": "The default view id of the table."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "dbTableName"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/import/%7BbaseId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"worksheets\":{\"property1\":{\"name\":\"string\",\"columns\":[{\"type\":\"singleLineText\",\"name\":\"string\",\"sourceColumnIndex\":0}],\"useFirstRowAsHeader\":true,\"importData\":true},\"property2\":{\"name\":\"string\",\"columns\":[{\"type\":\"singleLineText\",\"name\":\"string\",\"sourceColumnIndex\":0}],\"useFirstRowAsHeader\":true,\"importData\":true}},\"attachmentUrl\":\"string\",\"fileType\":\"csv\",\"notification\":true,\"tz\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/import/%7BbaseId%7D';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"worksheets\":{\"property1\":{\"name\":\"string\",\"columns\":[{\"type\":\"singleLineText\",\"name\":\"string\",\"sourceColumnIndex\":0}],\"useFirstRowAsHeader\":true,\"importData\":true},\"property2\":{\"name\":\"string\",\"columns\":[{\"type\":\"singleLineText\",\"name\":\"string\",\"sourceColumnIndex\":0}],\"useFirstRowAsHeader\":true,\"importData\":true}},\"attachmentUrl\":\"string\",\"fileType\":\"csv\",\"notification\":true,\"tz\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/import/%7BbaseId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  worksheets: {\n    property1: {\n      name: 'string',\n      columns: [{type: 'singleLineText', name: 'string', sourceColumnIndex: 0}],\n      useFirstRowAsHeader: true,\n      importData: true\n    },\n    property2: {\n      name: 'string',\n      columns: [{type: 'singleLineText', name: 'string', sourceColumnIndex: 0}],\n      useFirstRowAsHeader: true,\n      importData: true\n    }\n  },\n  attachmentUrl: 'string',\n  fileType: 'csv',\n  notification: true,\n  tz: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"worksheets\\\":{\\\"property1\\\":{\\\"name\\\":\\\"string\\\",\\\"columns\\\":[{\\\"type\\\":\\\"singleLineText\\\",\\\"name\\\":\\\"string\\\",\\\"sourceColumnIndex\\\":0}],\\\"useFirstRowAsHeader\\\":true,\\\"importData\\\":true},\\\"property2\\\":{\\\"name\\\":\\\"string\\\",\\\"columns\\\":[{\\\"type\\\":\\\"singleLineText\\\",\\\"name\\\":\\\"string\\\",\\\"sourceColumnIndex\\\":0}],\\\"useFirstRowAsHeader\\\":true,\\\"importData\\\":true}},\\\"attachmentUrl\\\":\\\"string\\\",\\\"fileType\\\":\\\"csv\\\",\\\"notification\\\":true,\\\"tz\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/import/%7BbaseId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/import/{baseId}/{tableId}": {
+      "patch": {
+        "description": "import table inplace",
+        "tags": [
+          "import"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attachmentUrl": {
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "type": "string",
+                    "enum": [
+                      "csv",
+                      "excel"
+                    ]
+                  },
+                  "insertConfig": {
+                    "type": "object",
+                    "properties": {
+                      "sourceWorkSheetKey": {
+                        "type": "string"
+                      },
+                      "excludeFirstRow": {
+                        "type": "boolean"
+                      },
+                      "sourceColumnMap": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "number",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "required": [
+                      "sourceWorkSheetKey",
+                      "excludeFirstRow",
+                      "sourceColumnMap"
+                    ]
+                  },
+                  "notification": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "attachmentUrl",
+                  "fileType",
+                  "insertConfig"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully import table inplace"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/import/%7BbaseId%7D/%7BtableId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"attachmentUrl\":\"string\",\"fileType\":\"csv\",\"insertConfig\":{\"sourceWorkSheetKey\":\"string\",\"excludeFirstRow\":true,\"sourceColumnMap\":{\"property1\":0,\"property2\":0}},\"notification\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/import/%7BbaseId%7D/%7BtableId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"attachmentUrl\":\"string\",\"fileType\":\"csv\",\"insertConfig\":{\"sourceWorkSheetKey\":\"string\",\"excludeFirstRow\":true,\"sourceColumnMap\":{\"property1\":0,\"property2\":0}},\"notification\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/import/%7BbaseId%7D/%7BtableId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  attachmentUrl: 'string',\n  fileType: 'csv',\n  insertConfig: {\n    sourceWorkSheetKey: 'string',\n    excludeFirstRow: true,\n    sourceColumnMap: {property1: 0, property2: 0}\n  },\n  notification: true\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"attachmentUrl\\\":\\\"string\\\",\\\"fileType\\\":\\\"csv\\\",\\\"insertConfig\\\":{\\\"sourceWorkSheetKey\\\":\\\"string\\\",\\\"excludeFirstRow\\\":true,\\\"sourceColumnMap\\\":{\\\"property1\\\":0,\\\"property2\\\":0}},\\\"notification\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/import/%7BbaseId%7D/%7BtableId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

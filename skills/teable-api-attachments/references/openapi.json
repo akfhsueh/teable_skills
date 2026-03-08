@@ -1,0 +1,390 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/attachments/notify/{token}": {
+      "post": {
+        "description": "Get Attachment information",
+        "tags": [
+          "attachments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "token",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "filename",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Attachment information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "xxxxxxxxxxx",
+                      "description": "Token for the uploaded file"
+                    },
+                    "size": {
+                      "type": "number",
+                      "example": 1024,
+                      "description": "File size in bytes"
+                    },
+                    "url": {
+                      "type": "string",
+                      "example": "/bucket/xxxxx",
+                      "description": "URL of the uploaded file"
+                    },
+                    "path": {
+                      "type": "string",
+                      "example": "/table/xxxxxx",
+                      "description": "file path"
+                    },
+                    "mimetype": {
+                      "type": "string",
+                      "example": "video/mp4",
+                      "description": "MIME type of the uploaded file"
+                    },
+                    "width": {
+                      "type": "number",
+                      "example": 100,
+                      "description": "Image width of the uploaded file"
+                    },
+                    "height": {
+                      "type": "number",
+                      "example": 100,
+                      "description": "Image height of the uploaded file"
+                    },
+                    "presignedUrl": {
+                      "type": "string",
+                      "description": "Preview url"
+                    }
+                  },
+                  "required": [
+                    "token",
+                    "size",
+                    "url",
+                    "path",
+                    "mimetype",
+                    "presignedUrl"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url 'http://127.0.0.1:3000/api/attachments/notify/%7Btoken%7D?filename=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/attachments/notify/%7Btoken%7D?filename=SOME_STRING_VALUE';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/attachments/notify/%7Btoken%7D?filename=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/attachments/notify/%7Btoken%7D?filename=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/attachments/{token}": {
+      "get": {
+        "description": "Upload attachment",
+        "tags": [
+          "attachments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "token",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "File name for download"
+            },
+            "required": false,
+            "description": "File name for download",
+            "name": "filename",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/attachments/%7Btoken%7D?filename=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/attachments/%7Btoken%7D?filename=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/attachments/%7Btoken%7D?filename=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/attachments/%7Btoken%7D?filename=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/attachments/signature": {
+      "post": {
+        "description": "Retrieve upload signature.",
+        "tags": [
+          "attachments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contentType": {
+                    "type": "string",
+                    "example": "image/png",
+                    "description": "Mime type"
+                  },
+                  "contentLength": {
+                    "type": "number",
+                    "example": 123,
+                    "description": "File size"
+                  },
+                  "expiresIn": {
+                    "type": "number",
+                    "example": 3600,
+                    "description": "Token expire time, seconds"
+                  },
+                  "hash": {
+                    "type": "string",
+                    "example": "xxxxxxxx",
+                    "description": "File hash"
+                  },
+                  "type": {
+                    "type": "integer",
+                    "enum": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14
+                    ],
+                    "example": 1,
+                    "description": "Type"
+                  },
+                  "baseId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "contentType",
+                  "contentLength",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "return the upload URL and the key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "example": "https://example.com/attachment/upload",
+                      "description": "Upload url"
+                    },
+                    "uploadMethod": {
+                      "type": "string",
+                      "example": "POST",
+                      "description": "Upload method"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "xxxxxxxx",
+                      "description": "Secret key"
+                    },
+                    "requestHeaders": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "example": {
+                        "Content-Type": "image/png"
+                      }
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "uploadMethod",
+                    "token",
+                    "requestHeaders"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/attachments/signature \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"contentType\":\"image/png\",\"contentLength\":123,\"expiresIn\":3600,\"hash\":\"xxxxxxxx\",\"type\":1,\"baseId\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/attachments/signature';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"contentType\":\"image/png\",\"contentLength\":123,\"expiresIn\":3600,\"hash\":\"xxxxxxxx\",\"type\":1,\"baseId\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/attachments/signature',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  contentType: 'image/png',\n  contentLength: 123,\n  expiresIn: 3600,\n  hash: 'xxxxxxxx',\n  type: 1,\n  baseId: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"contentType\\\":\\\"image/png\\\",\\\"contentLength\\\":123,\\\"expiresIn\\\":3600,\\\"hash\\\":\\\"xxxxxxxx\\\",\\\"type\\\":1,\\\"baseId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/attachments/signature\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/attachments/upload/{token}": {
+      "post": {
+        "description": "Upload attachment",
+        "tags": [
+          "attachments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "token",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "description": "upload attachment",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Upload successful"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/attachments/upload/%7Btoken%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '\"string\"'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/attachments/upload/%7Btoken%7D';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '\"string\"'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/attachments/upload/%7Btoken%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify('string'));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"\\\"string\\\"\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/attachments/upload/%7Btoken%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

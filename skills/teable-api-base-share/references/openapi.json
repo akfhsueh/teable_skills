@@ -1,0 +1,843 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/base/{baseId}/share": {
+      "post": {
+        "description": "Create a base share link",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nodeId": {
+                    "type": "string"
+                  },
+                  "allowSave": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "allowCopy": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": true,
+                    "minLength": 3
+                  }
+                },
+                "required": [
+                  "nodeId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns the created base share",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "shareId": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "boolean"
+                    },
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "allowSave": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "allowCopy": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "baseId",
+                    "shareId",
+                    "password",
+                    "nodeId",
+                    "allowSave",
+                    "allowCopy",
+                    "enabled"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/share \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"nodeId\":\"string\",\"allowSave\":true,\"allowCopy\":true,\"password\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/share';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"nodeId\":\"string\",\"allowSave\":true,\"allowCopy\":true,\"password\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/share',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({nodeId: 'string', allowSave: true, allowCopy: true, password: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"nodeId\\\":\\\"string\\\",\\\"allowSave\\\":true,\\\"allowCopy\\\":true,\\\"password\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/base/%7BbaseId%7D/share\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "get": {
+        "description": "Get all shared node IDs for a base",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns list of shared node IDs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nodeId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "nodeId"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/share \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/share';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/share',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/share\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/share/{shareId}": {
+      "patch": {
+        "description": "Update a base share link",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "shareId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "allowSave": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "allowCopy": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": true,
+                    "minLength": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the updated base share",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "shareId": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "boolean"
+                    },
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "allowSave": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "allowCopy": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "baseId",
+                    "shareId",
+                    "password",
+                    "nodeId",
+                    "allowSave",
+                    "allowCopy",
+                    "enabled"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/%7BshareId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"allowSave\":true,\"allowCopy\":true,\"enabled\":true,\"password\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/%7BshareId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"allowSave\":true,\"allowCopy\":true,\"enabled\":true,\"password\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/share/%7BshareId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({allowSave: true, allowCopy: true, enabled: true, password: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"allowSave\\\":true,\\\"allowCopy\\\":true,\\\"enabled\\\":true,\\\"password\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/share/%7BshareId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a base share link",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "shareId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/%7BshareId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/%7BshareId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/share/%7BshareId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/base/%7BbaseId%7D/share/%7BshareId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/share/{shareId}/refresh": {
+      "post": {
+        "description": "Refresh/regenerate a base share link ID",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "shareId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the refreshed base share",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "shareId": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "boolean"
+                    },
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "allowSave": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "allowCopy": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "baseId",
+                    "shareId",
+                    "password",
+                    "nodeId",
+                    "allowSave",
+                    "allowCopy",
+                    "enabled"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/%7BshareId%7D/refresh \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/%7BshareId%7D/refresh';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/share/%7BshareId%7D/refresh',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/base/%7BbaseId%7D/share/%7BshareId%7D/refresh\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/share/{shareId}/base": {
+      "get": {
+        "description": "Get shared base information",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "shareId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the shared base information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "shareMeta": {
+                      "type": "object",
+                      "properties": {
+                        "password": {
+                          "type": "boolean"
+                        },
+                        "nodeId": {
+                          "type": "string"
+                        },
+                        "allowSave": {
+                          "type": "boolean",
+                          "nullable": true
+                        },
+                        "allowCopy": {
+                          "type": "boolean",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "password",
+                        "nodeId",
+                        "allowSave",
+                        "allowCopy"
+                      ]
+                    },
+                    "defaultUrl": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "baseId",
+                    "shareMeta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/share/%7BshareId%7D/base \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/share/%7BshareId%7D/base';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/share/%7BshareId%7D/base',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/share/%7BshareId%7D/base\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/share/node/{nodeId}": {
+      "get": {
+        "description": "Get a base share by node ID",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "nodeId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the base share for the specified node",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "shareId": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "boolean"
+                    },
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "allowSave": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "allowCopy": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "baseId",
+                    "shareId",
+                    "password",
+                    "nodeId",
+                    "allowSave",
+                    "allowCopy",
+                    "enabled"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/node/%7BnodeId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/share/node/%7BnodeId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/share/node/%7BnodeId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/share/node/%7BnodeId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/share/{shareId}/base/auth": {
+      "post": {
+        "description": "Authenticate with password to access shared base",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "shareId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "minLength": 3
+                  }
+                },
+                "required": [
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/share/%7BshareId%7D/base/auth \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"password\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/share/%7BshareId%7D/base/auth';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"password\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/share/%7BshareId%7D/base/auth',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({password: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"password\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/share/%7BshareId%7D/base/auth\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/share/{shareId}/base/copy": {
+      "post": {
+        "description": "Copy a shared base to a target space",
+        "tags": [
+          "base-share"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "shareId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "spaceId": {
+                    "type": "string",
+                    "description": "The target space ID to copy the base to"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the copied base"
+                  },
+                  "withRecords": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to copy records"
+                  },
+                  "baseId": {
+                    "type": "string",
+                    "description": "The target base ID to copy into. If provided, tables will be added to the existing base instead of creating a new one."
+                  }
+                },
+                "required": [
+                  "spaceId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the copied base",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "spaceId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "spaceId"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/share/%7BshareId%7D/base/copy \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"spaceId\":\"string\",\"name\":\"string\",\"withRecords\":true,\"baseId\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/share/%7BshareId%7D/base/copy';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"spaceId\":\"string\",\"name\":\"string\",\"withRecords\":true,\"baseId\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/share/%7BshareId%7D/base/copy',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({spaceId: 'string', name: 'string', withRecords: true, baseId: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"spaceId\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"withRecords\\\":true,\\\"baseId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/share/%7BshareId%7D/base/copy\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

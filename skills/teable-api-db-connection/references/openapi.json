@@ -1,0 +1,325 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/base/{baseId}/connection": {
+      "post": {
+        "description": "Create a db connection url",
+        "tags": [
+          "db-connection"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "baseId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "baseId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Connection created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "dsn": {
+                      "type": "object",
+                      "properties": {
+                        "driver": {
+                          "type": "string"
+                        },
+                        "host": {
+                          "type": "string"
+                        },
+                        "port": {
+                          "type": "number"
+                        },
+                        "db": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "string"
+                        },
+                        "pass": {
+                          "type": "string"
+                        },
+                        "params": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "boolean"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "driver",
+                        "host"
+                      ]
+                    },
+                    "connection": {
+                      "type": "object",
+                      "properties": {
+                        "max": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "max",
+                        "current"
+                      ]
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "The URL that can be used to connect to the database"
+                    }
+                  },
+                  "required": [
+                    "dsn",
+                    "connection",
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/connection \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"baseId\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/connection';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"baseId\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/connection',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({baseId: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"baseId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/base/%7BbaseId%7D/connection\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a db connection",
+        "tags": [
+          "db-connection"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/connection \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/connection';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/connection',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/base/%7BbaseId%7D/connection\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "get": {
+        "description": "Get db connection info",
+        "tags": [
+          "db-connection"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns information about a db connection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "dsn": {
+                      "type": "object",
+                      "properties": {
+                        "driver": {
+                          "type": "string"
+                        },
+                        "host": {
+                          "type": "string"
+                        },
+                        "port": {
+                          "type": "number"
+                        },
+                        "db": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "string"
+                        },
+                        "pass": {
+                          "type": "string"
+                        },
+                        "params": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "boolean"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "driver",
+                        "host"
+                      ]
+                    },
+                    "connection": {
+                      "type": "object",
+                      "properties": {
+                        "max": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "max",
+                        "current"
+                      ]
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "The URL that can be used to connect to the database"
+                    }
+                  },
+                  "required": [
+                    "dsn",
+                    "connection",
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/connection \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/connection';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/connection',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/connection\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

@@ -1,0 +1,1681 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/table/{tableId}/aggregation": {
+      "get": {
+        "summary": "Get aggregated statistics",
+        "description": "Returns statistical aggregations of table data based on specified functions and grouping criteria",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns aggregations list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "aggregations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "fieldId": {
+                              "type": "string",
+                              "description": "The id of the field."
+                            },
+                            "total": {
+                              "type": "object",
+                              "nullable": true,
+                              "properties": {
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    },
+                                    {
+                                      "nullable": true
+                                    }
+                                  ]
+                                },
+                                "aggFunc": {
+                                  "type": "string",
+                                  "enum": [
+                                    "count",
+                                    "empty",
+                                    "filled",
+                                    "unique",
+                                    "max",
+                                    "min",
+                                    "sum",
+                                    "average",
+                                    "checked",
+                                    "unChecked",
+                                    "percentEmpty",
+                                    "percentFilled",
+                                    "percentUnique",
+                                    "percentChecked",
+                                    "percentUnChecked",
+                                    "earliestDate",
+                                    "latestDate",
+                                    "dateRangeOfDays",
+                                    "dateRangeOfMonths",
+                                    "totalAttachmentSize"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "aggFunc"
+                              ],
+                              "description": "Aggregations by all data in field"
+                            },
+                            "group": {
+                              "type": "object",
+                              "nullable": true,
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "nullable": true
+                                      }
+                                    ]
+                                  },
+                                  "aggFunc": {
+                                    "type": "string",
+                                    "enum": [
+                                      "count",
+                                      "empty",
+                                      "filled",
+                                      "unique",
+                                      "max",
+                                      "min",
+                                      "sum",
+                                      "average",
+                                      "checked",
+                                      "unChecked",
+                                      "percentEmpty",
+                                      "percentFilled",
+                                      "percentUnique",
+                                      "percentChecked",
+                                      "percentUnChecked",
+                                      "earliestDate",
+                                      "latestDate",
+                                      "dateRangeOfDays",
+                                      "dateRangeOfMonths",
+                                      "totalAttachmentSize"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "aggFunc"
+                                ]
+                              },
+                              "description": "Aggregations by grouped data in field"
+                            }
+                          },
+                          "required": [
+                            "fieldId",
+                            "total"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/row-count": {
+      "get": {
+        "summary": "Get total row count",
+        "description": "Returns the total number of rows in a view based on applied filters and criteria",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "{field} = 'Completed' AND {field} > 5",
+              "deprecated": true
+            },
+            "required": false,
+            "name": "filterByTql",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear."
+            },
+            "required": false,
+            "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear.",
+            "name": "filterLinkCellCandidate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field"
+            },
+            "required": false,
+            "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field",
+            "name": "filterLinkCellSelected",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Filter selected records by record ids"
+            },
+            "required": false,
+            "description": "Filter selected records by record ids",
+            "name": "selectedRecordIds",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Row count for the view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rowCount": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "rowCount"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/row-count?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/row-count?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/row-count?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/row-count?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/group-points": {
+      "get": {
+        "summary": "Get group points",
+        "description": "Returns the distribution and count of records across different group points in the view",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group objects that specifies how the records should be grouped."
+            },
+            "required": false,
+            "description": "An array of group objects that specifies how the records should be grouped.",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group ids that specifies which groups are collapsed"
+            },
+            "required": false,
+            "description": "An array of group ids that specifies which groups are collapsed",
+            "name": "collapsedGroupIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group points for the view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "nullable": true,
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "number",
+                            "enum": [
+                              0
+                            ]
+                          },
+                          "depth": {
+                            "type": "number",
+                            "maximum": 2,
+                            "minimum": 0
+                          },
+                          "value": {
+                            "nullable": true
+                          },
+                          "isCollapsed": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "depth",
+                          "isCollapsed"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "count"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/group-points?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&ignoreViewQuery=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/group-points?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&ignoreViewQuery=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/group-points?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&ignoreViewQuery=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/group-points?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&ignoreViewQuery=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/calendar-daily-collection": {
+      "get": {
+        "summary": "Get daily calendar data",
+        "description": "Returns records and count distribution across dates based on specified date range and fields",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "startDate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "endDate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "startDateFieldId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "endDateFieldId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Calendar daily collection for the view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "number"
+                      }
+                    },
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The record id."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "primary field value"
+                          },
+                          "fields": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "nullable": true
+                            },
+                            "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                          },
+                          "autoNumber": {
+                            "type": "number",
+                            "description": "Auto number, a unique identifier for each record"
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "description": "Created time, date ISO string (new Date().toISOString)."
+                          },
+                          "lastModifiedTime": {
+                            "type": "string",
+                            "description": "Last modified time, date ISO string (new Date().toISOString)."
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "description": "Created by, user name"
+                          },
+                          "lastModifiedBy": {
+                            "type": "string",
+                            "description": "Last modified by, user name"
+                          },
+                          "permissions": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Permissions for the record"
+                          },
+                          "undeletable": {
+                            "type": "boolean",
+                            "description": "Whether the record is undeletable"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "countMap",
+                    "records"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/calendar-daily-collection?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE&startDate=SOME_STRING_VALUE&endDate=SOME_STRING_VALUE&startDateFieldId=SOME_STRING_VALUE&endDateFieldId=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/calendar-daily-collection?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE&startDate=SOME_STRING_VALUE&endDate=SOME_STRING_VALUE&startDateFieldId=SOME_STRING_VALUE&endDateFieldId=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/calendar-daily-collection?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE&startDate=SOME_STRING_VALUE&endDate=SOME_STRING_VALUE&startDateFieldId=SOME_STRING_VALUE&endDateFieldId=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/calendar-daily-collection?viewId=viwXXXXXXX&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE&startDate=SOME_STRING_VALUE&endDate=SOME_STRING_VALUE&startDateFieldId=SOME_STRING_VALUE&endDateFieldId=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/search-count": {
+      "get": {
+        "summary": "Get total count of search",
+        "description": "Returns the total count of records matching the specified search criteria and filters",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search count with query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "count"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/search-count?filter=SOME_STRING_VALUE&viewId=viwXXXXXXX&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/search-count?filter=SOME_STRING_VALUE&viewId=viwXXXXXXX&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/search-count?filter=SOME_STRING_VALUE&viewId=viwXXXXXXX&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/search-count?filter=SOME_STRING_VALUE&viewId=viwXXXXXXX&search=SOME_ARRAY_VALUE&ignoreViewQuery=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/search-index": {
+      "get": {
+        "summary": "Get record indices for search",
+        "description": "Returns the indices and record IDs of records matching the search criteria",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "{field} = 'Completed' AND {field} > 5",
+              "deprecated": true
+            },
+            "required": false,
+            "name": "filterByTql",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear."
+            },
+            "required": false,
+            "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear.",
+            "name": "filterLinkCellCandidate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field"
+            },
+            "required": false,
+            "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field",
+            "name": "filterLinkCellSelected",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Filter selected records by record ids"
+            },
+            "required": false,
+            "description": "Filter selected records by record ids",
+            "name": "selectedRecordIds",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "record index with search query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "nullable": true,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "number"
+                      },
+                      "fieldId": {
+                        "type": "string"
+                      },
+                      "recordId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "index",
+                      "fieldId",
+                      "recordId"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/search-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/search-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/search-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/search-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/task-status-collection": {
+      "get": {
+        "summary": "Get task status collection",
+        "description": "Returns records and count distribution across task status based on specified date range and fields",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task status collection for the view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cells": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "recordId": {
+                            "type": "string"
+                          },
+                          "fieldId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "recordId",
+                          "fieldId"
+                        ]
+                      }
+                    },
+                    "fieldMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "taskId": {
+                            "type": "string"
+                          },
+                          "completedCount": {
+                            "type": "number"
+                          },
+                          "totalCount": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "taskId",
+                          "completedCount",
+                          "totalCount"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "cells",
+                    "fieldMap"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/task-status-collection \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/task-status-collection';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/task-status-collection',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/task-status-collection\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/aggregation/record-index": {
+      "get": {
+        "summary": "Get record index",
+        "description": "Returns the 0-based row index of a specific record in the current query context (respecting view filters, sort order, link filters)",
+        "tags": [
+          "aggregation"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "{field} = 'Completed' AND {field} > 5",
+              "deprecated": true
+            },
+            "required": false,
+            "name": "filterByTql",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear."
+            },
+            "required": false,
+            "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear.",
+            "name": "filterLinkCellCandidate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field"
+            },
+            "required": false,
+            "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field",
+            "name": "filterLinkCellSelected",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Filter selected records by record ids"
+            },
+            "required": false,
+            "description": "Filter selected records by record ids",
+            "name": "selectedRecordIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of sort objects that specifies how the records should be ordered."
+            },
+            "required": false,
+            "description": "An array of sort objects that specifies how the records should be ordered.",
+            "name": "orderBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group objects that specifies how the records should be grouped."
+            },
+            "required": false,
+            "description": "An array of group objects that specifies how the records should be grouped.",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group ids that specifies which groups are collapsed"
+            },
+            "required": false,
+            "description": "An array of group ids that specifies which groups are collapsed",
+            "name": "collapsedGroupIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "qry_xxxxxxxx",
+              "description": "When provided, other query parameters will be merged with the saved ones."
+            },
+            "required": false,
+            "description": "When provided, other query parameters will be merged with the saved ones.",
+            "name": "queryId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record index in the current query context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "index": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "index"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/record-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&recordId=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/aggregation/record-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&recordId=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/aggregation/record-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&recordId=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/aggregation/record-index?viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&recordId=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

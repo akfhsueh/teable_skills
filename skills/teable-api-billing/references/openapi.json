@@ -1,0 +1,2597 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/space/{spaceId}/billing/subscription/summary": {
+      "get": {
+        "description": "Retrieves a summary of subscription information for a space",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a summary of subscription information about a space.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "spaceId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "active",
+                        "canceled",
+                        "incomplete",
+                        "incomplete_expired",
+                        "trialing",
+                        "past_due",
+                        "unpaid",
+                        "paused",
+                        "seat_limit_exceeded"
+                      ]
+                    },
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "free",
+                        "pro",
+                        "business",
+                        "enterprise"
+                      ]
+                    },
+                    "appSumoTier": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            2
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            3
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            4
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "spaceId",
+                    "status",
+                    "level"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription/summary \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription/summary';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/subscription/summary',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/subscription/summary\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/subscription/summary": {
+      "get": {
+        "description": "Retrieves a summary of subscription information across all spaces",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a summary of subscription information for each space.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "spaceId": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "active",
+                          "canceled",
+                          "incomplete",
+                          "incomplete_expired",
+                          "trialing",
+                          "past_due",
+                          "unpaid",
+                          "paused",
+                          "seat_limit_exceeded"
+                        ]
+                      },
+                      "level": {
+                        "type": "string",
+                        "enum": [
+                          "free",
+                          "pro",
+                          "business",
+                          "enterprise"
+                        ]
+                      },
+                      "appSumoTier": {
+                        "anyOf": [
+                          {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              2
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              3
+                            ]
+                          },
+                          {
+                            "type": "number",
+                            "enum": [
+                              4
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "spaceId",
+                      "status",
+                      "level"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/subscription/summary \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/subscription/summary';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/subscription/summary',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/subscription/summary\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/base-products": {
+      "get": {
+        "description": "Get base products list",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns base products list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "base",
+                          "credit",
+                          "rowCount",
+                          "attachmentSize"
+                        ]
+                      },
+                      "catalog": {
+                        "type": "string",
+                        "enum": [
+                          "cloud",
+                          "self-hosted"
+                        ]
+                      },
+                      "level": {
+                        "type": "string",
+                        "enum": [
+                          "free",
+                          "pro",
+                          "business",
+                          "enterprise"
+                        ]
+                      },
+                      "trialPeriodInDays": {
+                        "type": "number"
+                      },
+                      "giftCredit": {
+                        "type": "number"
+                      },
+                      "creditSubscribeEnable": {
+                        "type": "boolean"
+                      },
+                      "limit": {
+                        "type": "object",
+                        "properties": {
+                          "maxRows": {
+                            "type": "number"
+                          },
+                          "maxSizeAttachments": {
+                            "type": "number"
+                          },
+                          "maxNumDatabaseConnections": {
+                            "type": "number"
+                          },
+                          "maxRevisionHistoryDays": {
+                            "type": "number"
+                          },
+                          "maxAutomationHistoryDays": {
+                            "type": "number"
+                          },
+                          "automationEnable": {
+                            "type": "boolean"
+                          },
+                          "auditLogEnable": {
+                            "type": "boolean"
+                          },
+                          "adminPanelEnable": {
+                            "type": "boolean"
+                          },
+                          "rowColoringEnable": {
+                            "type": "boolean"
+                          },
+                          "buttonFieldEnable": {
+                            "type": "boolean"
+                          },
+                          "fieldAIEnable": {
+                            "type": "boolean"
+                          },
+                          "userGroupEnable": {
+                            "type": "boolean"
+                          },
+                          "advancedExtensionsEnable": {
+                            "type": "boolean"
+                          },
+                          "advancedPermissionsEnable": {
+                            "type": "boolean"
+                          },
+                          "passwordRestrictedSharesEnable": {
+                            "type": "boolean"
+                          },
+                          "authenticationEnable": {
+                            "type": "boolean"
+                          },
+                          "domainVerificationEnable": {
+                            "type": "boolean"
+                          },
+                          "organizationEnable": {
+                            "type": "boolean"
+                          },
+                          "apiRateLimit": {
+                            "type": "number"
+                          },
+                          "chatAIEnable": {
+                            "type": "boolean"
+                          },
+                          "appEnable": {
+                            "type": "boolean"
+                          },
+                          "customDomainEnable": {
+                            "type": "boolean"
+                          },
+                          "maxNumAutomationSendEmail": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "maxRows",
+                          "maxSizeAttachments",
+                          "maxNumDatabaseConnections",
+                          "maxRevisionHistoryDays",
+                          "maxAutomationHistoryDays",
+                          "automationEnable",
+                          "auditLogEnable",
+                          "adminPanelEnable",
+                          "rowColoringEnable",
+                          "buttonFieldEnable",
+                          "fieldAIEnable",
+                          "userGroupEnable",
+                          "advancedExtensionsEnable",
+                          "advancedPermissionsEnable",
+                          "passwordRestrictedSharesEnable",
+                          "authenticationEnable",
+                          "domainVerificationEnable",
+                          "organizationEnable",
+                          "apiRateLimit",
+                          "chatAIEnable",
+                          "appEnable",
+                          "customDomainEnable",
+                          "maxNumAutomationSendEmail"
+                        ]
+                      },
+                      "prices": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "legacyIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "productId": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "interval": {
+                              "type": "string",
+                              "enum": [
+                                "month",
+                                "year"
+                              ]
+                            },
+                            "intervalCount": {
+                              "type": "number"
+                            },
+                            "unitAmount": {
+                              "type": "number"
+                            },
+                            "currency": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "legacyIds",
+                            "productId",
+                            "type",
+                            "interval",
+                            "intervalCount",
+                            "unitAmount",
+                            "currency"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "catalog",
+                      "level",
+                      "limit",
+                      "prices"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/base-products \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/base-products';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/base-products',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/base-products\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/add-on-products": {
+      "get": {
+        "description": "Get add-on products list",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns add-on products list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "base",
+                          "credit",
+                          "rowCount",
+                          "attachmentSize"
+                        ]
+                      },
+                      "catalog": {
+                        "type": "string",
+                        "enum": [
+                          "cloud",
+                          "self-hosted"
+                        ]
+                      },
+                      "unitAmount": {
+                        "type": "number"
+                      },
+                      "prices": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "legacyIds": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "productId": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "interval": {
+                              "type": "string",
+                              "enum": [
+                                "month",
+                                "year"
+                              ]
+                            },
+                            "intervalCount": {
+                              "type": "number"
+                            },
+                            "unitAmount": {
+                              "type": "number"
+                            },
+                            "currency": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "legacyIds",
+                            "productId",
+                            "type",
+                            "interval",
+                            "intervalCount",
+                            "unitAmount",
+                            "currency"
+                          ]
+                        }
+                      },
+                      "trialPeriodInDays": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "catalog",
+                      "unitAmount",
+                      "prices"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/add-on-products \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/add-on-products';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/add-on-products',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/add-on-products\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/subscription": {
+      "get": {
+        "description": "Get subscription detail by spaceId",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns subscription detail.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "base": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "base",
+                            "credit",
+                            "rowCount",
+                            "attachmentSize"
+                          ]
+                        },
+                        "catalog": {
+                          "type": "string",
+                          "enum": [
+                            "cloud",
+                            "self-hosted"
+                          ]
+                        },
+                        "level": {
+                          "type": "string",
+                          "enum": [
+                            "free",
+                            "pro",
+                            "business",
+                            "enterprise"
+                          ]
+                        },
+                        "limit": {
+                          "type": "object",
+                          "properties": {
+                            "maxRows": {
+                              "type": "number"
+                            },
+                            "maxSizeAttachments": {
+                              "type": "number"
+                            },
+                            "maxNumDatabaseConnections": {
+                              "type": "number"
+                            },
+                            "maxRevisionHistoryDays": {
+                              "type": "number"
+                            },
+                            "maxAutomationHistoryDays": {
+                              "type": "number"
+                            },
+                            "automationEnable": {
+                              "type": "boolean"
+                            },
+                            "auditLogEnable": {
+                              "type": "boolean"
+                            },
+                            "adminPanelEnable": {
+                              "type": "boolean"
+                            },
+                            "rowColoringEnable": {
+                              "type": "boolean"
+                            },
+                            "buttonFieldEnable": {
+                              "type": "boolean"
+                            },
+                            "fieldAIEnable": {
+                              "type": "boolean"
+                            },
+                            "userGroupEnable": {
+                              "type": "boolean"
+                            },
+                            "advancedExtensionsEnable": {
+                              "type": "boolean"
+                            },
+                            "advancedPermissionsEnable": {
+                              "type": "boolean"
+                            },
+                            "passwordRestrictedSharesEnable": {
+                              "type": "boolean"
+                            },
+                            "authenticationEnable": {
+                              "type": "boolean"
+                            },
+                            "domainVerificationEnable": {
+                              "type": "boolean"
+                            },
+                            "organizationEnable": {
+                              "type": "boolean"
+                            },
+                            "apiRateLimit": {
+                              "type": "number"
+                            },
+                            "chatAIEnable": {
+                              "type": "boolean"
+                            },
+                            "appEnable": {
+                              "type": "boolean"
+                            },
+                            "customDomainEnable": {
+                              "type": "boolean"
+                            },
+                            "maxNumAutomationSendEmail": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "maxRows",
+                            "maxSizeAttachments",
+                            "maxNumDatabaseConnections",
+                            "maxRevisionHistoryDays",
+                            "maxAutomationHistoryDays",
+                            "automationEnable",
+                            "auditLogEnable",
+                            "adminPanelEnable",
+                            "rowColoringEnable",
+                            "buttonFieldEnable",
+                            "fieldAIEnable",
+                            "userGroupEnable",
+                            "advancedExtensionsEnable",
+                            "advancedPermissionsEnable",
+                            "passwordRestrictedSharesEnable",
+                            "authenticationEnable",
+                            "domainVerificationEnable",
+                            "organizationEnable",
+                            "apiRateLimit",
+                            "chatAIEnable",
+                            "appEnable",
+                            "customDomainEnable",
+                            "maxNumAutomationSendEmail"
+                          ]
+                        },
+                        "creditSubscribeEnable": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "canceled",
+                            "incomplete",
+                            "incomplete_expired",
+                            "trialing",
+                            "past_due",
+                            "unpaid",
+                            "paused",
+                            "seat_limit_exceeded"
+                          ]
+                        },
+                        "quantity": {
+                          "type": "number"
+                        },
+                        "priceId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "unitAmount": {
+                          "type": "number"
+                        },
+                        "interval": {
+                          "type": "string",
+                          "enum": [
+                            "month",
+                            "year"
+                          ]
+                        },
+                        "currentPeriodStart": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "currentPeriodEnd": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "cancelAt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "isTrialUsed": {
+                          "type": "boolean"
+                        },
+                        "period": {
+                          "type": "string",
+                          "enum": [
+                            "month",
+                            "year",
+                            "lifetime"
+                          ]
+                        },
+                        "appSumoTier": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                2
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                3
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                4
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "catalog",
+                        "level",
+                        "limit",
+                        "status",
+                        "quantity",
+                        "priceId",
+                        "unitAmount",
+                        "interval",
+                        "currentPeriodStart",
+                        "currentPeriodEnd",
+                        "cancelAt"
+                      ]
+                    },
+                    "credit": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "base",
+                            "credit",
+                            "rowCount",
+                            "attachmentSize"
+                          ]
+                        },
+                        "catalog": {
+                          "type": "string",
+                          "enum": [
+                            "cloud",
+                            "self-hosted"
+                          ]
+                        },
+                        "unitAmount": {
+                          "type": "number"
+                        },
+                        "quantity": {
+                          "type": "number"
+                        },
+                        "interval": {
+                          "type": "string",
+                          "enum": [
+                            "month",
+                            "year"
+                          ]
+                        },
+                        "cancelAt": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "catalog",
+                        "unitAmount",
+                        "quantity",
+                        "interval",
+                        "cancelAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "base"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/subscription',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/subscription\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "Cancel subscription for a space",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base",
+                "credit",
+                "rowCount",
+                "attachmentSize"
+              ]
+            },
+            "required": true,
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "successUrl",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cancel successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription?type=SOME_STRING_VALUE&successUrl=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription?type=SOME_STRING_VALUE&successUrl=SOME_STRING_VALUE';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/subscription?type=SOME_STRING_VALUE&successUrl=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/space/%7BspaceId%7D/billing/subscription?type=SOME_STRING_VALUE&successUrl=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing": {
+      "get": {
+        "description": "Get space billing details",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns space billing details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "spaceId": {
+                      "type": "string"
+                    },
+                    "plan": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string",
+                          "enum": [
+                            "free",
+                            "pro",
+                            "business",
+                            "enterprise"
+                          ]
+                        },
+                        "interval": {
+                          "type": "string",
+                          "enum": [
+                            "month",
+                            "year"
+                          ]
+                        },
+                        "quantity": {
+                          "type": "number"
+                        },
+                        "unitAmount": {
+                          "type": "number"
+                        },
+                        "usage": {
+                          "type": "object",
+                          "properties": {
+                            "numRows": {
+                              "type": "number"
+                            },
+                            "attachmentSize": {
+                              "type": "number"
+                            },
+                            "numDatabaseConnections": {
+                              "type": "number"
+                            },
+                            "numCollaborators": {
+                              "type": "number"
+                            },
+                            "numAutomationSendEmail": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "numRows",
+                            "attachmentSize",
+                            "numDatabaseConnections",
+                            "numCollaborators",
+                            "numAutomationSendEmail"
+                          ]
+                        },
+                        "limit": {
+                          "type": "object",
+                          "properties": {
+                            "maxRows": {
+                              "type": "number"
+                            },
+                            "maxSizeAttachments": {
+                              "type": "number"
+                            },
+                            "maxNumDatabaseConnections": {
+                              "type": "number"
+                            },
+                            "maxRevisionHistoryDays": {
+                              "type": "number"
+                            },
+                            "maxAutomationHistoryDays": {
+                              "type": "number"
+                            },
+                            "automationEnable": {
+                              "type": "boolean"
+                            },
+                            "auditLogEnable": {
+                              "type": "boolean"
+                            },
+                            "adminPanelEnable": {
+                              "type": "boolean"
+                            },
+                            "rowColoringEnable": {
+                              "type": "boolean"
+                            },
+                            "buttonFieldEnable": {
+                              "type": "boolean"
+                            },
+                            "fieldAIEnable": {
+                              "type": "boolean"
+                            },
+                            "userGroupEnable": {
+                              "type": "boolean"
+                            },
+                            "advancedExtensionsEnable": {
+                              "type": "boolean"
+                            },
+                            "advancedPermissionsEnable": {
+                              "type": "boolean"
+                            },
+                            "passwordRestrictedSharesEnable": {
+                              "type": "boolean"
+                            },
+                            "authenticationEnable": {
+                              "type": "boolean"
+                            },
+                            "domainVerificationEnable": {
+                              "type": "boolean"
+                            },
+                            "organizationEnable": {
+                              "type": "boolean"
+                            },
+                            "apiRateLimit": {
+                              "type": "number"
+                            },
+                            "chatAIEnable": {
+                              "type": "boolean"
+                            },
+                            "appEnable": {
+                              "type": "boolean"
+                            },
+                            "customDomainEnable": {
+                              "type": "boolean"
+                            },
+                            "maxNumAutomationSendEmail": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "maxRows",
+                            "maxSizeAttachments",
+                            "maxNumDatabaseConnections",
+                            "maxRevisionHistoryDays",
+                            "maxAutomationHistoryDays",
+                            "automationEnable",
+                            "auditLogEnable",
+                            "adminPanelEnable",
+                            "rowColoringEnable",
+                            "buttonFieldEnable",
+                            "fieldAIEnable",
+                            "userGroupEnable",
+                            "advancedExtensionsEnable",
+                            "advancedPermissionsEnable",
+                            "passwordRestrictedSharesEnable",
+                            "authenticationEnable",
+                            "domainVerificationEnable",
+                            "organizationEnable",
+                            "apiRateLimit",
+                            "chatAIEnable",
+                            "appEnable",
+                            "customDomainEnable",
+                            "maxNumAutomationSendEmail"
+                          ]
+                        },
+                        "currentPeriodStart": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "currentPeriodEnd": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "cancelAt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "cycleStart": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "cycleEnd": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "canceled",
+                            "incomplete",
+                            "incomplete_expired",
+                            "trialing",
+                            "past_due",
+                            "unpaid",
+                            "paused",
+                            "seat_limit_exceeded"
+                          ]
+                        },
+                        "period": {
+                          "type": "string",
+                          "enum": [
+                            "month",
+                            "year",
+                            "lifetime"
+                          ]
+                        },
+                        "appSumoTier": {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                2
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                3
+                              ]
+                            },
+                            {
+                              "type": "number",
+                              "enum": [
+                                4
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "level",
+                        "interval",
+                        "quantity",
+                        "unitAmount",
+                        "usage",
+                        "limit",
+                        "currentPeriodStart",
+                        "currentPeriodEnd",
+                        "cancelAt",
+                        "status"
+                      ]
+                    },
+                    "credit": {
+                      "type": "object",
+                      "properties": {
+                        "amount": {
+                          "type": "number"
+                        },
+                        "usedAmount": {
+                          "type": "number"
+                        },
+                        "rewardAmount": {
+                          "type": "number",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "amount",
+                        "usedAmount"
+                      ]
+                    },
+                    "detail": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "email"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "spaceId",
+                    "plan",
+                    "credit",
+                    "detail"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/invoice/base-list": {
+      "get": {
+        "description": "Get paginated invoice list by spaceId",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "required": false,
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns paginated invoice list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "number": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "amount": {
+                            "type": "number"
+                          },
+                          "currency": {
+                            "type": "string"
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "pdfUrl": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "number",
+                          "amount",
+                          "currency",
+                          "createdTime",
+                          "status"
+                        ]
+                      }
+                    },
+                    "hasMore": {
+                      "type": "boolean"
+                    },
+                    "pageSize": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "hasMore",
+                    "pageSize"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/invoice/base-list?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/invoice/base-list?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/invoice/base-list?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/invoice/base-list?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/subscription/license/{licenseId}": {
+      "get": {
+        "description": "Get license details for the self-hosted related subscription",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "licenseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns license details for the self-hosted related subscription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "instanceId": {
+                      "type": "string"
+                    },
+                    "currentPeriodStart": {
+                      "type": "string"
+                    },
+                    "currentPeriodEnd": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "number"
+                    },
+                    "unitAmount": {
+                      "type": "number"
+                    },
+                    "licenseKey": {
+                      "type": "string"
+                    },
+                    "interval": {
+                      "type": "string",
+                      "enum": [
+                        "month",
+                        "year"
+                      ]
+                    },
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "free",
+                        "pro",
+                        "business",
+                        "enterprise"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "instanceId",
+                    "currentPeriodStart",
+                    "currentPeriodEnd",
+                    "quantity",
+                    "unitAmount",
+                    "licenseKey",
+                    "interval",
+                    "level"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/subscription/license/%7BlicenseId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/subscription/license/%7BlicenseId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/subscription/license/%7BlicenseId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/subscription/license/%7BlicenseId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/subscription/license": {
+      "get": {
+        "description": "Get license list",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns license list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "instanceId": {
+                        "type": "string"
+                      },
+                      "currentPeriodStart": {
+                        "type": "string"
+                      },
+                      "currentPeriodEnd": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "number"
+                      },
+                      "unitAmount": {
+                        "type": "number"
+                      },
+                      "licenseKey": {
+                        "type": "string"
+                      },
+                      "interval": {
+                        "type": "string",
+                        "enum": [
+                          "month",
+                          "year"
+                        ]
+                      },
+                      "level": {
+                        "type": "string",
+                        "enum": [
+                          "free",
+                          "pro",
+                          "business",
+                          "enterprise"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "instanceId",
+                      "currentPeriodStart",
+                      "currentPeriodEnd",
+                      "quantity",
+                      "unitAmount",
+                      "licenseKey",
+                      "interval",
+                      "level"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/subscription/license \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/subscription/license';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/subscription/license',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/subscription/license\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/subscription/license/manage-billing": {
+      "post": {
+        "description": "Manage billing",
+        "tags": [
+          "billing",
+          "license"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "returnUrl": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "returnUrl"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns manage billing url",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/billing/subscription/license/manage-billing \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"returnUrl\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/subscription/license/manage-billing';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"returnUrl\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/subscription/license/manage-billing',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({returnUrl: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"returnUrl\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/billing/subscription/license/manage-billing\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/subscription/license/manage-billing/availability": {
+      "get": {
+        "description": "Get manage billing portal availability",
+        "tags": [
+          "billing",
+          "license"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns whether user can access manage billing portal",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "canAccessPortal": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "canAccessPortal"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/subscription/license/manage-billing/availability \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/subscription/license/manage-billing/availability';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/subscription/license/manage-billing/availability',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/subscription/license/manage-billing/availability\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/subscription/checkout": {
+      "post": {
+        "description": "Get checkout session url for a space",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "priceId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "successUrl": {
+                    "type": "string"
+                  },
+                  "cancelUrl": {
+                    "type": "string"
+                  },
+                  "isTrial": {
+                    "type": "boolean"
+                  },
+                  "clientReferenceId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "priceId",
+                  "quantity"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns checkout session url about a space.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription/checkout \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"priceId\":\"string\",\"quantity\":0,\"successUrl\":\"string\",\"cancelUrl\":\"string\",\"isTrial\":true,\"clientReferenceId\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription/checkout';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"priceId\":\"string\",\"quantity\":0,\"successUrl\":\"string\",\"cancelUrl\":\"string\",\"isTrial\":true,\"clientReferenceId\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/subscription/checkout',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  priceId: 'string',\n  quantity: 0,\n  successUrl: 'string',\n  cancelUrl: 'string',\n  isTrial: true,\n  clientReferenceId: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"priceId\\\":\\\"string\\\",\\\"quantity\\\":0,\\\"successUrl\\\":\\\"string\\\",\\\"cancelUrl\\\":\\\"string\\\",\\\"isTrial\\\":true,\\\"clientReferenceId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/space/%7BspaceId%7D/billing/subscription/checkout\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/subscription/license/checkout": {
+      "post": {
+        "description": "Get checkout session url for a self-hosted license",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instanceId": {
+                    "type": "string",
+                    "minLength": 36,
+                    "maxLength": 36
+                  },
+                  "priceId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "successUrl": {
+                    "type": "string"
+                  },
+                  "cancelUrl": {
+                    "type": "string"
+                  },
+                  "clientReferenceId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "instanceId",
+                  "priceId",
+                  "quantity"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns checkout session url about a self-hosted license.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/billing/subscription/license/checkout \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"instanceId\":\"stringstringstringstringstringstring\",\"priceId\":\"string\",\"quantity\":0,\"successUrl\":\"string\",\"cancelUrl\":\"string\",\"clientReferenceId\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/subscription/license/checkout';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"instanceId\":\"stringstringstringstringstringstring\",\"priceId\":\"string\",\"quantity\":0,\"successUrl\":\"string\",\"cancelUrl\":\"string\",\"clientReferenceId\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/subscription/license/checkout',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  instanceId: 'stringstringstringstringstringstring',\n  priceId: 'string',\n  quantity: 0,\n  successUrl: 'string',\n  cancelUrl: 'string',\n  clientReferenceId: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"instanceId\\\":\\\"stringstringstringstringstringstring\\\",\\\"priceId\\\":\\\"string\\\",\\\"quantity\\\":0,\\\"successUrl\\\":\\\"string\\\",\\\"cancelUrl\\\":\\\"string\\\",\\\"clientReferenceId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/billing/subscription/license/checkout\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/subscription/plan": {
+      "get": {
+        "description": "Retrieves the plan subscription",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the plan subscription.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "quantity": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "quantity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription/plan \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/subscription/plan';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/subscription/plan',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/subscription/plan\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/billing/all-products": {
+      "get": {
+        "description": "Get all products collection",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all products collection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseProducts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "base",
+                              "credit",
+                              "rowCount",
+                              "attachmentSize"
+                            ]
+                          },
+                          "catalog": {
+                            "type": "string",
+                            "enum": [
+                              "cloud",
+                              "self-hosted"
+                            ]
+                          },
+                          "level": {
+                            "type": "string",
+                            "enum": [
+                              "free",
+                              "pro",
+                              "business",
+                              "enterprise"
+                            ]
+                          },
+                          "trialPeriodInDays": {
+                            "type": "number"
+                          },
+                          "giftCredit": {
+                            "type": "number"
+                          },
+                          "creditSubscribeEnable": {
+                            "type": "boolean"
+                          },
+                          "limit": {
+                            "type": "object",
+                            "properties": {
+                              "maxRows": {
+                                "type": "number"
+                              },
+                              "maxSizeAttachments": {
+                                "type": "number"
+                              },
+                              "maxNumDatabaseConnections": {
+                                "type": "number"
+                              },
+                              "maxRevisionHistoryDays": {
+                                "type": "number"
+                              },
+                              "maxAutomationHistoryDays": {
+                                "type": "number"
+                              },
+                              "automationEnable": {
+                                "type": "boolean"
+                              },
+                              "auditLogEnable": {
+                                "type": "boolean"
+                              },
+                              "adminPanelEnable": {
+                                "type": "boolean"
+                              },
+                              "rowColoringEnable": {
+                                "type": "boolean"
+                              },
+                              "buttonFieldEnable": {
+                                "type": "boolean"
+                              },
+                              "fieldAIEnable": {
+                                "type": "boolean"
+                              },
+                              "userGroupEnable": {
+                                "type": "boolean"
+                              },
+                              "advancedExtensionsEnable": {
+                                "type": "boolean"
+                              },
+                              "advancedPermissionsEnable": {
+                                "type": "boolean"
+                              },
+                              "passwordRestrictedSharesEnable": {
+                                "type": "boolean"
+                              },
+                              "authenticationEnable": {
+                                "type": "boolean"
+                              },
+                              "domainVerificationEnable": {
+                                "type": "boolean"
+                              },
+                              "organizationEnable": {
+                                "type": "boolean"
+                              },
+                              "apiRateLimit": {
+                                "type": "number"
+                              },
+                              "chatAIEnable": {
+                                "type": "boolean"
+                              },
+                              "appEnable": {
+                                "type": "boolean"
+                              },
+                              "customDomainEnable": {
+                                "type": "boolean"
+                              },
+                              "maxNumAutomationSendEmail": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "maxRows",
+                              "maxSizeAttachments",
+                              "maxNumDatabaseConnections",
+                              "maxRevisionHistoryDays",
+                              "maxAutomationHistoryDays",
+                              "automationEnable",
+                              "auditLogEnable",
+                              "adminPanelEnable",
+                              "rowColoringEnable",
+                              "buttonFieldEnable",
+                              "fieldAIEnable",
+                              "userGroupEnable",
+                              "advancedExtensionsEnable",
+                              "advancedPermissionsEnable",
+                              "passwordRestrictedSharesEnable",
+                              "authenticationEnable",
+                              "domainVerificationEnable",
+                              "organizationEnable",
+                              "apiRateLimit",
+                              "chatAIEnable",
+                              "appEnable",
+                              "customDomainEnable",
+                              "maxNumAutomationSendEmail"
+                            ]
+                          },
+                          "prices": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "legacyIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "productId": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "interval": {
+                                  "type": "string",
+                                  "enum": [
+                                    "month",
+                                    "year"
+                                  ]
+                                },
+                                "intervalCount": {
+                                  "type": "number"
+                                },
+                                "unitAmount": {
+                                  "type": "number"
+                                },
+                                "currency": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "legacyIds",
+                                "productId",
+                                "type",
+                                "interval",
+                                "intervalCount",
+                                "unitAmount",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "catalog",
+                          "level",
+                          "limit",
+                          "prices"
+                        ]
+                      }
+                    },
+                    "addOnProducts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "base",
+                              "credit",
+                              "rowCount",
+                              "attachmentSize"
+                            ]
+                          },
+                          "catalog": {
+                            "type": "string",
+                            "enum": [
+                              "cloud",
+                              "self-hosted"
+                            ]
+                          },
+                          "unitAmount": {
+                            "type": "number"
+                          },
+                          "prices": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "legacyIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "productId": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "interval": {
+                                  "type": "string",
+                                  "enum": [
+                                    "month",
+                                    "year"
+                                  ]
+                                },
+                                "intervalCount": {
+                                  "type": "number"
+                                },
+                                "unitAmount": {
+                                  "type": "number"
+                                },
+                                "currency": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "legacyIds",
+                                "productId",
+                                "type",
+                                "interval",
+                                "intervalCount",
+                                "unitAmount",
+                                "currency"
+                              ]
+                            }
+                          },
+                          "trialPeriodInDays": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "catalog",
+                          "unitAmount",
+                          "prices"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "baseProducts",
+                    "addOnProducts"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/billing/all-products \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/billing/all-products';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/billing/all-products',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/billing/all-products\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/credit-summary": {
+      "get": {
+        "description": "Get space credit summary",
+        "tags": [
+          "billing",
+          "credit"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns space credit summary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number"
+                    },
+                    "usedAmount": {
+                      "type": "number"
+                    },
+                    "leftAmount": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "amount",
+                    "usedAmount",
+                    "leftAmount"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-summary \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-summary';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/credit-summary',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/credit-summary\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/credit-detail": {
+      "get": {
+        "description": "Get space credit usage detail by month",
+        "tags": [
+          "billing",
+          "credit"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}$"
+            },
+            "required": true,
+            "name": "month",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns space credit usage detail.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "automation_action": {
+                        "type": "number"
+                      },
+                      "automation_ai_action": {
+                        "type": "number"
+                      },
+                      "ai_generation": {
+                        "type": "number"
+                      },
+                      "field_ai_generation": {
+                        "type": "number"
+                      },
+                      "ai_chat": {
+                        "type": "number"
+                      },
+                      "app_generation": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "date",
+                      "automation_action",
+                      "automation_ai_action",
+                      "ai_generation",
+                      "field_ai_generation",
+                      "ai_chat",
+                      "app_generation"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/manage-portal": {
+      "get": {
+        "description": "Get Stripe customer portal URL for managing billing details",
+        "tags": [
+          "billing"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns Stripe customer portal URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/manage-portal \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/manage-portal';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/manage-portal',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/manage-portal\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

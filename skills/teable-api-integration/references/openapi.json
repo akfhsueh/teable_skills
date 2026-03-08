@@ -1,0 +1,2538 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/space/{spaceId}/integration": {
+      "get": {
+        "description": "Get integration list by query",
+        "tags": [
+          "space",
+          "integration"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list of integration.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "spaceId": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "AI"
+                        ]
+                      },
+                      "enable": {
+                        "type": "boolean"
+                      },
+                      "config": {
+                        "type": "object",
+                        "properties": {
+                          "llmProviders": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "openai",
+                                    "anthropic",
+                                    "google",
+                                    "azure",
+                                    "cohere",
+                                    "mistral",
+                                    "deepseek",
+                                    "qwen",
+                                    "zhipu",
+                                    "lingyiwanwu",
+                                    "xai",
+                                    "togetherai",
+                                    "ollama",
+                                    "amazonBedrock",
+                                    "openRouter",
+                                    "openaiCompatible",
+                                    "aiGateway"
+                                  ]
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "apiKey": {
+                                  "type": "string"
+                                },
+                                "baseUrl": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "models": {
+                                  "type": "string",
+                                  "default": ""
+                                },
+                                "isInstance": {
+                                  "type": "boolean"
+                                },
+                                "modelConfigs": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "object",
+                                    "properties": {
+                                      "label": {
+                                        "type": "string"
+                                      },
+                                      "pricing": {
+                                        "type": "object",
+                                        "properties": {
+                                          "input": {
+                                            "type": "string"
+                                          },
+                                          "output": {
+                                            "type": "string"
+                                          },
+                                          "inputCacheRead": {
+                                            "type": "string"
+                                          },
+                                          "inputCacheWrite": {
+                                            "type": "string"
+                                          },
+                                          "reasoning": {
+                                            "type": "string"
+                                          },
+                                          "image": {
+                                            "type": "string"
+                                          },
+                                          "webSearch": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      },
+                                      "inputRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "outputRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "cacheReadRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "cacheWriteRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "reasoningRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "imageRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "webSearchRate": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "isImageModel": {
+                                        "type": "boolean"
+                                      },
+                                      "ability": {
+                                        "type": "object",
+                                        "properties": {
+                                          "image": {
+                                            "anyOf": [
+                                              {
+                                                "type": "boolean"
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "url": {
+                                                    "type": "boolean"
+                                                  },
+                                                  "base64": {
+                                                    "type": "boolean"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "pdf": {
+                                            "anyOf": [
+                                              {
+                                                "type": "boolean"
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "url": {
+                                                    "type": "boolean"
+                                                  },
+                                                  "base64": {
+                                                    "type": "boolean"
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "webSearch": {
+                                            "type": "boolean"
+                                          },
+                                          "toolCall": {
+                                            "type": "boolean"
+                                          },
+                                          "reasoning": {
+                                            "type": "boolean"
+                                          },
+                                          "imageGeneration": {
+                                            "type": "boolean"
+                                          }
+                                        }
+                                      },
+                                      "imageAbility": {
+                                        "type": "object",
+                                        "properties": {
+                                          "generation": {
+                                            "type": "boolean"
+                                          },
+                                          "imageToImage": {
+                                            "type": "boolean"
+                                          }
+                                        }
+                                      },
+                                      "testedAt": {
+                                        "type": "number"
+                                      },
+                                      "ownedBy": {
+                                        "type": "string",
+                                        "enum": [
+                                          "alibaba",
+                                          "amazon",
+                                          "anthropic",
+                                          "arcee-ai",
+                                          "bfl",
+                                          "bytedance",
+                                          "cohere",
+                                          "deepseek",
+                                          "google",
+                                          "inception",
+                                          "kwaipilot",
+                                          "meituan",
+                                          "meta",
+                                          "minimax",
+                                          "mistral",
+                                          "moonshotai",
+                                          "morph",
+                                          "nvidia",
+                                          "openai",
+                                          "perplexity",
+                                          "prime-intellect",
+                                          "stealth",
+                                          "vercel",
+                                          "voyage",
+                                          "xai",
+                                          "xiaomi",
+                                          "zai"
+                                        ]
+                                      },
+                                      "modelType": {
+                                        "type": "string",
+                                        "enum": [
+                                          "language",
+                                          "embedding",
+                                          "image"
+                                        ]
+                                      },
+                                      "tags": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "reasoning",
+                                            "tool-use",
+                                            "vision",
+                                            "file-input",
+                                            "image-generation",
+                                            "implicit-caching"
+                                          ]
+                                        }
+                                      },
+                                      "contextWindow": {
+                                        "type": "number"
+                                      },
+                                      "maxTokens": {
+                                        "type": "number"
+                                      },
+                                      "description": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "name"
+                              ]
+                            },
+                            "default": []
+                          },
+                          "embeddingModel": {
+                            "type": "string"
+                          },
+                          "translationModel": {
+                            "type": "string"
+                          },
+                          "chatModel": {
+                            "type": "object",
+                            "properties": {
+                              "lg": {
+                                "type": "string"
+                              },
+                              "md": {
+                                "type": "string"
+                              },
+                              "sm": {
+                                "type": "string"
+                              },
+                              "ability": {
+                                "type": "object",
+                                "properties": {
+                                  "image": {
+                                    "anyOf": [
+                                      {
+                                        "type": "boolean"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "url": {
+                                            "type": "boolean"
+                                          },
+                                          "base64": {
+                                            "type": "boolean"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "pdf": {
+                                    "anyOf": [
+                                      {
+                                        "type": "boolean"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "url": {
+                                            "type": "boolean"
+                                          },
+                                          "base64": {
+                                            "type": "boolean"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "webSearch": {
+                                    "type": "boolean"
+                                  },
+                                  "toolCall": {
+                                    "type": "boolean"
+                                  },
+                                  "reasoning": {
+                                    "type": "boolean"
+                                  },
+                                  "imageGeneration": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "gatewayModels": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "enabled": {
+                                  "type": "boolean",
+                                  "default": true
+                                },
+                                "capabilities": {
+                                  "type": "object",
+                                  "properties": {
+                                    "image": {
+                                      "anyOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "url": {
+                                              "type": "boolean"
+                                            },
+                                            "base64": {
+                                              "type": "boolean"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "pdf": {
+                                      "anyOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "object",
+                                          "properties": {
+                                            "url": {
+                                              "type": "boolean"
+                                            },
+                                            "base64": {
+                                              "type": "boolean"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "webSearch": {
+                                      "type": "boolean"
+                                    },
+                                    "toolCall": {
+                                      "type": "boolean"
+                                    },
+                                    "reasoning": {
+                                      "type": "boolean"
+                                    },
+                                    "imageGeneration": {
+                                      "type": "boolean"
+                                    }
+                                  }
+                                },
+                                "pricing": {
+                                  "type": "object",
+                                  "properties": {
+                                    "input": {
+                                      "type": "string"
+                                    },
+                                    "output": {
+                                      "type": "string"
+                                    },
+                                    "inputCacheRead": {
+                                      "type": "string"
+                                    },
+                                    "inputCacheWrite": {
+                                      "type": "string"
+                                    },
+                                    "reasoning": {
+                                      "type": "string"
+                                    },
+                                    "image": {
+                                      "type": "string"
+                                    },
+                                    "webSearch": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "rates": {
+                                  "type": "object",
+                                  "properties": {
+                                    "inputRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    },
+                                    "outputRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    },
+                                    "cacheReadRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    },
+                                    "cacheWriteRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    },
+                                    "reasoningRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    },
+                                    "imageRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    },
+                                    "webSearchRate": {
+                                      "type": "number",
+                                      "minimum": 0
+                                    }
+                                  }
+                                },
+                                "isImageModel": {
+                                  "type": "boolean"
+                                },
+                                "defaultFor": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "chatLg",
+                                      "chatMd",
+                                      "chatSm",
+                                      "aiFieldText",
+                                      "aiFieldImage"
+                                    ]
+                                  }
+                                },
+                                "testedAt": {
+                                  "type": "number"
+                                },
+                                "ownedBy": {
+                                  "type": "string",
+                                  "enum": [
+                                    "alibaba",
+                                    "amazon",
+                                    "anthropic",
+                                    "arcee-ai",
+                                    "bfl",
+                                    "bytedance",
+                                    "cohere",
+                                    "deepseek",
+                                    "google",
+                                    "inception",
+                                    "kwaipilot",
+                                    "meituan",
+                                    "meta",
+                                    "minimax",
+                                    "mistral",
+                                    "moonshotai",
+                                    "morph",
+                                    "nvidia",
+                                    "openai",
+                                    "perplexity",
+                                    "prime-intellect",
+                                    "stealth",
+                                    "vercel",
+                                    "voyage",
+                                    "xai",
+                                    "xiaomi",
+                                    "zai"
+                                  ]
+                                },
+                                "modelType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "language",
+                                    "embedding",
+                                    "image"
+                                  ]
+                                },
+                                "tags": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "reasoning",
+                                      "tool-use",
+                                      "vision",
+                                      "file-input",
+                                      "image-generation",
+                                      "implicit-caching"
+                                    ]
+                                  }
+                                },
+                                "contextWindow": {
+                                  "type": "number"
+                                },
+                                "maxTokens": {
+                                  "type": "number"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label"
+                              ]
+                            }
+                          },
+                          "capabilities": {
+                            "type": "object",
+                            "properties": {
+                              "disableActions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "aiGatewayApiKey": {
+                            "type": "string"
+                          },
+                          "aiGatewayBaseUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "attachmentTest": {
+                            "type": "object",
+                            "properties": {
+                              "urlMode": {
+                                "type": "object",
+                                "properties": {
+                                  "success": {
+                                    "type": "boolean"
+                                  },
+                                  "errorMessage": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "success"
+                                ]
+                              },
+                              "base64Mode": {
+                                "type": "object",
+                                "properties": {
+                                  "success": {
+                                    "type": "boolean"
+                                  },
+                                  "errorMessage": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "success"
+                                ]
+                              },
+                              "testedAt": {
+                                "type": "string"
+                              },
+                              "testedOrigin": {
+                                "type": "string"
+                              },
+                              "recommendedMode": {
+                                "type": "string",
+                                "enum": [
+                                  "url",
+                                  "base64"
+                                ]
+                              }
+                            }
+                          },
+                          "attachmentTransferMode": {
+                            "type": "string",
+                            "enum": [
+                              "url",
+                              "base64"
+                            ],
+                            "default": "url"
+                          },
+                          "aiGatewayApiKeys": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "vertexByokCredential": {
+                            "type": "object",
+                            "properties": {
+                              "project": {
+                                "type": "string"
+                              },
+                              "location": {
+                                "type": "string"
+                              },
+                              "googleCredentials": {
+                                "type": "object",
+                                "properties": {
+                                  "privateKey": {
+                                    "type": "string"
+                                  },
+                                  "clientEmail": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "privateKey",
+                                  "clientEmail"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "project",
+                              "location",
+                              "googleCredentials"
+                            ]
+                          },
+                          "concurrencyGroups": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "taskTypes": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "text",
+                                      "image"
+                                    ]
+                                  },
+                                  "default": []
+                                },
+                                "keys": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "apiKey": {
+                                        "type": "string"
+                                      },
+                                      "status": {
+                                        "type": "string",
+                                        "enum": [
+                                          "verified",
+                                          "untested",
+                                          "error"
+                                        ],
+                                        "default": "untested"
+                                      }
+                                    },
+                                    "required": [
+                                      "apiKey"
+                                    ]
+                                  },
+                                  "default": []
+                                },
+                                "perKey": {
+                                  "type": "number",
+                                  "minimum": 1,
+                                  "maximum": 100,
+                                  "default": 5
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name"
+                              ]
+                            }
+                          },
+                          "concurrencyPerKey": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 100
+                          },
+                          "appConfig": {
+                            "type": "object",
+                            "properties": {
+                              "apiKey": {
+                                "type": "string"
+                              },
+                              "vercelToken": {
+                                "type": "string"
+                              },
+                              "customDomain": {
+                                "type": "string"
+                              },
+                              "creditCount": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "v0BaseUrl": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "vercelBaseUrl": {
+                                "type": "string",
+                                "format": "uri"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "createdTime": {
+                        "type": "string"
+                      },
+                      "lastModifiedTime": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "spaceId",
+                      "type",
+                      "config",
+                      "createdTime"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/integration',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/integration\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "post": {
+        "description": "Create a integration to a space",
+        "tags": [
+          "space",
+          "integration"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "AI"
+                    ]
+                  },
+                  "enable": {
+                    "type": "boolean"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "llmProviders": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "openai",
+                                "anthropic",
+                                "google",
+                                "azure",
+                                "cohere",
+                                "mistral",
+                                "deepseek",
+                                "qwen",
+                                "zhipu",
+                                "lingyiwanwu",
+                                "xai",
+                                "togetherai",
+                                "ollama",
+                                "amazonBedrock",
+                                "openRouter",
+                                "openaiCompatible",
+                                "aiGateway"
+                              ]
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "apiKey": {
+                              "type": "string"
+                            },
+                            "baseUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "models": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "isInstance": {
+                              "type": "boolean"
+                            },
+                            "modelConfigs": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "pricing": {
+                                    "type": "object",
+                                    "properties": {
+                                      "input": {
+                                        "type": "string"
+                                      },
+                                      "output": {
+                                        "type": "string"
+                                      },
+                                      "inputCacheRead": {
+                                        "type": "string"
+                                      },
+                                      "inputCacheWrite": {
+                                        "type": "string"
+                                      },
+                                      "reasoning": {
+                                        "type": "string"
+                                      },
+                                      "image": {
+                                        "type": "string"
+                                      },
+                                      "webSearch": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "inputRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "outputRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "cacheReadRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "cacheWriteRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "reasoningRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "imageRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "webSearchRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "isImageModel": {
+                                    "type": "boolean"
+                                  },
+                                  "ability": {
+                                    "type": "object",
+                                    "properties": {
+                                      "image": {
+                                        "anyOf": [
+                                          {
+                                            "type": "boolean"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "url": {
+                                                "type": "boolean"
+                                              },
+                                              "base64": {
+                                                "type": "boolean"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "pdf": {
+                                        "anyOf": [
+                                          {
+                                            "type": "boolean"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "url": {
+                                                "type": "boolean"
+                                              },
+                                              "base64": {
+                                                "type": "boolean"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "webSearch": {
+                                        "type": "boolean"
+                                      },
+                                      "toolCall": {
+                                        "type": "boolean"
+                                      },
+                                      "reasoning": {
+                                        "type": "boolean"
+                                      },
+                                      "imageGeneration": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "imageAbility": {
+                                    "type": "object",
+                                    "properties": {
+                                      "generation": {
+                                        "type": "boolean"
+                                      },
+                                      "imageToImage": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "testedAt": {
+                                    "type": "number"
+                                  },
+                                  "ownedBy": {
+                                    "type": "string",
+                                    "enum": [
+                                      "alibaba",
+                                      "amazon",
+                                      "anthropic",
+                                      "arcee-ai",
+                                      "bfl",
+                                      "bytedance",
+                                      "cohere",
+                                      "deepseek",
+                                      "google",
+                                      "inception",
+                                      "kwaipilot",
+                                      "meituan",
+                                      "meta",
+                                      "minimax",
+                                      "mistral",
+                                      "moonshotai",
+                                      "morph",
+                                      "nvidia",
+                                      "openai",
+                                      "perplexity",
+                                      "prime-intellect",
+                                      "stealth",
+                                      "vercel",
+                                      "voyage",
+                                      "xai",
+                                      "xiaomi",
+                                      "zai"
+                                    ]
+                                  },
+                                  "modelType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "language",
+                                      "embedding",
+                                      "image"
+                                    ]
+                                  },
+                                  "tags": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "reasoning",
+                                        "tool-use",
+                                        "vision",
+                                        "file-input",
+                                        "image-generation",
+                                        "implicit-caching"
+                                      ]
+                                    }
+                                  },
+                                  "contextWindow": {
+                                    "type": "number"
+                                  },
+                                  "maxTokens": {
+                                    "type": "number"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "name"
+                          ]
+                        },
+                        "default": []
+                      },
+                      "embeddingModel": {
+                        "type": "string"
+                      },
+                      "translationModel": {
+                        "type": "string"
+                      },
+                      "chatModel": {
+                        "type": "object",
+                        "properties": {
+                          "lg": {
+                            "type": "string"
+                          },
+                          "md": {
+                            "type": "string"
+                          },
+                          "sm": {
+                            "type": "string"
+                          },
+                          "ability": {
+                            "type": "object",
+                            "properties": {
+                              "image": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "pdf": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "webSearch": {
+                                "type": "boolean"
+                              },
+                              "toolCall": {
+                                "type": "boolean"
+                              },
+                              "reasoning": {
+                                "type": "boolean"
+                              },
+                              "imageGeneration": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "gatewayModels": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "enabled": {
+                              "type": "boolean",
+                              "default": true
+                            },
+                            "capabilities": {
+                              "type": "object",
+                              "properties": {
+                                "image": {
+                                  "anyOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "url": {
+                                          "type": "boolean"
+                                        },
+                                        "base64": {
+                                          "type": "boolean"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                "pdf": {
+                                  "anyOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "url": {
+                                          "type": "boolean"
+                                        },
+                                        "base64": {
+                                          "type": "boolean"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                "webSearch": {
+                                  "type": "boolean"
+                                },
+                                "toolCall": {
+                                  "type": "boolean"
+                                },
+                                "reasoning": {
+                                  "type": "boolean"
+                                },
+                                "imageGeneration": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "pricing": {
+                              "type": "object",
+                              "properties": {
+                                "input": {
+                                  "type": "string"
+                                },
+                                "output": {
+                                  "type": "string"
+                                },
+                                "inputCacheRead": {
+                                  "type": "string"
+                                },
+                                "inputCacheWrite": {
+                                  "type": "string"
+                                },
+                                "reasoning": {
+                                  "type": "string"
+                                },
+                                "image": {
+                                  "type": "string"
+                                },
+                                "webSearch": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "rates": {
+                              "type": "object",
+                              "properties": {
+                                "inputRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "outputRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "cacheReadRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "cacheWriteRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "reasoningRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "imageRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "webSearchRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                }
+                              }
+                            },
+                            "isImageModel": {
+                              "type": "boolean"
+                            },
+                            "defaultFor": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "chatLg",
+                                  "chatMd",
+                                  "chatSm",
+                                  "aiFieldText",
+                                  "aiFieldImage"
+                                ]
+                              }
+                            },
+                            "testedAt": {
+                              "type": "number"
+                            },
+                            "ownedBy": {
+                              "type": "string",
+                              "enum": [
+                                "alibaba",
+                                "amazon",
+                                "anthropic",
+                                "arcee-ai",
+                                "bfl",
+                                "bytedance",
+                                "cohere",
+                                "deepseek",
+                                "google",
+                                "inception",
+                                "kwaipilot",
+                                "meituan",
+                                "meta",
+                                "minimax",
+                                "mistral",
+                                "moonshotai",
+                                "morph",
+                                "nvidia",
+                                "openai",
+                                "perplexity",
+                                "prime-intellect",
+                                "stealth",
+                                "vercel",
+                                "voyage",
+                                "xai",
+                                "xiaomi",
+                                "zai"
+                              ]
+                            },
+                            "modelType": {
+                              "type": "string",
+                              "enum": [
+                                "language",
+                                "embedding",
+                                "image"
+                              ]
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "reasoning",
+                                  "tool-use",
+                                  "vision",
+                                  "file-input",
+                                  "image-generation",
+                                  "implicit-caching"
+                                ]
+                              }
+                            },
+                            "contextWindow": {
+                              "type": "number"
+                            },
+                            "maxTokens": {
+                              "type": "number"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "label"
+                          ]
+                        }
+                      },
+                      "capabilities": {
+                        "type": "object",
+                        "properties": {
+                          "disableActions": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "aiGatewayApiKey": {
+                        "type": "string"
+                      },
+                      "aiGatewayBaseUrl": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "attachmentTest": {
+                        "type": "object",
+                        "properties": {
+                          "urlMode": {
+                            "type": "object",
+                            "properties": {
+                              "success": {
+                                "type": "boolean"
+                              },
+                              "errorMessage": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "success"
+                            ]
+                          },
+                          "base64Mode": {
+                            "type": "object",
+                            "properties": {
+                              "success": {
+                                "type": "boolean"
+                              },
+                              "errorMessage": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "success"
+                            ]
+                          },
+                          "testedAt": {
+                            "type": "string"
+                          },
+                          "testedOrigin": {
+                            "type": "string"
+                          },
+                          "recommendedMode": {
+                            "type": "string",
+                            "enum": [
+                              "url",
+                              "base64"
+                            ]
+                          }
+                        }
+                      },
+                      "attachmentTransferMode": {
+                        "type": "string",
+                        "enum": [
+                          "url",
+                          "base64"
+                        ],
+                        "default": "url"
+                      },
+                      "aiGatewayApiKeys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "vertexByokCredential": {
+                        "type": "object",
+                        "properties": {
+                          "project": {
+                            "type": "string"
+                          },
+                          "location": {
+                            "type": "string"
+                          },
+                          "googleCredentials": {
+                            "type": "object",
+                            "properties": {
+                              "privateKey": {
+                                "type": "string"
+                              },
+                              "clientEmail": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "privateKey",
+                              "clientEmail"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "project",
+                          "location",
+                          "googleCredentials"
+                        ]
+                      },
+                      "concurrencyGroups": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "taskTypes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "text",
+                                  "image"
+                                ]
+                              },
+                              "default": []
+                            },
+                            "keys": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "apiKey": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "verified",
+                                      "untested",
+                                      "error"
+                                    ],
+                                    "default": "untested"
+                                  }
+                                },
+                                "required": [
+                                  "apiKey"
+                                ]
+                              },
+                              "default": []
+                            },
+                            "perKey": {
+                              "type": "number",
+                              "minimum": 1,
+                              "maximum": 100,
+                              "default": 5
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
+                        }
+                      },
+                      "concurrencyPerKey": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 100
+                      },
+                      "appConfig": {
+                        "type": "object",
+                        "properties": {
+                          "apiKey": {
+                            "type": "string"
+                          },
+                          "vercelToken": {
+                            "type": "string"
+                          },
+                          "customDomain": {
+                            "type": "string"
+                          },
+                          "creditCount": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "v0BaseUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "vercelBaseUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"type\":\"AI\",\"enable\":true,\"config\":{\"llmProviders\":[],\"embeddingModel\":\"string\",\"translationModel\":\"string\",\"chatModel\":{\"lg\":\"string\",\"md\":\"string\",\"sm\":\"string\",\"ability\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true}},\"gatewayModels\":[{\"id\":\"string\",\"label\":\"string\",\"enabled\":true,\"capabilities\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true},\"pricing\":{\"input\":\"string\",\"output\":\"string\",\"inputCacheRead\":\"string\",\"inputCacheWrite\":\"string\",\"reasoning\":\"string\",\"image\":\"string\",\"webSearch\":\"string\"},\"rates\":{\"inputRate\":0,\"outputRate\":0,\"cacheReadRate\":0,\"cacheWriteRate\":0,\"reasoningRate\":0,\"imageRate\":0,\"webSearchRate\":0},\"isImageModel\":true,\"defaultFor\":[\"chatLg\"],\"testedAt\":0,\"ownedBy\":\"alibaba\",\"modelType\":\"language\",\"tags\":[\"reasoning\"],\"contextWindow\":0,\"maxTokens\":0,\"description\":\"string\"}],\"capabilities\":{\"disableActions\":[\"string\"]},\"aiGatewayApiKey\":\"string\",\"aiGatewayBaseUrl\":\"http://example.com\",\"attachmentTest\":{\"urlMode\":{\"success\":true,\"errorMessage\":\"string\"},\"base64Mode\":{\"success\":true,\"errorMessage\":\"string\"},\"testedAt\":\"string\",\"testedOrigin\":\"string\",\"recommendedMode\":\"url\"},\"attachmentTransferMode\":\"url\",\"aiGatewayApiKeys\":[\"string\"],\"vertexByokCredential\":{\"project\":\"string\",\"location\":\"string\",\"googleCredentials\":{\"privateKey\":\"string\",\"clientEmail\":\"string\"}},\"concurrencyGroups\":[{\"id\":\"string\",\"name\":\"string\",\"taskTypes\":[],\"keys\":[],\"perKey\":5}],\"concurrencyPerKey\":1,\"appConfig\":{\"apiKey\":\"string\",\"vercelToken\":\"string\",\"customDomain\":\"string\",\"creditCount\":0,\"v0BaseUrl\":\"http://example.com\",\"vercelBaseUrl\":\"http://example.com\"}}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"type\":\"AI\",\"enable\":true,\"config\":{\"llmProviders\":[],\"embeddingModel\":\"string\",\"translationModel\":\"string\",\"chatModel\":{\"lg\":\"string\",\"md\":\"string\",\"sm\":\"string\",\"ability\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true}},\"gatewayModels\":[{\"id\":\"string\",\"label\":\"string\",\"enabled\":true,\"capabilities\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true},\"pricing\":{\"input\":\"string\",\"output\":\"string\",\"inputCacheRead\":\"string\",\"inputCacheWrite\":\"string\",\"reasoning\":\"string\",\"image\":\"string\",\"webSearch\":\"string\"},\"rates\":{\"inputRate\":0,\"outputRate\":0,\"cacheReadRate\":0,\"cacheWriteRate\":0,\"reasoningRate\":0,\"imageRate\":0,\"webSearchRate\":0},\"isImageModel\":true,\"defaultFor\":[\"chatLg\"],\"testedAt\":0,\"ownedBy\":\"alibaba\",\"modelType\":\"language\",\"tags\":[\"reasoning\"],\"contextWindow\":0,\"maxTokens\":0,\"description\":\"string\"}],\"capabilities\":{\"disableActions\":[\"string\"]},\"aiGatewayApiKey\":\"string\",\"aiGatewayBaseUrl\":\"http://example.com\",\"attachmentTest\":{\"urlMode\":{\"success\":true,\"errorMessage\":\"string\"},\"base64Mode\":{\"success\":true,\"errorMessage\":\"string\"},\"testedAt\":\"string\",\"testedOrigin\":\"string\",\"recommendedMode\":\"url\"},\"attachmentTransferMode\":\"url\",\"aiGatewayApiKeys\":[\"string\"],\"vertexByokCredential\":{\"project\":\"string\",\"location\":\"string\",\"googleCredentials\":{\"privateKey\":\"string\",\"clientEmail\":\"string\"}},\"concurrencyGroups\":[{\"id\":\"string\",\"name\":\"string\",\"taskTypes\":[],\"keys\":[],\"perKey\":5}],\"concurrencyPerKey\":1,\"appConfig\":{\"apiKey\":\"string\",\"vercelToken\":\"string\",\"customDomain\":\"string\",\"creditCount\":0,\"v0BaseUrl\":\"http://example.com\",\"vercelBaseUrl\":\"http://example.com\"}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/integration',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  type: 'AI',\n  enable: true,\n  config: {\n    llmProviders: [],\n    embeddingModel: 'string',\n    translationModel: 'string',\n    chatModel: {\n      lg: 'string',\n      md: 'string',\n      sm: 'string',\n      ability: {\n        image: true,\n        pdf: true,\n        webSearch: true,\n        toolCall: true,\n        reasoning: true,\n        imageGeneration: true\n      }\n    },\n    gatewayModels: [\n      {\n        id: 'string',\n        label: 'string',\n        enabled: true,\n        capabilities: {\n          image: true,\n          pdf: true,\n          webSearch: true,\n          toolCall: true,\n          reasoning: true,\n          imageGeneration: true\n        },\n        pricing: {\n          input: 'string',\n          output: 'string',\n          inputCacheRead: 'string',\n          inputCacheWrite: 'string',\n          reasoning: 'string',\n          image: 'string',\n          webSearch: 'string'\n        },\n        rates: {\n          inputRate: 0,\n          outputRate: 0,\n          cacheReadRate: 0,\n          cacheWriteRate: 0,\n          reasoningRate: 0,\n          imageRate: 0,\n          webSearchRate: 0\n        },\n        isImageModel: true,\n        defaultFor: ['chatLg'],\n        testedAt: 0,\n        ownedBy: 'alibaba',\n        modelType: 'language',\n        tags: ['reasoning'],\n        contextWindow: 0,\n        maxTokens: 0,\n        description: 'string'\n      }\n    ],\n    capabilities: {disableActions: ['string']},\n    aiGatewayApiKey: 'string',\n    aiGatewayBaseUrl: 'http://example.com',\n    attachmentTest: {\n      urlMode: {success: true, errorMessage: 'string'},\n      base64Mode: {success: true, errorMessage: 'string'},\n      testedAt: 'string',\n      testedOrigin: 'string',\n      recommendedMode: 'url'\n    },\n    attachmentTransferMode: 'url',\n    aiGatewayApiKeys: ['string'],\n    vertexByokCredential: {\n      project: 'string',\n      location: 'string',\n      googleCredentials: {privateKey: 'string', clientEmail: 'string'}\n    },\n    concurrencyGroups: [{id: 'string', name: 'string', taskTypes: [], keys: [], perKey: 5}],\n    concurrencyPerKey: 1,\n    appConfig: {\n      apiKey: 'string',\n      vercelToken: 'string',\n      customDomain: 'string',\n      creditCount: 0,\n      v0BaseUrl: 'http://example.com',\n      vercelBaseUrl: 'http://example.com'\n    }\n  }\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"type\\\":\\\"AI\\\",\\\"enable\\\":true,\\\"config\\\":{\\\"llmProviders\\\":[],\\\"embeddingModel\\\":\\\"string\\\",\\\"translationModel\\\":\\\"string\\\",\\\"chatModel\\\":{\\\"lg\\\":\\\"string\\\",\\\"md\\\":\\\"string\\\",\\\"sm\\\":\\\"string\\\",\\\"ability\\\":{\\\"image\\\":true,\\\"pdf\\\":true,\\\"webSearch\\\":true,\\\"toolCall\\\":true,\\\"reasoning\\\":true,\\\"imageGeneration\\\":true}},\\\"gatewayModels\\\":[{\\\"id\\\":\\\"string\\\",\\\"label\\\":\\\"string\\\",\\\"enabled\\\":true,\\\"capabilities\\\":{\\\"image\\\":true,\\\"pdf\\\":true,\\\"webSearch\\\":true,\\\"toolCall\\\":true,\\\"reasoning\\\":true,\\\"imageGeneration\\\":true},\\\"pricing\\\":{\\\"input\\\":\\\"string\\\",\\\"output\\\":\\\"string\\\",\\\"inputCacheRead\\\":\\\"string\\\",\\\"inputCacheWrite\\\":\\\"string\\\",\\\"reasoning\\\":\\\"string\\\",\\\"image\\\":\\\"string\\\",\\\"webSearch\\\":\\\"string\\\"},\\\"rates\\\":{\\\"inputRate\\\":0,\\\"outputRate\\\":0,\\\"cacheReadRate\\\":0,\\\"cacheWriteRate\\\":0,\\\"reasoningRate\\\":0,\\\"imageRate\\\":0,\\\"webSearchRate\\\":0},\\\"isImageModel\\\":true,\\\"defaultFor\\\":[\\\"chatLg\\\"],\\\"testedAt\\\":0,\\\"ownedBy\\\":\\\"alibaba\\\",\\\"modelType\\\":\\\"language\\\",\\\"tags\\\":[\\\"reasoning\\\"],\\\"contextWindow\\\":0,\\\"maxTokens\\\":0,\\\"description\\\":\\\"string\\\"}],\\\"capabilities\\\":{\\\"disableActions\\\":[\\\"string\\\"]},\\\"aiGatewayApiKey\\\":\\\"string\\\",\\\"aiGatewayBaseUrl\\\":\\\"http://example.com\\\",\\\"attachmentTest\\\":{\\\"urlMode\\\":{\\\"success\\\":true,\\\"errorMessage\\\":\\\"string\\\"},\\\"base64Mode\\\":{\\\"success\\\":true,\\\"errorMessage\\\":\\\"string\\\"},\\\"testedAt\\\":\\\"string\\\",\\\"testedOrigin\\\":\\\"string\\\",\\\"recommendedMode\\\":\\\"url\\\"},\\\"attachmentTransferMode\\\":\\\"url\\\",\\\"aiGatewayApiKeys\\\":[\\\"string\\\"],\\\"vertexByokCredential\\\":{\\\"project\\\":\\\"string\\\",\\\"location\\\":\\\"string\\\",\\\"googleCredentials\\\":{\\\"privateKey\\\":\\\"string\\\",\\\"clientEmail\\\":\\\"string\\\"}},\\\"concurrencyGroups\\\":[{\\\"id\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"taskTypes\\\":[],\\\"keys\\\":[],\\\"perKey\\\":5}],\\\"concurrencyPerKey\\\":1,\\\"appConfig\\\":{\\\"apiKey\\\":\\\"string\\\",\\\"vercelToken\\\":\\\"string\\\",\\\"customDomain\\\":\\\"string\\\",\\\"creditCount\\\":0,\\\"v0BaseUrl\\\":\\\"http://example.com\\\",\\\"vercelBaseUrl\\\":\\\"http://example.com\\\"}}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/space/%7BspaceId%7D/integration\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/integration/{integrationId}": {
+      "patch": {
+        "description": "Update a integration to a space",
+        "tags": [
+          "space",
+          "integration"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "llmProviders": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "openai",
+                                "anthropic",
+                                "google",
+                                "azure",
+                                "cohere",
+                                "mistral",
+                                "deepseek",
+                                "qwen",
+                                "zhipu",
+                                "lingyiwanwu",
+                                "xai",
+                                "togetherai",
+                                "ollama",
+                                "amazonBedrock",
+                                "openRouter",
+                                "openaiCompatible",
+                                "aiGateway"
+                              ]
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "apiKey": {
+                              "type": "string"
+                            },
+                            "baseUrl": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "models": {
+                              "type": "string",
+                              "default": ""
+                            },
+                            "isInstance": {
+                              "type": "boolean"
+                            },
+                            "modelConfigs": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "pricing": {
+                                    "type": "object",
+                                    "properties": {
+                                      "input": {
+                                        "type": "string"
+                                      },
+                                      "output": {
+                                        "type": "string"
+                                      },
+                                      "inputCacheRead": {
+                                        "type": "string"
+                                      },
+                                      "inputCacheWrite": {
+                                        "type": "string"
+                                      },
+                                      "reasoning": {
+                                        "type": "string"
+                                      },
+                                      "image": {
+                                        "type": "string"
+                                      },
+                                      "webSearch": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "inputRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "outputRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "cacheReadRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "cacheWriteRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "reasoningRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "imageRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "webSearchRate": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "isImageModel": {
+                                    "type": "boolean"
+                                  },
+                                  "ability": {
+                                    "type": "object",
+                                    "properties": {
+                                      "image": {
+                                        "anyOf": [
+                                          {
+                                            "type": "boolean"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "url": {
+                                                "type": "boolean"
+                                              },
+                                              "base64": {
+                                                "type": "boolean"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "pdf": {
+                                        "anyOf": [
+                                          {
+                                            "type": "boolean"
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "url": {
+                                                "type": "boolean"
+                                              },
+                                              "base64": {
+                                                "type": "boolean"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "webSearch": {
+                                        "type": "boolean"
+                                      },
+                                      "toolCall": {
+                                        "type": "boolean"
+                                      },
+                                      "reasoning": {
+                                        "type": "boolean"
+                                      },
+                                      "imageGeneration": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "imageAbility": {
+                                    "type": "object",
+                                    "properties": {
+                                      "generation": {
+                                        "type": "boolean"
+                                      },
+                                      "imageToImage": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "testedAt": {
+                                    "type": "number"
+                                  },
+                                  "ownedBy": {
+                                    "type": "string",
+                                    "enum": [
+                                      "alibaba",
+                                      "amazon",
+                                      "anthropic",
+                                      "arcee-ai",
+                                      "bfl",
+                                      "bytedance",
+                                      "cohere",
+                                      "deepseek",
+                                      "google",
+                                      "inception",
+                                      "kwaipilot",
+                                      "meituan",
+                                      "meta",
+                                      "minimax",
+                                      "mistral",
+                                      "moonshotai",
+                                      "morph",
+                                      "nvidia",
+                                      "openai",
+                                      "perplexity",
+                                      "prime-intellect",
+                                      "stealth",
+                                      "vercel",
+                                      "voyage",
+                                      "xai",
+                                      "xiaomi",
+                                      "zai"
+                                    ]
+                                  },
+                                  "modelType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "language",
+                                      "embedding",
+                                      "image"
+                                    ]
+                                  },
+                                  "tags": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "reasoning",
+                                        "tool-use",
+                                        "vision",
+                                        "file-input",
+                                        "image-generation",
+                                        "implicit-caching"
+                                      ]
+                                    }
+                                  },
+                                  "contextWindow": {
+                                    "type": "number"
+                                  },
+                                  "maxTokens": {
+                                    "type": "number"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "name"
+                          ]
+                        },
+                        "default": []
+                      },
+                      "embeddingModel": {
+                        "type": "string"
+                      },
+                      "translationModel": {
+                        "type": "string"
+                      },
+                      "chatModel": {
+                        "type": "object",
+                        "properties": {
+                          "lg": {
+                            "type": "string"
+                          },
+                          "md": {
+                            "type": "string"
+                          },
+                          "sm": {
+                            "type": "string"
+                          },
+                          "ability": {
+                            "type": "object",
+                            "properties": {
+                              "image": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "pdf": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "webSearch": {
+                                "type": "boolean"
+                              },
+                              "toolCall": {
+                                "type": "boolean"
+                              },
+                              "reasoning": {
+                                "type": "boolean"
+                              },
+                              "imageGeneration": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "gatewayModels": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "enabled": {
+                              "type": "boolean",
+                              "default": true
+                            },
+                            "capabilities": {
+                              "type": "object",
+                              "properties": {
+                                "image": {
+                                  "anyOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "url": {
+                                          "type": "boolean"
+                                        },
+                                        "base64": {
+                                          "type": "boolean"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                "pdf": {
+                                  "anyOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "url": {
+                                          "type": "boolean"
+                                        },
+                                        "base64": {
+                                          "type": "boolean"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                "webSearch": {
+                                  "type": "boolean"
+                                },
+                                "toolCall": {
+                                  "type": "boolean"
+                                },
+                                "reasoning": {
+                                  "type": "boolean"
+                                },
+                                "imageGeneration": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "pricing": {
+                              "type": "object",
+                              "properties": {
+                                "input": {
+                                  "type": "string"
+                                },
+                                "output": {
+                                  "type": "string"
+                                },
+                                "inputCacheRead": {
+                                  "type": "string"
+                                },
+                                "inputCacheWrite": {
+                                  "type": "string"
+                                },
+                                "reasoning": {
+                                  "type": "string"
+                                },
+                                "image": {
+                                  "type": "string"
+                                },
+                                "webSearch": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "rates": {
+                              "type": "object",
+                              "properties": {
+                                "inputRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "outputRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "cacheReadRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "cacheWriteRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "reasoningRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "imageRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "webSearchRate": {
+                                  "type": "number",
+                                  "minimum": 0
+                                }
+                              }
+                            },
+                            "isImageModel": {
+                              "type": "boolean"
+                            },
+                            "defaultFor": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "chatLg",
+                                  "chatMd",
+                                  "chatSm",
+                                  "aiFieldText",
+                                  "aiFieldImage"
+                                ]
+                              }
+                            },
+                            "testedAt": {
+                              "type": "number"
+                            },
+                            "ownedBy": {
+                              "type": "string",
+                              "enum": [
+                                "alibaba",
+                                "amazon",
+                                "anthropic",
+                                "arcee-ai",
+                                "bfl",
+                                "bytedance",
+                                "cohere",
+                                "deepseek",
+                                "google",
+                                "inception",
+                                "kwaipilot",
+                                "meituan",
+                                "meta",
+                                "minimax",
+                                "mistral",
+                                "moonshotai",
+                                "morph",
+                                "nvidia",
+                                "openai",
+                                "perplexity",
+                                "prime-intellect",
+                                "stealth",
+                                "vercel",
+                                "voyage",
+                                "xai",
+                                "xiaomi",
+                                "zai"
+                              ]
+                            },
+                            "modelType": {
+                              "type": "string",
+                              "enum": [
+                                "language",
+                                "embedding",
+                                "image"
+                              ]
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "reasoning",
+                                  "tool-use",
+                                  "vision",
+                                  "file-input",
+                                  "image-generation",
+                                  "implicit-caching"
+                                ]
+                              }
+                            },
+                            "contextWindow": {
+                              "type": "number"
+                            },
+                            "maxTokens": {
+                              "type": "number"
+                            },
+                            "description": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "label"
+                          ]
+                        }
+                      },
+                      "capabilities": {
+                        "type": "object",
+                        "properties": {
+                          "disableActions": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "aiGatewayApiKey": {
+                        "type": "string"
+                      },
+                      "aiGatewayBaseUrl": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "attachmentTest": {
+                        "type": "object",
+                        "properties": {
+                          "urlMode": {
+                            "type": "object",
+                            "properties": {
+                              "success": {
+                                "type": "boolean"
+                              },
+                              "errorMessage": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "success"
+                            ]
+                          },
+                          "base64Mode": {
+                            "type": "object",
+                            "properties": {
+                              "success": {
+                                "type": "boolean"
+                              },
+                              "errorMessage": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "success"
+                            ]
+                          },
+                          "testedAt": {
+                            "type": "string"
+                          },
+                          "testedOrigin": {
+                            "type": "string"
+                          },
+                          "recommendedMode": {
+                            "type": "string",
+                            "enum": [
+                              "url",
+                              "base64"
+                            ]
+                          }
+                        }
+                      },
+                      "attachmentTransferMode": {
+                        "type": "string",
+                        "enum": [
+                          "url",
+                          "base64"
+                        ],
+                        "default": "url"
+                      },
+                      "aiGatewayApiKeys": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "vertexByokCredential": {
+                        "type": "object",
+                        "properties": {
+                          "project": {
+                            "type": "string"
+                          },
+                          "location": {
+                            "type": "string"
+                          },
+                          "googleCredentials": {
+                            "type": "object",
+                            "properties": {
+                              "privateKey": {
+                                "type": "string"
+                              },
+                              "clientEmail": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "privateKey",
+                              "clientEmail"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "project",
+                          "location",
+                          "googleCredentials"
+                        ]
+                      },
+                      "concurrencyGroups": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "taskTypes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "enum": [
+                                  "text",
+                                  "image"
+                                ]
+                              },
+                              "default": []
+                            },
+                            "keys": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "apiKey": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string",
+                                    "enum": [
+                                      "verified",
+                                      "untested",
+                                      "error"
+                                    ],
+                                    "default": "untested"
+                                  }
+                                },
+                                "required": [
+                                  "apiKey"
+                                ]
+                              },
+                              "default": []
+                            },
+                            "perKey": {
+                              "type": "number",
+                              "minimum": 1,
+                              "maximum": 100,
+                              "default": 5
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
+                        }
+                      },
+                      "concurrencyPerKey": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 100
+                      },
+                      "appConfig": {
+                        "type": "object",
+                        "properties": {
+                          "apiKey": {
+                            "type": "string"
+                          },
+                          "vercelToken": {
+                            "type": "string"
+                          },
+                          "customDomain": {
+                            "type": "string"
+                          },
+                          "creditCount": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "v0BaseUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "vercelBaseUrl": {
+                            "type": "string",
+                            "format": "uri"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"enable\":true,\"config\":{\"llmProviders\":[],\"embeddingModel\":\"string\",\"translationModel\":\"string\",\"chatModel\":{\"lg\":\"string\",\"md\":\"string\",\"sm\":\"string\",\"ability\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true}},\"gatewayModels\":[{\"id\":\"string\",\"label\":\"string\",\"enabled\":true,\"capabilities\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true},\"pricing\":{\"input\":\"string\",\"output\":\"string\",\"inputCacheRead\":\"string\",\"inputCacheWrite\":\"string\",\"reasoning\":\"string\",\"image\":\"string\",\"webSearch\":\"string\"},\"rates\":{\"inputRate\":0,\"outputRate\":0,\"cacheReadRate\":0,\"cacheWriteRate\":0,\"reasoningRate\":0,\"imageRate\":0,\"webSearchRate\":0},\"isImageModel\":true,\"defaultFor\":[\"chatLg\"],\"testedAt\":0,\"ownedBy\":\"alibaba\",\"modelType\":\"language\",\"tags\":[\"reasoning\"],\"contextWindow\":0,\"maxTokens\":0,\"description\":\"string\"}],\"capabilities\":{\"disableActions\":[\"string\"]},\"aiGatewayApiKey\":\"string\",\"aiGatewayBaseUrl\":\"http://example.com\",\"attachmentTest\":{\"urlMode\":{\"success\":true,\"errorMessage\":\"string\"},\"base64Mode\":{\"success\":true,\"errorMessage\":\"string\"},\"testedAt\":\"string\",\"testedOrigin\":\"string\",\"recommendedMode\":\"url\"},\"attachmentTransferMode\":\"url\",\"aiGatewayApiKeys\":[\"string\"],\"vertexByokCredential\":{\"project\":\"string\",\"location\":\"string\",\"googleCredentials\":{\"privateKey\":\"string\",\"clientEmail\":\"string\"}},\"concurrencyGroups\":[{\"id\":\"string\",\"name\":\"string\",\"taskTypes\":[],\"keys\":[],\"perKey\":5}],\"concurrencyPerKey\":1,\"appConfig\":{\"apiKey\":\"string\",\"vercelToken\":\"string\",\"customDomain\":\"string\",\"creditCount\":0,\"v0BaseUrl\":\"http://example.com\",\"vercelBaseUrl\":\"http://example.com\"}}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"enable\":true,\"config\":{\"llmProviders\":[],\"embeddingModel\":\"string\",\"translationModel\":\"string\",\"chatModel\":{\"lg\":\"string\",\"md\":\"string\",\"sm\":\"string\",\"ability\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true}},\"gatewayModels\":[{\"id\":\"string\",\"label\":\"string\",\"enabled\":true,\"capabilities\":{\"image\":true,\"pdf\":true,\"webSearch\":true,\"toolCall\":true,\"reasoning\":true,\"imageGeneration\":true},\"pricing\":{\"input\":\"string\",\"output\":\"string\",\"inputCacheRead\":\"string\",\"inputCacheWrite\":\"string\",\"reasoning\":\"string\",\"image\":\"string\",\"webSearch\":\"string\"},\"rates\":{\"inputRate\":0,\"outputRate\":0,\"cacheReadRate\":0,\"cacheWriteRate\":0,\"reasoningRate\":0,\"imageRate\":0,\"webSearchRate\":0},\"isImageModel\":true,\"defaultFor\":[\"chatLg\"],\"testedAt\":0,\"ownedBy\":\"alibaba\",\"modelType\":\"language\",\"tags\":[\"reasoning\"],\"contextWindow\":0,\"maxTokens\":0,\"description\":\"string\"}],\"capabilities\":{\"disableActions\":[\"string\"]},\"aiGatewayApiKey\":\"string\",\"aiGatewayBaseUrl\":\"http://example.com\",\"attachmentTest\":{\"urlMode\":{\"success\":true,\"errorMessage\":\"string\"},\"base64Mode\":{\"success\":true,\"errorMessage\":\"string\"},\"testedAt\":\"string\",\"testedOrigin\":\"string\",\"recommendedMode\":\"url\"},\"attachmentTransferMode\":\"url\",\"aiGatewayApiKeys\":[\"string\"],\"vertexByokCredential\":{\"project\":\"string\",\"location\":\"string\",\"googleCredentials\":{\"privateKey\":\"string\",\"clientEmail\":\"string\"}},\"concurrencyGroups\":[{\"id\":\"string\",\"name\":\"string\",\"taskTypes\":[],\"keys\":[],\"perKey\":5}],\"concurrencyPerKey\":1,\"appConfig\":{\"apiKey\":\"string\",\"vercelToken\":\"string\",\"customDomain\":\"string\",\"creditCount\":0,\"v0BaseUrl\":\"http://example.com\",\"vercelBaseUrl\":\"http://example.com\"}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  enable: true,\n  config: {\n    llmProviders: [],\n    embeddingModel: 'string',\n    translationModel: 'string',\n    chatModel: {\n      lg: 'string',\n      md: 'string',\n      sm: 'string',\n      ability: {\n        image: true,\n        pdf: true,\n        webSearch: true,\n        toolCall: true,\n        reasoning: true,\n        imageGeneration: true\n      }\n    },\n    gatewayModels: [\n      {\n        id: 'string',\n        label: 'string',\n        enabled: true,\n        capabilities: {\n          image: true,\n          pdf: true,\n          webSearch: true,\n          toolCall: true,\n          reasoning: true,\n          imageGeneration: true\n        },\n        pricing: {\n          input: 'string',\n          output: 'string',\n          inputCacheRead: 'string',\n          inputCacheWrite: 'string',\n          reasoning: 'string',\n          image: 'string',\n          webSearch: 'string'\n        },\n        rates: {\n          inputRate: 0,\n          outputRate: 0,\n          cacheReadRate: 0,\n          cacheWriteRate: 0,\n          reasoningRate: 0,\n          imageRate: 0,\n          webSearchRate: 0\n        },\n        isImageModel: true,\n        defaultFor: ['chatLg'],\n        testedAt: 0,\n        ownedBy: 'alibaba',\n        modelType: 'language',\n        tags: ['reasoning'],\n        contextWindow: 0,\n        maxTokens: 0,\n        description: 'string'\n      }\n    ],\n    capabilities: {disableActions: ['string']},\n    aiGatewayApiKey: 'string',\n    aiGatewayBaseUrl: 'http://example.com',\n    attachmentTest: {\n      urlMode: {success: true, errorMessage: 'string'},\n      base64Mode: {success: true, errorMessage: 'string'},\n      testedAt: 'string',\n      testedOrigin: 'string',\n      recommendedMode: 'url'\n    },\n    attachmentTransferMode: 'url',\n    aiGatewayApiKeys: ['string'],\n    vertexByokCredential: {\n      project: 'string',\n      location: 'string',\n      googleCredentials: {privateKey: 'string', clientEmail: 'string'}\n    },\n    concurrencyGroups: [{id: 'string', name: 'string', taskTypes: [], keys: [], perKey: 5}],\n    concurrencyPerKey: 1,\n    appConfig: {\n      apiKey: 'string',\n      vercelToken: 'string',\n      customDomain: 'string',\n      creditCount: 0,\n      v0BaseUrl: 'http://example.com',\n      vercelBaseUrl: 'http://example.com'\n    }\n  }\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"enable\\\":true,\\\"config\\\":{\\\"llmProviders\\\":[],\\\"embeddingModel\\\":\\\"string\\\",\\\"translationModel\\\":\\\"string\\\",\\\"chatModel\\\":{\\\"lg\\\":\\\"string\\\",\\\"md\\\":\\\"string\\\",\\\"sm\\\":\\\"string\\\",\\\"ability\\\":{\\\"image\\\":true,\\\"pdf\\\":true,\\\"webSearch\\\":true,\\\"toolCall\\\":true,\\\"reasoning\\\":true,\\\"imageGeneration\\\":true}},\\\"gatewayModels\\\":[{\\\"id\\\":\\\"string\\\",\\\"label\\\":\\\"string\\\",\\\"enabled\\\":true,\\\"capabilities\\\":{\\\"image\\\":true,\\\"pdf\\\":true,\\\"webSearch\\\":true,\\\"toolCall\\\":true,\\\"reasoning\\\":true,\\\"imageGeneration\\\":true},\\\"pricing\\\":{\\\"input\\\":\\\"string\\\",\\\"output\\\":\\\"string\\\",\\\"inputCacheRead\\\":\\\"string\\\",\\\"inputCacheWrite\\\":\\\"string\\\",\\\"reasoning\\\":\\\"string\\\",\\\"image\\\":\\\"string\\\",\\\"webSearch\\\":\\\"string\\\"},\\\"rates\\\":{\\\"inputRate\\\":0,\\\"outputRate\\\":0,\\\"cacheReadRate\\\":0,\\\"cacheWriteRate\\\":0,\\\"reasoningRate\\\":0,\\\"imageRate\\\":0,\\\"webSearchRate\\\":0},\\\"isImageModel\\\":true,\\\"defaultFor\\\":[\\\"chatLg\\\"],\\\"testedAt\\\":0,\\\"ownedBy\\\":\\\"alibaba\\\",\\\"modelType\\\":\\\"language\\\",\\\"tags\\\":[\\\"reasoning\\\"],\\\"contextWindow\\\":0,\\\"maxTokens\\\":0,\\\"description\\\":\\\"string\\\"}],\\\"capabilities\\\":{\\\"disableActions\\\":[\\\"string\\\"]},\\\"aiGatewayApiKey\\\":\\\"string\\\",\\\"aiGatewayBaseUrl\\\":\\\"http://example.com\\\",\\\"attachmentTest\\\":{\\\"urlMode\\\":{\\\"success\\\":true,\\\"errorMessage\\\":\\\"string\\\"},\\\"base64Mode\\\":{\\\"success\\\":true,\\\"errorMessage\\\":\\\"string\\\"},\\\"testedAt\\\":\\\"string\\\",\\\"testedOrigin\\\":\\\"string\\\",\\\"recommendedMode\\\":\\\"url\\\"},\\\"attachmentTransferMode\\\":\\\"url\\\",\\\"aiGatewayApiKeys\\\":[\\\"string\\\"],\\\"vertexByokCredential\\\":{\\\"project\\\":\\\"string\\\",\\\"location\\\":\\\"string\\\",\\\"googleCredentials\\\":{\\\"privateKey\\\":\\\"string\\\",\\\"clientEmail\\\":\\\"string\\\"}},\\\"concurrencyGroups\\\":[{\\\"id\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"taskTypes\\\":[],\\\"keys\\\":[],\\\"perKey\\\":5}],\\\"concurrencyPerKey\\\":1,\\\"appConfig\\\":{\\\"apiKey\\\":\\\"string\\\",\\\"vercelToken\\\":\\\"string\\\",\\\"customDomain\\\":\\\"string\\\",\\\"creditCount\\\":0,\\\"v0BaseUrl\\\":\\\"http://example.com\\\",\\\"vercelBaseUrl\\\":\\\"http://example.com\\\"}}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "Delete a integration by integrationId",
+        "tags": [
+          "space",
+          "integration"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "integrationId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/space/%7BspaceId%7D/integration/%7BintegrationId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

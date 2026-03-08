@@ -1,0 +1,1932 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/base/{baseId}/authority-matrix/status": {
+      "patch": {
+        "description": "Enable authority",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "enabled"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "enabledTime": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix/status \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"enabled\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix/status';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"enabled\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix/status',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({enabled: true}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"enabled\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/authority-matrix/status\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix": {
+      "get": {
+        "description": "Get authority matrix",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "baseId": {
+                        "type": "string"
+                      },
+                      "defaultRole": {
+                        "type": "string"
+                      },
+                      "enabledTime": {
+                        "type": "string"
+                      },
+                      "adminUsers": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "avatar": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "email"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "baseId"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/authority-matrix\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "put": {
+        "description": "Update authority matrix",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "defaultRole": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "defaultRole"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "defaultRole": {
+                      "type": "string"
+                    },
+                    "enabledTime": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "baseId"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PUT \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"defaultRole\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix';\nconst options = {\n  method: 'PUT',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"defaultRole\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PUT',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({defaultRole: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"defaultRole\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PUT\", \"/api/base/%7BbaseId%7D/authority-matrix\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix/admin-user": {
+      "patch": {
+        "description": "Update admin user",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userIds": {
+                    "type": "array",
+                    "nullable": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "userIds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix/admin-user \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"userIds\":[\"string\"]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix/admin-user';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"userIds\":[\"string\"]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix/admin-user',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({userIds: ['string']}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"userIds\\\":[\\\"string\\\"]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/authority-matrix/admin-user\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role": {
+      "post": {
+        "description": "Add authority matrix role",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "tables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tableId": {
+                          "type": "string"
+                        },
+                        "disabledActions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "fieldRecordPermission": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "fieldId": {
+                                "type": "string"
+                              },
+                              "disabledActions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Field operations, encompassing reading, editing, and deleting, are presently disabled."
+                              }
+                            },
+                            "required": [
+                              "fieldId"
+                            ]
+                          }
+                        },
+                        "recordFilter": {
+                          "type": "object",
+                          "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+                        },
+                        "enabledViewIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "tableId"
+                      ]
+                    }
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "nodeType": {
+                          "type": "string",
+                          "enum": [
+                            "workflow",
+                            "app"
+                          ]
+                        },
+                        "nodeId": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "nodeType",
+                        "nodeId"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "createdTime": {
+                      "type": "string"
+                    },
+                    "enabledTime": {
+                      "type": "string"
+                    },
+                    "tables": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "authorityMatrixRoleId": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "disabledActions": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "enabledViewIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "fieldRecordPermission": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "fieldId": {
+                                  "type": "string"
+                                },
+                                "disabledActions": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Field operations, encompassing reading, editing, and deleting, are presently disabled."
+                                }
+                              },
+                              "required": [
+                                "fieldId"
+                              ]
+                            }
+                          },
+                          "recordFilter": {
+                            "type": "object",
+                            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "enabledTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "authorityMatrixRoleId",
+                          "tableId",
+                          "createdTime"
+                        ]
+                      }
+                    },
+                    "nodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "authorityMatrixRoleId": {
+                            "type": "string"
+                          },
+                          "nodeType": {
+                            "type": "string",
+                            "enum": [
+                              "workflow",
+                              "app"
+                            ]
+                          },
+                          "nodeId": {
+                            "type": "string"
+                          },
+                          "enabledTime": {
+                            "type": "string"
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "authorityMatrixRoleId",
+                          "nodeType",
+                          "nodeId"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "baseId",
+                    "createdTime",
+                    "tables"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\",\"description\":\"string\",\"enabled\":true,\"tables\":[{\"tableId\":\"string\",\"disabledActions\":[\"string\"],\"fieldRecordPermission\":[{\"fieldId\":\"string\",\"disabledActions\":[\"string\"]}],\"recordFilter\":{},\"enabledViewIds\":[\"string\"],\"enabled\":true}],\"nodes\":[{\"nodeType\":\"workflow\",\"nodeId\":\"string\",\"enabled\":true}]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\",\"description\":\"string\",\"enabled\":true,\"tables\":[{\"tableId\":\"string\",\"disabledActions\":[\"string\"],\"fieldRecordPermission\":[{\"fieldId\":\"string\",\"disabledActions\":[\"string\"]}],\"recordFilter\":{},\"enabledViewIds\":[\"string\"],\"enabled\":true}],\"nodes\":[{\"nodeType\":\"workflow\",\"nodeId\":\"string\",\"enabled\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  name: 'string',\n  description: 'string',\n  enabled: true,\n  tables: [\n    {\n      tableId: 'string',\n      disabledActions: ['string'],\n      fieldRecordPermission: [{fieldId: 'string', disabledActions: ['string']}],\n      recordFilter: {},\n      enabledViewIds: ['string'],\n      enabled: true\n    }\n  ],\n  nodes: [{nodeType: 'workflow', nodeId: 'string', enabled: true}]\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\",\\\"description\\\":\\\"string\\\",\\\"enabled\\\":true,\\\"tables\\\":[{\\\"tableId\\\":\\\"string\\\",\\\"disabledActions\\\":[\\\"string\\\"],\\\"fieldRecordPermission\\\":[{\\\"fieldId\\\":\\\"string\\\",\\\"disabledActions\\\":[\\\"string\\\"]}],\\\"recordFilter\\\":{},\\\"enabledViewIds\\\":[\\\"string\\\"],\\\"enabled\\\":true}],\\\"nodes\\\":[{\\\"nodeType\\\":\\\"workflow\\\",\\\"nodeId\\\":\\\"string\\\",\\\"enabled\\\":true}]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/base/%7BbaseId%7D/authority-matrix-role\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "get": {
+        "description": "Get authority matrix role list",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "baseId": {
+                        "type": "string"
+                      },
+                      "createdTime": {
+                        "type": "string"
+                      },
+                      "enabledTime": {
+                        "type": "string"
+                      },
+                      "users": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "avatar": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "email"
+                          ]
+                        }
+                      },
+                      "departments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "baseId",
+                      "createdTime"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/authority-matrix-role\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role/{authorityMatrixRoleId}": {
+      "delete": {
+        "description": "Delete authority matrix role",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRoleId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "put": {
+        "description": "Update authority matrix role",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRoleId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "authorityMatrixRoleId": {
+                          "type": "string"
+                        },
+                        "tableId": {
+                          "type": "string"
+                        },
+                        "disabledActions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "enabledViewIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "fieldRecordPermission": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "fieldId": {
+                                "type": "string"
+                              },
+                              "disabledActions": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Field operations, encompassing reading, editing, and deleting, are presently disabled."
+                              }
+                            },
+                            "required": [
+                              "fieldId"
+                            ]
+                          }
+                        },
+                        "recordFilter": {
+                          "type": "object",
+                          "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "authorityMatrixRoleId",
+                        "tableId"
+                      ]
+                    }
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "nodeType": {
+                          "type": "string",
+                          "enum": [
+                            "workflow",
+                            "app"
+                          ]
+                        },
+                        "nodeId": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "nodeType",
+                        "nodeId"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "createdTime": {
+                      "type": "string"
+                    },
+                    "enabledTime": {
+                      "type": "string"
+                    },
+                    "tables": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "authorityMatrixRoleId": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "disabledActions": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "enabledViewIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "fieldRecordPermission": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "fieldId": {
+                                  "type": "string"
+                                },
+                                "disabledActions": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Field operations, encompassing reading, editing, and deleting, are presently disabled."
+                                }
+                              },
+                              "required": [
+                                "fieldId"
+                              ]
+                            }
+                          },
+                          "recordFilter": {
+                            "type": "object",
+                            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "enabledTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "authorityMatrixRoleId",
+                          "tableId",
+                          "createdTime"
+                        ]
+                      }
+                    },
+                    "nodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "authorityMatrixRoleId": {
+                            "type": "string"
+                          },
+                          "nodeType": {
+                            "type": "string",
+                            "enum": [
+                              "workflow",
+                              "app"
+                            ]
+                          },
+                          "nodeId": {
+                            "type": "string"
+                          },
+                          "enabledTime": {
+                            "type": "string"
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "authorityMatrixRoleId",
+                          "nodeType",
+                          "nodeId"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "baseId",
+                    "createdTime",
+                    "tables"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PUT \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\",\"description\":\"string\",\"tables\":[{\"authorityMatrixRoleId\":\"string\",\"tableId\":\"string\",\"disabledActions\":[\"string\"],\"enabledViewIds\":[\"string\"],\"fieldRecordPermission\":[{\"fieldId\":\"string\",\"disabledActions\":[\"string\"]}],\"recordFilter\":{},\"enabled\":true}],\"nodes\":[{\"nodeType\":\"workflow\",\"nodeId\":\"string\",\"enabled\":true}]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D';\nconst options = {\n  method: 'PUT',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\",\"description\":\"string\",\"tables\":[{\"authorityMatrixRoleId\":\"string\",\"tableId\":\"string\",\"disabledActions\":[\"string\"],\"enabledViewIds\":[\"string\"],\"fieldRecordPermission\":[{\"fieldId\":\"string\",\"disabledActions\":[\"string\"]}],\"recordFilter\":{},\"enabled\":true}],\"nodes\":[{\"nodeType\":\"workflow\",\"nodeId\":\"string\",\"enabled\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PUT',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  name: 'string',\n  description: 'string',\n  tables: [\n    {\n      authorityMatrixRoleId: 'string',\n      tableId: 'string',\n      disabledActions: ['string'],\n      enabledViewIds: ['string'],\n      fieldRecordPermission: [{fieldId: 'string', disabledActions: ['string']}],\n      recordFilter: {},\n      enabled: true\n    }\n  ],\n  nodes: [{nodeType: 'workflow', nodeId: 'string', enabled: true}]\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\",\\\"description\\\":\\\"string\\\",\\\"tables\\\":[{\\\"authorityMatrixRoleId\\\":\\\"string\\\",\\\"tableId\\\":\\\"string\\\",\\\"disabledActions\\\":[\\\"string\\\"],\\\"enabledViewIds\\\":[\\\"string\\\"],\\\"fieldRecordPermission\\\":[{\\\"fieldId\\\":\\\"string\\\",\\\"disabledActions\\\":[\\\"string\\\"]}],\\\"recordFilter\\\":{},\\\"enabled\\\":true}],\\\"nodes\\\":[{\\\"nodeType\\\":\\\"workflow\\\",\\\"nodeId\\\":\\\"string\\\",\\\"enabled\\\":true}]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PUT\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "get": {
+        "description": "Get authority matrix role",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRoleId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "createdTime": {
+                      "type": "string"
+                    },
+                    "enabledTime": {
+                      "type": "string"
+                    },
+                    "tables": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "authorityMatrixRoleId": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "disabledActions": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "enabledViewIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "fieldRecordPermission": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "fieldId": {
+                                  "type": "string"
+                                },
+                                "disabledActions": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Field operations, encompassing reading, editing, and deleting, are presently disabled."
+                                }
+                              },
+                              "required": [
+                                "fieldId"
+                              ]
+                            }
+                          },
+                          "recordFilter": {
+                            "type": "object",
+                            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "enabledTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "authorityMatrixRoleId",
+                          "tableId",
+                          "createdTime"
+                        ]
+                      }
+                    },
+                    "nodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "authorityMatrixRoleId": {
+                            "type": "string"
+                          },
+                          "nodeType": {
+                            "type": "string",
+                            "enum": [
+                              "workflow",
+                              "app"
+                            ]
+                          },
+                          "nodeId": {
+                            "type": "string"
+                          },
+                          "enabledTime": {
+                            "type": "string"
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "authorityMatrixRoleId",
+                          "nodeType",
+                          "nodeId"
+                        ]
+                      }
+                    },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "email"
+                        ]
+                      }
+                    },
+                    "departments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "baseId",
+                    "createdTime",
+                    "tables"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role/{authorityMatrixRoleId}/status": {
+      "patch": {
+        "description": "Update authority matrix role status",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRole",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "enabled"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "authorityMatrixId": {
+                      "type": "string"
+                    },
+                    "enabledTime": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "authorityMatrixId"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/status \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"enabled\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/status';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"enabled\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/status',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({enabled: true}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"enabled\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/status\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role/{authorityMatrixRoleId}/name": {
+      "patch": {
+        "description": "Update authority matrix role name",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRole",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/name \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/name';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/name',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({name: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/name\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role/{authorityMatrixRoleId}/description": {
+      "patch": {
+        "description": "Update authority matrix role description",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRole",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/description \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"description\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/description';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"description\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/description',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({description: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"description\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/description\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role/{authorityMatrixRoleId}/user": {
+      "patch": {
+        "description": "Update authority matrix role user",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRoleId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "departmentIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "authorityMatrixId": {
+                      "type": "string"
+                    },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "email"
+                        ]
+                      }
+                    },
+                    "departments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "authorityMatrixId",
+                    "users",
+                    "departments"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/user \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"userIds\":[\"string\"],\"departmentIds\":[\"string\"]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/user';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"userIds\":[\"string\"],\"departmentIds\":[\"string\"]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/user',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({userIds: ['string'], departmentIds: ['string']}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"userIds\\\":[\\\"string\\\"],\\\"departmentIds\\\":[\\\"string\\\"]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/user\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role/{authorityMatrixRoleId}/duplicate": {
+      "post": {
+        "description": "Duplicate authority matrix role",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRoleId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "includeUsers": {
+                    "type": "boolean"
+                  },
+                  "includeDepartments": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "authorityMatrixRoleId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "baseId",
+                    "authorityMatrixRoleId"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/duplicate \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"includeUsers\":true,\"includeDepartments\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/duplicate';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"includeUsers\":true,\"includeDepartments\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/duplicate',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({includeUsers: true, includeDepartments: true}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"includeUsers\\\":true,\\\"includeDepartments\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/base/%7BbaseId%7D/authority-matrix-role/%7BauthorityMatrixRoleId%7D/duplicate\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/authority-matrix-role-table/{tableId}/filter-link-records": {
+      "get": {
+        "description": "Get authority matrix table link records",
+        "tags": [
+          "authority-matrix"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "authorityMatrixRoleId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tableId": {
+                        "type": "string"
+                      },
+                      "records": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "tableId",
+                      "records"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role-table/%7BtableId%7D/filter-link-records?authorityMatrixRoleId=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/authority-matrix-role-table/%7BtableId%7D/filter-link-records?authorityMatrixRoleId=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/authority-matrix-role-table/%7BtableId%7D/filter-link-records?authorityMatrixRoleId=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/authority-matrix-role-table/%7BtableId%7D/filter-link-records?authorityMatrixRoleId=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

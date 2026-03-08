@@ -1,0 +1,300 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/space/{spaceId}/billing/credit-summary": {
+      "get": {
+        "description": "Get space credit summary",
+        "tags": [
+          "billing",
+          "credit"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns space credit summary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number"
+                    },
+                    "usedAmount": {
+                      "type": "number"
+                    },
+                    "leftAmount": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "amount",
+                    "usedAmount",
+                    "leftAmount"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-summary \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-summary';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/credit-summary',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/credit-summary\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/billing/credit-detail": {
+      "get": {
+        "description": "Get space credit usage detail by month",
+        "tags": [
+          "billing",
+          "credit"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}$"
+            },
+            "required": true,
+            "name": "month",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns space credit usage detail.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "automation_action": {
+                        "type": "number"
+                      },
+                      "automation_ai_action": {
+                        "type": "number"
+                      },
+                      "ai_generation": {
+                        "type": "number"
+                      },
+                      "field_ai_generation": {
+                        "type": "number"
+                      },
+                      "ai_chat": {
+                        "type": "number"
+                      },
+                      "app_generation": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "date",
+                      "automation_action",
+                      "automation_ai_action",
+                      "ai_generation",
+                      "field_ai_generation",
+                      "ai_chat",
+                      "app_generation"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/billing/credit-detail?month=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/reward/credit-list": {
+      "get": {
+        "summary": "Get reward credit list",
+        "description": "Get reward credit list for a space",
+        "tags": [
+          "reward",
+          "credit"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list of reward credits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "sourceType": {
+                        "type": "string",
+                        "enum": [
+                          "appSumoActivation",
+                          "socialShare",
+                          "system"
+                        ]
+                      },
+                      "rewardStatus": {
+                        "type": "string",
+                        "enum": [
+                          "pending",
+                          "approved",
+                          "rejected"
+                        ]
+                      },
+                      "rewardType": {
+                        "type": "string",
+                        "enum": [
+                          "credit"
+                        ]
+                      },
+                      "rewardAmount": {
+                        "type": "number"
+                      },
+                      "consumedAmount": {
+                        "type": "number"
+                      },
+                      "rewardTime": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "expiredTime": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "createdTime": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "sourceType",
+                      "rewardStatus",
+                      "rewardType",
+                      "rewardAmount",
+                      "consumedAmount",
+                      "createdTime"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/credit-list \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/credit-list';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/reward/credit-list',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/reward/credit-list\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

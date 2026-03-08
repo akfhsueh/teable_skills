@@ -1,0 +1,1919 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/comment/{tableId}/{recordId}/{commentId}/reaction": {
+      "post": {
+        "description": "create record comment reaction",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "commentId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reaction": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "reaction"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create comment reaction."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"reaction\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"reaction\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({reaction: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"reaction\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "delete record comment reaction",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "commentId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reaction": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "reaction"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully delete comment reaction."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"reaction\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction';\nconst options = {\n  method: 'DELETE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"reaction\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({reaction: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"reaction\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"DELETE\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D/reaction\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/{recordId}/{commentId}": {
+      "get": {
+        "description": "Get record comment detail",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the record's comment detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "p"
+                                  ]
+                                },
+                                "value": {
+                                  "nullable": true
+                                },
+                                "children": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "span"
+                                            ]
+                                          },
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "value"
+                                        ]
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "mention"
+                                            ]
+                                          },
+                                          "value": {
+                                            "type": "string"
+                                          },
+                                          "name": {
+                                            "type": "string"
+                                          },
+                                          "avatar": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "value"
+                                        ]
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "a"
+                                            ]
+                                          },
+                                          "value": {
+                                            "nullable": true
+                                          },
+                                          "url": {
+                                            "type": "string"
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "url",
+                                          "title"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "children"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "img"
+                                  ]
+                                },
+                                "value": {
+                                  "nullable": true
+                                },
+                                "path": {
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "type": "number"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "path"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "createdBy": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      },
+                      "reaction": {
+                        "type": "array",
+                        "nullable": true,
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "reaction": {
+                              "type": "string"
+                            },
+                            "user": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "avatar": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "reaction",
+                            "user"
+                          ]
+                        }
+                      },
+                      "createdTime": {
+                        "type": "string"
+                      },
+                      "lastModifiedTime": {
+                        "type": "string"
+                      },
+                      "quoteId": {
+                        "type": "string"
+                      },
+                      "deletedTime": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "content",
+                      "createdBy",
+                      "createdTime"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "patch": {
+        "description": "update record comment",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "commentId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "p"
+                              ]
+                            },
+                            "value": {
+                              "nullable": true
+                            },
+                            "children": {
+                              "type": "array",
+                              "items": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "span"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ]
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "mention"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "avatar": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ]
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "a"
+                                        ]
+                                      },
+                                      "value": {
+                                        "nullable": true
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "url",
+                                      "title"
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "children"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "img"
+                              ]
+                            },
+                            "value": {
+                              "nullable": true
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update comment."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"content\":[{\"type\":\"p\",\"value\":null,\"children\":[{\"type\":\"span\",\"value\":\"string\"}]}]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"content\":[{\"type\":\"p\",\"value\":null,\"children\":[{\"type\":\"span\",\"value\":\"string\"}]}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  content: [{type: 'p', value: null, children: [{type: 'span', value: 'string'}]}]\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"content\\\":[{\\\"type\\\":\\\"p\\\",\\\"value\\\":null,\\\"children\\\":[{\\\"type\\\":\\\"span\\\",\\\"value\\\":\\\"string\\\"}]}]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "delete record comment",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "commentId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully delete comment."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/%7BcommentId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/{recordId}/list": {
+      "get": {
+        "description": "Get record comment list",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 20,
+              "example": 20,
+              "description": "The record count you want to take, maximum is 1000"
+            },
+            "required": false,
+            "description": "The record count you want to take, maximum is 1000",
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "required": false,
+            "name": "includeCursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "forward"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "backward"
+                  ]
+                }
+              ]
+            },
+            "required": false,
+            "name": "direction",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list of record's comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "content": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "p"
+                                      ]
+                                    },
+                                    "value": {
+                                      "nullable": true
+                                    },
+                                    "children": {
+                                      "type": "array",
+                                      "items": {
+                                        "anyOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "span"
+                                                ]
+                                              },
+                                              "value": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "value"
+                                            ]
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "mention"
+                                                ]
+                                              },
+                                              "value": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "avatar": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "value"
+                                            ]
+                                          },
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "a"
+                                                ]
+                                              },
+                                              "value": {
+                                                "nullable": true
+                                              },
+                                              "url": {
+                                                "type": "string"
+                                              },
+                                              "title": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "type",
+                                              "url",
+                                              "title"
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "children"
+                                  ]
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "img"
+                                      ]
+                                    },
+                                    "value": {
+                                      "nullable": true
+                                    },
+                                    "path": {
+                                      "type": "string"
+                                    },
+                                    "width": {
+                                      "type": "number"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "path"
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          "createdBy": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "avatar": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "reaction": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "reaction": {
+                                  "type": "string"
+                                },
+                                "user": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "avatar": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "name"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "reaction",
+                                "user"
+                              ]
+                            }
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "lastModifiedTime": {
+                            "type": "string"
+                          },
+                          "quoteId": {
+                            "type": "string"
+                          },
+                          "deletedTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "content",
+                          "createdBy",
+                          "createdTime"
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "comments"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/list?take=20&cursor=SOME_STRING_VALUE&includeCursor=SOME_BOOLEAN_VALUE&direction=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/list?take=20&cursor=SOME_STRING_VALUE&includeCursor=SOME_BOOLEAN_VALUE&direction=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/list?take=20&cursor=SOME_STRING_VALUE&includeCursor=SOME_BOOLEAN_VALUE&direction=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/list?take=20&cursor=SOME_STRING_VALUE&includeCursor=SOME_BOOLEAN_VALUE&direction=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/{recordId}/create": {
+      "post": {
+        "description": "create record comment",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quoteId": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "p"
+                              ]
+                            },
+                            "value": {
+                              "nullable": true
+                            },
+                            "children": {
+                              "type": "array",
+                              "items": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "span"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ]
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "mention"
+                                        ]
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "avatar": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "value"
+                                    ]
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "a"
+                                        ]
+                                      },
+                                      "value": {
+                                        "nullable": true
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      },
+                                      "title": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "url",
+                                      "title"
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "children"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "img"
+                              ]
+                            },
+                            "value": {
+                              "nullable": true
+                            },
+                            "path": {
+                              "type": "string"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "path"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create comment."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/create \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"quoteId\":\"string\",\"content\":[{\"type\":\"p\",\"value\":null,\"children\":[{\"type\":\"span\",\"value\":\"string\"}]}]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/create';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"quoteId\":\"string\",\"content\":[{\"type\":\"p\",\"value\":null,\"children\":[{\"type\":\"span\",\"value\":\"string\"}]}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/create',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  quoteId: 'string',\n  content: [{type: 'p', value: null, children: [{type: 'span', value: 'string'}]}]\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"quoteId\\\":\\\"string\\\",\\\"content\\\":[{\\\"type\\\":\\\"p\\\",\\\"value\\\":null,\\\"children\\\":[{\\\"type\\\":\\\"span\\\",\\\"value\\\":\\\"string\\\"}]}]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/create\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/{recordId}/subscribe": {
+      "post": {
+        "description": "subscribe record comment's active",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully subscribe record comment."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "unsubscribe record comment",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully subscribe record comment."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "get": {
+        "description": "get record comment subscribe detail",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get record comment subscribe detail.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "tableId": {
+                      "type": "string"
+                    },
+                    "recordId": {
+                      "type": "string"
+                    },
+                    "createdBy": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "tableId",
+                    "recordId",
+                    "createdBy"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/subscribe\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/{recordId}/attachment/{path}": {
+      "get": {
+        "description": "Get record comment attachment url",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the record's comment attachment url",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/attachment/%7Bpath%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/attachment/%7Bpath%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/attachment/%7Bpath%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/attachment/%7Bpath%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/count": {
+      "get": {
+        "description": "Get record comment counts by query",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id"
+            },
+            "required": false,
+            "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id",
+            "name": "projection",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "text"
+              ],
+              "default": "json",
+              "description": "Define the return value formate, you can set it to text if you only need simple string value"
+            },
+            "required": false,
+            "description": "Define the return value formate, you can set it to text if you only need simple string value",
+            "name": "cellFormat",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "id",
+                "name",
+                "dbFieldName"
+              ],
+              "default": "name",
+              "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+            },
+            "required": false,
+            "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details",
+            "name": "fieldKeyType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "{field} = 'Completed' AND {field} > 5",
+              "deprecated": true
+            },
+            "required": false,
+            "name": "filterByTql",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear."
+            },
+            "required": false,
+            "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear.",
+            "name": "filterLinkCellCandidate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field"
+            },
+            "required": false,
+            "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field",
+            "name": "filterLinkCellSelected",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Filter selected records by record ids"
+            },
+            "required": false,
+            "description": "Filter selected records by record ids",
+            "name": "selectedRecordIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of sort objects that specifies how the records should be ordered."
+            },
+            "required": false,
+            "description": "An array of sort objects that specifies how the records should be ordered.",
+            "name": "orderBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group objects that specifies how the records should be grouped."
+            },
+            "required": false,
+            "description": "An array of group objects that specifies how the records should be grouped.",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group ids that specifies which groups are collapsed"
+            },
+            "required": false,
+            "description": "An array of group ids that specifies which groups are collapsed",
+            "name": "collapsedGroupIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "qry_xxxxxxxx",
+              "description": "When provided, other query parameters will be merged with the saved ones."
+            },
+            "required": false,
+            "description": "When provided, other query parameters will be merged with the saved ones.",
+            "name": "queryId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 100,
+              "example": 100,
+              "description": "The record count you want to take, maximum is 1000"
+            },
+            "required": false,
+            "description": "The record count you want to take, maximum is 1000",
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 0,
+              "example": 0,
+              "description": "The records count you want to skip"
+            },
+            "required": false,
+            "description": "The records count you want to skip",
+            "name": "skip",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the comment counts by query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "recordId": {
+                        "type": "string"
+                      },
+                      "count": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "recordId",
+                      "count"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/count?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/count?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/count?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/comment/%7BtableId%7D/count?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/comment/{tableId}/{recordId}/count": {
+      "get": {
+        "description": "Get record comment count",
+        "tags": [
+          "comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the comment count by query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "count"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/count \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/comment/%7BtableId%7D/%7BrecordId%7D/count';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/comment/%7BtableId%7D/%7BrecordId%7D/count',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/comment/%7BtableId%7D/%7BrecordId%7D/count\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}
