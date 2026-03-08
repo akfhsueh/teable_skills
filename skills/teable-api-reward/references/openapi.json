@@ -1,0 +1,1329 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/space/{spaceId}/reward/claim": {
+      "post": {
+        "summary": "Claim a reward",
+        "description": "Submit a reward claim (e.g., social share)",
+        "tags": [
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "sourceType": {
+                        "type": "string",
+                        "enum": [
+                          "socialShare"
+                        ]
+                      },
+                      "sourceMetaData": {
+                        "type": "object",
+                        "properties": {
+                          "platform": {
+                            "type": "string",
+                            "enum": [
+                              "x",
+                              "linkedin"
+                            ]
+                          },
+                          "postUrl": {
+                            "type": "string"
+                          },
+                          "postId": {
+                            "type": "string"
+                          },
+                          "snapshotId": {
+                            "type": "string"
+                          },
+                          "content": {
+                            "type": "string"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "followerCount": {
+                            "type": "number"
+                          },
+                          "verifyResult": {
+                            "type": "object",
+                            "properties": {
+                              "isValid": {
+                                "type": "boolean"
+                              },
+                              "errors": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "message": {
+                                      "type": "string"
+                                    },
+                                    "localization": {
+                                      "type": "object",
+                                      "properties": {
+                                        "i18nKey": {
+                                          "type": "string"
+                                        },
+                                        "context": {
+                                          "type": "object",
+                                          "additionalProperties": {
+                                            "nullable": true
+                                          }
+                                        }
+                                      },
+                                      "required": [
+                                        "i18nKey"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "message"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": [
+                              "isValid"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "platform",
+                          "postUrl"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "sourceType",
+                      "sourceMetaData"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "sourceType": {
+                        "type": "string",
+                        "enum": [
+                          "appSumoActivation"
+                        ]
+                      },
+                      "sourceMetaData": {
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "sourceType"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reward claim submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "rewardStatus": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "approved",
+                        "rejected"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "rewardStatus"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/claim \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"sourceType\":\"socialShare\",\"sourceMetaData\":{\"platform\":\"x\",\"postUrl\":\"string\",\"postId\":\"string\",\"snapshotId\":\"string\",\"content\":\"string\",\"username\":\"string\",\"followerCount\":0,\"verifyResult\":{\"isValid\":true,\"errors\":[{\"message\":\"string\",\"localization\":{\"i18nKey\":\"string\",\"context\":{\"property1\":null,\"property2\":null}}}]}}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/claim';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"sourceType\":\"socialShare\",\"sourceMetaData\":{\"platform\":\"x\",\"postUrl\":\"string\",\"postId\":\"string\",\"snapshotId\":\"string\",\"content\":\"string\",\"username\":\"string\",\"followerCount\":0,\"verifyResult\":{\"isValid\":true,\"errors\":[{\"message\":\"string\",\"localization\":{\"i18nKey\":\"string\",\"context\":{\"property1\":null,\"property2\":null}}}]}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/reward/claim',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  sourceType: 'socialShare',\n  sourceMetaData: {\n    platform: 'x',\n    postUrl: 'string',\n    postId: 'string',\n    snapshotId: 'string',\n    content: 'string',\n    username: 'string',\n    followerCount: 0,\n    verifyResult: {\n      isValid: true,\n      errors: [\n        {\n          message: 'string',\n          localization: {i18nKey: 'string', context: {property1: null, property2: null}}\n        }\n      ]\n    }\n  }\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"sourceType\\\":\\\"socialShare\\\",\\\"sourceMetaData\\\":{\\\"platform\\\":\\\"x\\\",\\\"postUrl\\\":\\\"string\\\",\\\"postId\\\":\\\"string\\\",\\\"snapshotId\\\":\\\"string\\\",\\\"content\\\":\\\"string\\\",\\\"username\\\":\\\"string\\\",\\\"followerCount\\\":0,\\\"verifyResult\\\":{\\\"isValid\\\":true,\\\"errors\\\":[{\\\"message\\\":\\\"string\\\",\\\"localization\\\":{\\\"i18nKey\\\":\\\"string\\\",\\\"context\\\":{\\\"property1\\\":null,\\\"property2\\\":null}}}]}}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/space/%7BspaceId%7D/reward/claim\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/reward/credit-list": {
+      "get": {
+        "summary": "Get reward credit list",
+        "description": "Get reward credit list for a space",
+        "tags": [
+          "reward",
+          "credit"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list of reward credits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "sourceType": {
+                        "type": "string",
+                        "enum": [
+                          "appSumoActivation",
+                          "socialShare",
+                          "system"
+                        ]
+                      },
+                      "rewardStatus": {
+                        "type": "string",
+                        "enum": [
+                          "pending",
+                          "approved",
+                          "rejected"
+                        ]
+                      },
+                      "rewardType": {
+                        "type": "string",
+                        "enum": [
+                          "credit"
+                        ]
+                      },
+                      "rewardAmount": {
+                        "type": "number"
+                      },
+                      "consumedAmount": {
+                        "type": "number"
+                      },
+                      "rewardTime": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "expiredTime": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "createdTime": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "sourceType",
+                      "rewardStatus",
+                      "rewardType",
+                      "rewardAmount",
+                      "consumedAmount",
+                      "createdTime"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/credit-list \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/credit-list';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/reward/credit-list',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/reward/credit-list\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/space/{spaceId}/reward/{rewardId}": {
+      "get": {
+        "summary": "Get reward details",
+        "description": "Get details of a specific reward including its verification status",
+        "tags": [
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "rewardId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reward details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "spaceId": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "sourceType": {
+                      "type": "string",
+                      "enum": [
+                        "appSumoActivation",
+                        "socialShare",
+                        "system"
+                      ]
+                    },
+                    "sourceMetaData": {
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string",
+                          "enum": [
+                            "x",
+                            "linkedin"
+                          ]
+                        },
+                        "postUrl": {
+                          "type": "string"
+                        },
+                        "postId": {
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "followerCount": {
+                          "type": "number"
+                        },
+                        "verifyResult": {
+                          "type": "object",
+                          "properties": {
+                            "isValid": {
+                              "type": "boolean"
+                            },
+                            "errors": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "localization": {
+                                    "type": "object",
+                                    "properties": {
+                                      "i18nKey": {
+                                        "type": "string"
+                                      },
+                                      "context": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                          "nullable": true
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "i18nKey"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "message"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "isValid"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "platform",
+                        "postUrl"
+                      ]
+                    },
+                    "rewardStatus": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "approved",
+                        "rejected"
+                      ]
+                    },
+                    "rewardAmount": {
+                      "type": "number"
+                    },
+                    "consumedAmount": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "rewardTime": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "expiredTime": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdTime": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "spaceId",
+                    "userId",
+                    "sourceType",
+                    "sourceMetaData",
+                    "rewardStatus",
+                    "rewardAmount",
+                    "createdTime"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/%7BrewardId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/reward/%7BrewardId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/reward/%7BrewardId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/reward/%7BrewardId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/reward/overview": {
+      "get": {
+        "summary": "Get admin reward overview by spaces",
+        "description": "Get aggregated reward statistics grouped by space for admin management. Returns pending, approved, consumed, available and expiring amounts per space.",
+        "tags": [
+          "admin",
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Search by space name"
+            },
+            "required": false,
+            "description": "Search by space name",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by created time from (ISO string)"
+            },
+            "required": false,
+            "description": "Filter by created time from (ISO string)",
+            "name": "createdTimeFrom",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by created time to (ISO string)"
+            },
+            "required": false,
+            "description": "Filter by created time to (ISO string)",
+            "name": "createdTimeTo",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "required": false,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "required": false,
+            "name": "pageSize",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the reward overview grouped by spaces",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "space": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "pendingCount": {
+                            "type": "integer"
+                          },
+                          "rejectedCount": {
+                            "type": "integer"
+                          },
+                          "approvedCount": {
+                            "type": "integer"
+                          },
+                          "approvedAmount": {
+                            "type": "integer"
+                          },
+                          "consumedAmount": {
+                            "type": "number"
+                          },
+                          "availableAmount": {
+                            "type": "number"
+                          },
+                          "expiringSoonAmount": {
+                            "type": "number"
+                          },
+                          "updatedTime": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "space",
+                          "user",
+                          "pendingCount",
+                          "rejectedCount",
+                          "approvedCount",
+                          "approvedAmount",
+                          "consumedAmount",
+                          "availableAmount",
+                          "expiringSoonAmount",
+                          "updatedTime"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "total"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/admin/reward/overview?search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/reward/overview?search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/reward/overview?search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/reward/overview?search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/reward/list": {
+      "get": {
+        "summary": "Get admin reward list",
+        "description": "Get paginated and filtered list of reward for admin management. Supports filtering by space, status, platform, verification result, and search.",
+        "tags": [
+          "admin",
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by space ID"
+            },
+            "required": false,
+            "description": "Filter by space ID",
+            "name": "spaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "appSumoActivation",
+                "socialShare",
+                "system"
+              ],
+              "description": "Filter by reward source type"
+            },
+            "required": false,
+            "description": "Filter by reward source type",
+            "name": "sourceType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ],
+              "description": "Filter by reward status"
+            },
+            "required": false,
+            "description": "Filter by reward status",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "x",
+                "linkedin"
+              ],
+              "description": "Filter by social platform"
+            },
+            "required": false,
+            "description": "Filter by social platform",
+            "name": "platform",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "description": "Filter by verification result"
+            },
+            "required": false,
+            "description": "Filter by verification result",
+            "name": "isValid",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Search by postUrl, uniqueKey or userId"
+            },
+            "required": false,
+            "description": "Search by postUrl, uniqueKey or userId",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by created time from (ISO string)"
+            },
+            "required": false,
+            "description": "Filter by created time from (ISO string)",
+            "name": "createdTimeFrom",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by created time to (ISO string)"
+            },
+            "required": false,
+            "description": "Filter by created time to (ISO string)",
+            "name": "createdTimeTo",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "required": false,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "required": false,
+            "name": "pageSize",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the paginated list of reward",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "space": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "approved",
+                              "rejected"
+                            ]
+                          },
+                          "sourceType": {
+                            "type": "string",
+                            "enum": [
+                              "appSumoActivation",
+                              "socialShare",
+                              "system"
+                            ]
+                          },
+                          "sourceMetaData": {
+                            "nullable": true
+                          },
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "consumedAmount": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "remainingAmount": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "rewardTime": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "expiredTime": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "space",
+                          "user",
+                          "status",
+                          "sourceType",
+                          "amount",
+                          "consumedAmount",
+                          "remainingAmount",
+                          "rewardTime",
+                          "expiredTime",
+                          "createdTime"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "total"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/admin/reward/list?spaceId=SOME_STRING_VALUE&sourceType=SOME_STRING_VALUE&status=SOME_STRING_VALUE&platform=SOME_STRING_VALUE&isValid=SOME_STRING_VALUE&search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/reward/list?spaceId=SOME_STRING_VALUE&sourceType=SOME_STRING_VALUE&status=SOME_STRING_VALUE&platform=SOME_STRING_VALUE&isValid=SOME_STRING_VALUE&search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/reward/list?spaceId=SOME_STRING_VALUE&sourceType=SOME_STRING_VALUE&status=SOME_STRING_VALUE&platform=SOME_STRING_VALUE&isValid=SOME_STRING_VALUE&search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/reward/list?spaceId=SOME_STRING_VALUE&sourceType=SOME_STRING_VALUE&status=SOME_STRING_VALUE&platform=SOME_STRING_VALUE&isValid=SOME_STRING_VALUE&search=SOME_STRING_VALUE&createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE&page=SOME_INTEGER_VALUE&pageSize=SOME_INTEGER_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/reward/spaces": {
+      "get": {
+        "summary": "Get all spaces with reward records",
+        "description": "Get a list of all spaces that have reward records for admin filtering",
+        "tags": [
+          "admin",
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list of spaces with reward records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "items"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/admin/reward/spaces \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/reward/spaces';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/reward/spaces',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/reward/spaces\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/reward/{rewardId}": {
+      "get": {
+        "summary": "Get admin reward detail",
+        "description": "Get detailed information of a specific reward including full metadata",
+        "tags": [
+          "admin",
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "rewardId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the reward detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "spaceId": {
+                      "type": "string"
+                    },
+                    "spaceName": {
+                      "type": "string"
+                    },
+                    "sourceType": {
+                      "type": "string"
+                    },
+                    "sourceMetaData": {
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string",
+                          "enum": [
+                            "x",
+                            "linkedin"
+                          ]
+                        },
+                        "postUrl": {
+                          "type": "string"
+                        },
+                        "postId": {
+                          "type": "string"
+                        },
+                        "snapshotId": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "followerCount": {
+                          "type": "number"
+                        },
+                        "verifyResult": {
+                          "type": "object",
+                          "properties": {
+                            "isValid": {
+                              "type": "boolean"
+                            },
+                            "errors": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "message": {
+                                    "type": "string"
+                                  },
+                                  "localization": {
+                                    "type": "object",
+                                    "properties": {
+                                      "i18nKey": {
+                                        "type": "string"
+                                      },
+                                      "context": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                          "nullable": true
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "i18nKey"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "message"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "isValid"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "platform",
+                        "postUrl"
+                      ]
+                    },
+                    "uniqueKey": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "approved",
+                        "rejected"
+                      ]
+                    },
+                    "amount": {
+                      "type": "integer"
+                    },
+                    "consumedAmount": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "remainingAmount": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "rewardTime": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "expiredTime": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdTime": {
+                      "type": "string"
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "userId",
+                    "spaceId",
+                    "spaceName",
+                    "sourceType",
+                    "sourceMetaData",
+                    "uniqueKey",
+                    "status",
+                    "amount",
+                    "consumedAmount",
+                    "remainingAmount",
+                    "rewardTime",
+                    "expiredTime",
+                    "createdTime",
+                    "lastModifiedTime"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/admin/reward/%7BrewardId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/reward/%7BrewardId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/reward/%7BrewardId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/reward/%7BrewardId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/reward/export/{spaceId}": {
+      "get": {
+        "summary": "Export admin reward list as CSV",
+        "description": "Export all reward records for a specific space as CSV file. Supports filtering by date range.",
+        "tags": [
+          "admin",
+          "reward"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Space ID to export rewards for"
+            },
+            "required": true,
+            "description": "Space ID to export rewards for",
+            "name": "spaceId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by created time from (ISO string)"
+            },
+            "required": false,
+            "description": "Filter by created time from (ISO string)",
+            "name": "createdTimeFrom",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter by created time to (ISO string)"
+            },
+            "required": false,
+            "description": "Filter by created time to (ISO string)",
+            "name": "createdTimeTo",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the CSV file with reward records",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/admin/reward/export/%7BspaceId%7D?createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/reward/export/%7BspaceId%7D?createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/reward/export/%7BspaceId%7D?createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/reward/export/%7BspaceId%7D?createdTimeFrom=SOME_STRING_VALUE&createdTimeTo=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

@@ -1,0 +1,601 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/unsubscribe/{token}": {
+      "get": {
+        "description": "Get unsubscribe information",
+        "tags": [
+          "unsubscribe"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "token",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "automation",
+                        "notify",
+                        "system",
+                        "verifyCode",
+                        "resetPassword",
+                        "invite",
+                        "common",
+                        "exportBase",
+                        "collaboratorCellTag",
+                        "collaboratorMultiRowTag",
+                        "notifyMerge",
+                        "waitlistInvite",
+                        "automationSendEmailAction"
+                      ]
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "subscriptionStatus": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "baseId",
+                    "email"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/unsubscribe/%7Btoken%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/unsubscribe/%7Btoken%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/unsubscribe/%7Btoken%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/unsubscribe/%7Btoken%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "post": {
+        "description": "Update subscription status",
+        "tags": [
+          "unsubscribe"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "token",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscriptionStatus": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "subscriptionStatus"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/unsubscribe/%7Btoken%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"subscriptionStatus\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/unsubscribe/%7Btoken%7D';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"subscriptionStatus\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/unsubscribe/%7Btoken%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({subscriptionStatus: true}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"subscriptionStatus\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/unsubscribe/%7Btoken%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/unsubscribe/list/{baseId}": {
+      "get": {
+        "description": "Get paginated unsubscribe list by baseId",
+        "tags": [
+          "unsubscribe"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "required": false,
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns paginated unsubscribe list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "createdTime": {
+                                "type": "string"
+                              },
+                              "sourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "empty"
+                                ]
+                              },
+                              "sourceMetaData": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "email",
+                              "createdTime",
+                              "sourceType",
+                              "sourceMetaData"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "createdTime": {
+                                "type": "string"
+                              },
+                              "sourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "legacy"
+                                ]
+                              },
+                              "sourceMetaData": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "email",
+                              "createdTime",
+                              "sourceType",
+                              "sourceMetaData"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "createdTime": {
+                                "type": "string"
+                              },
+                              "sourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "import"
+                                ]
+                              },
+                              "sourceMetaData": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "email",
+                              "createdTime",
+                              "sourceType",
+                              "sourceMetaData"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "email": {
+                                "type": "string"
+                              },
+                              "createdTime": {
+                                "type": "string"
+                              },
+                              "sourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "emailLink"
+                                ]
+                              },
+                              "sourceMetaData": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "automationSendEmailAction"
+                                    ]
+                                  },
+                                  "workflow": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "name"
+                                    ]
+                                  },
+                                  "action": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "type": {
+                                        "type": "string"
+                                      },
+                                      "category": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "type",
+                                      "category"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "action"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "email",
+                              "createdTime",
+                              "sourceType",
+                              "sourceMetaData"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "hasMore": {
+                      "type": "boolean"
+                    },
+                    "pageSize": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "hasMore",
+                    "pageSize"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/unsubscribe/list/%7BbaseId%7D?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE&search=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/unsubscribe/list/%7BbaseId%7D?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE&search=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/unsubscribe/list/%7BbaseId%7D?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE&search=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/unsubscribe/list/%7BbaseId%7D?pageSize=SOME_INTEGER_VALUE&cursor=SOME_STRING_VALUE&search=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/unsubscribe/export-list/{baseId}": {
+      "get": {
+        "description": "Export unsubscribe list",
+        "tags": [
+          "unsubscribe"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Export unsubscribe list successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/unsubscribe/export-list/%7BbaseId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/unsubscribe/export-list/%7BbaseId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/unsubscribe/export-list/%7BbaseId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/unsubscribe/export-list/%7BbaseId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/unsubscribe/import-list/{baseId}": {
+      "post": {
+        "description": "Import unsubscribe list",
+        "tags": [
+          "unsubscribe"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notify": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "example": "xxxxxxxxxxx",
+                        "description": "Token for the uploaded file"
+                      },
+                      "size": {
+                        "type": "number",
+                        "example": 1024,
+                        "description": "File size in bytes"
+                      },
+                      "url": {
+                        "type": "string",
+                        "example": "/bucket/xxxxx",
+                        "description": "URL of the uploaded file"
+                      },
+                      "path": {
+                        "type": "string",
+                        "example": "/table/xxxxxx",
+                        "description": "file path"
+                      },
+                      "mimetype": {
+                        "type": "string",
+                        "example": "video/mp4",
+                        "description": "MIME type of the uploaded file"
+                      },
+                      "width": {
+                        "type": "number",
+                        "example": 100,
+                        "description": "Image width of the uploaded file"
+                      },
+                      "height": {
+                        "type": "number",
+                        "example": 100,
+                        "description": "Image height of the uploaded file"
+                      },
+                      "presignedUrl": {
+                        "type": "string",
+                        "description": "Preview url"
+                      }
+                    },
+                    "required": [
+                      "token",
+                      "size",
+                      "url",
+                      "path",
+                      "mimetype",
+                      "presignedUrl"
+                    ]
+                  }
+                },
+                "required": [
+                  "notify"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/unsubscribe/import-list/%7BbaseId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"notify\":{\"token\":\"xxxxxxxxxxx\",\"size\":1024,\"url\":\"/bucket/xxxxx\",\"path\":\"/table/xxxxxx\",\"mimetype\":\"video/mp4\",\"width\":100,\"height\":100,\"presignedUrl\":\"string\"}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/unsubscribe/import-list/%7BbaseId%7D';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"notify\":{\"token\":\"xxxxxxxxxxx\",\"size\":1024,\"url\":\"/bucket/xxxxx\",\"path\":\"/table/xxxxxx\",\"mimetype\":\"video/mp4\",\"width\":100,\"height\":100,\"presignedUrl\":\"string\"}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/unsubscribe/import-list/%7BbaseId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  notify: {\n    token: 'xxxxxxxxxxx',\n    size: 1024,\n    url: '/bucket/xxxxx',\n    path: '/table/xxxxxx',\n    mimetype: 'video/mp4',\n    width: 100,\n    height: 100,\n    presignedUrl: 'string'\n  }\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"notify\\\":{\\\"token\\\":\\\"xxxxxxxxxxx\\\",\\\"size\\\":1024,\\\"url\\\":\\\"/bucket/xxxxx\\\",\\\"path\\\":\\\"/table/xxxxxx\\\",\\\"mimetype\\\":\\\"video/mp4\\\",\\\"width\\\":100,\\\"height\\\":100,\\\"presignedUrl\\\":\\\"string\\\"}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/unsubscribe/import-list/%7BbaseId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

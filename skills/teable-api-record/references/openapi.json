@@ -1,0 +1,3580 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/table/{tableId}/record/{recordId}": {
+      "get": {
+        "summary": "Get record",
+        "description": "Retrieve a single record by its ID with options to specify field projections and output format.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id"
+            },
+            "required": false,
+            "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id",
+            "name": "projection",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "text"
+              ],
+              "default": "json",
+              "description": "Define the return value formate, you can set it to text if you only need simple string value"
+            },
+            "required": false,
+            "description": "Define the return value formate, you can set it to text if you only need simple string value",
+            "name": "cellFormat",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "id",
+                "name",
+                "dbFieldName"
+              ],
+              "default": "name",
+              "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+            },
+            "required": false,
+            "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details",
+            "name": "fieldKeyType",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The record id."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "primary field value"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                    },
+                    "autoNumber": {
+                      "type": "number",
+                      "description": "Auto number, a unique identifier for each record"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "description": "Created time, date ISO string (new Date().toISOString)."
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "Last modified time, date ISO string (new Date().toISOString)."
+                    },
+                    "createdBy": {
+                      "type": "string",
+                      "description": "Created by, user name"
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "Last modified by, user name"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      },
+                      "description": "Permissions for the record"
+                    },
+                    "undeletable": {
+                      "type": "boolean",
+                      "description": "Whether the record is undeletable"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fields"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update record",
+        "description": "Update a single record by its ID with support for field value typecast and record reordering.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fieldKeyType": {
+                    "type": "string",
+                    "enum": [
+                      "id",
+                      "name",
+                      "dbFieldName"
+                    ],
+                    "default": "name",
+                    "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+                  },
+                  "typecast": {
+                    "type": "boolean",
+                    "description": "Automatic data conversion from cellValues if the typecast parameter is passed in. Automatic conversion is disabled by default to ensure data integrity, but it may be helpful for integrating with 3rd party data sources."
+                  },
+                  "record": {
+                    "type": "object",
+                    "properties": {
+                      "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "nullable": true
+                        },
+                        "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                      }
+                    },
+                    "required": [
+                      "fields"
+                    ]
+                  },
+                  "order": {
+                    "type": "object",
+                    "properties": {
+                      "viewId": {
+                        "type": "string",
+                        "description": "You can only specify order in one view when create record (will create a order index automatically)"
+                      },
+                      "anchorId": {
+                        "type": "string",
+                        "description": "The record id to anchor to"
+                      },
+                      "position": {
+                        "type": "string",
+                        "enum": [
+                          "before",
+                          "after"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "viewId",
+                      "anchorId",
+                      "position"
+                    ],
+                    "description": "Where this record to insert to (Optional)"
+                  }
+                },
+                "required": [
+                  "record"
+                ],
+                "description": "Update record by id"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns record data after update.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The record id."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "primary field value"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                    },
+                    "autoNumber": {
+                      "type": "number",
+                      "description": "Auto number, a unique identifier for each record"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "description": "Created time, date ISO string (new Date().toISOString)."
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "Last modified time, date ISO string (new Date().toISOString)."
+                    },
+                    "createdBy": {
+                      "type": "string",
+                      "description": "Created by, user name"
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "Last modified by, user name"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      },
+                      "description": "Permissions for the record"
+                    },
+                    "undeletable": {
+                      "type": "boolean",
+                      "description": "Whether the record is undeletable"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fields"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"fieldKeyType\":\"id\",\"typecast\":true,\"record\":{\"fields\":{\"property1\":null,\"property2\":null}},\"order\":{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"fieldKeyType\":\"id\",\"typecast\":true,\"record\":{\"fields\":{\"property1\":null,\"property2\":null}},\"order\":{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  fieldKeyType: 'id',\n  typecast: true,\n  record: {fields: {property1: null, property2: null}},\n  order: {viewId: 'string', anchorId: 'string', position: 'before'}\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"fieldKeyType\\\":\\\"id\\\",\\\"typecast\\\":true,\\\"record\\\":{\\\"fields\\\":{\\\"property1\\\":null,\\\"property2\\\":null}},\\\"order\\\":{\\\"viewId\\\":\\\"string\\\",\\\"anchorId\\\":\\\"string\\\",\\\"position\\\":\\\"before\\\"}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete record",
+        "description": "Permanently delete a single record by its ID.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record": {
+      "get": {
+        "summary": "List records",
+        "description": "Retrieve a list of records with support for filtering, sorting, grouping, and pagination. The response includes record data and optional group information.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id"
+            },
+            "required": false,
+            "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id",
+            "name": "projection",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "text"
+              ],
+              "default": "json",
+              "description": "Define the return value formate, you can set it to text if you only need simple string value"
+            },
+            "required": false,
+            "description": "Define the return value formate, you can set it to text if you only need simple string value",
+            "name": "cellFormat",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "id",
+                "name",
+                "dbFieldName"
+              ],
+              "default": "name",
+              "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+            },
+            "required": false,
+            "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details",
+            "name": "fieldKeyType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "{field} = 'Completed' AND {field} > 5",
+              "deprecated": true
+            },
+            "required": false,
+            "name": "filterByTql",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear."
+            },
+            "required": false,
+            "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear.",
+            "name": "filterLinkCellCandidate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field"
+            },
+            "required": false,
+            "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field",
+            "name": "filterLinkCellSelected",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Filter selected records by record ids"
+            },
+            "required": false,
+            "description": "Filter selected records by record ids",
+            "name": "selectedRecordIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of sort objects that specifies how the records should be ordered."
+            },
+            "required": false,
+            "description": "An array of sort objects that specifies how the records should be ordered.",
+            "name": "orderBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group objects that specifies how the records should be grouped."
+            },
+            "required": false,
+            "description": "An array of group objects that specifies how the records should be grouped.",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group ids that specifies which groups are collapsed"
+            },
+            "required": false,
+            "description": "An array of group ids that specifies which groups are collapsed",
+            "name": "collapsedGroupIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "qry_xxxxxxxx",
+              "description": "When provided, other query parameters will be merged with the saved ones."
+            },
+            "required": false,
+            "description": "When provided, other query parameters will be merged with the saved ones.",
+            "name": "queryId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 100,
+              "example": 100,
+              "description": "The record count you want to take, maximum is 1000"
+            },
+            "required": false,
+            "description": "The record count you want to take, maximum is 1000",
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 0,
+              "example": 0,
+              "description": "The records count you want to skip"
+            },
+            "required": false,
+            "description": "The records count you want to skip",
+            "name": "skip",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The record id."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "primary field value"
+                          },
+                          "fields": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "nullable": true
+                            },
+                            "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                          },
+                          "autoNumber": {
+                            "type": "number",
+                            "description": "Auto number, a unique identifier for each record"
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "description": "Created time, date ISO string (new Date().toISOString)."
+                          },
+                          "lastModifiedTime": {
+                            "type": "string",
+                            "description": "Last modified time, date ISO string (new Date().toISOString)."
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "description": "Created by, user name"
+                          },
+                          "lastModifiedBy": {
+                            "type": "string",
+                            "description": "Last modified by, user name"
+                          },
+                          "permissions": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Permissions for the record"
+                          },
+                          "undeletable": {
+                            "type": "boolean",
+                            "description": "Whether the record is undeletable"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields"
+                        ]
+                      },
+                      "example": [
+                        {
+                          "id": "recXXXXXXX",
+                          "fields": {
+                            "single line text": "text value"
+                          }
+                        }
+                      ],
+                      "description": "Array of record objects "
+                    },
+                    "extra": {
+                      "type": "object",
+                      "properties": {
+                        "groupPoints": {
+                          "type": "array",
+                          "nullable": true,
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "number",
+                                    "enum": [
+                                      0
+                                    ]
+                                  },
+                                  "depth": {
+                                    "type": "number",
+                                    "maximum": 2,
+                                    "minimum": 0
+                                  },
+                                  "value": {
+                                    "nullable": true
+                                  },
+                                  "isCollapsed": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "type",
+                                  "depth",
+                                  "isCollapsed"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "number",
+                                    "enum": [
+                                      1
+                                    ]
+                                  },
+                                  "count": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "type",
+                                  "count"
+                                ]
+                              }
+                            ]
+                          },
+                          "description": "Group points for the view"
+                        },
+                        "allGroupHeaderRefs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "depth": {
+                                "type": "number",
+                                "maximum": 2,
+                                "minimum": 0
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "depth"
+                            ]
+                          },
+                          "description": "All group header refs for the view, including collapsed group headers"
+                        },
+                        "searchHitIndex": {
+                          "type": "array",
+                          "nullable": true,
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "recordId": {
+                                "type": "string"
+                              },
+                              "fieldId": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "recordId",
+                              "fieldId"
+                            ]
+                          },
+                          "description": "The index of the records that match the search, highlight the records"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "records"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/record?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create records",
+        "description": "Create one or multiple records with support for field value typecast and custom record ordering.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fieldKeyType": {
+                    "type": "string",
+                    "enum": [
+                      "id",
+                      "name",
+                      "dbFieldName"
+                    ],
+                    "default": "name",
+                    "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+                  },
+                  "typecast": {
+                    "type": "boolean",
+                    "description": "Automatic data conversion from cellValues if the typecast parameter is passed in. Automatic conversion is disabled by default to ensure data integrity, but it may be helpful for integrating with 3rd party data sources."
+                  },
+                  "order": {
+                    "type": "object",
+                    "properties": {
+                      "viewId": {
+                        "type": "string",
+                        "description": "You can only specify order in one view when create record (will create a order index automatically)"
+                      },
+                      "anchorId": {
+                        "type": "string",
+                        "description": "The record id to anchor to"
+                      },
+                      "position": {
+                        "type": "string",
+                        "enum": [
+                          "before",
+                          "after"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "viewId",
+                      "anchorId",
+                      "position"
+                    ],
+                    "description": "Where this record to insert to (Optional)"
+                  },
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "fields": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          },
+                          "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                        }
+                      },
+                      "required": [
+                        "fields"
+                      ]
+                    },
+                    "example": [
+                      {
+                        "fields": {
+                          "single line text": "text value"
+                        }
+                      }
+                    ],
+                    "description": "Array of record objects "
+                  }
+                },
+                "required": [
+                  "records"
+                ],
+                "description": "Multiple Create records"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns data about the records.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The record id."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "primary field value"
+                          },
+                          "fields": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "nullable": true
+                            },
+                            "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                          },
+                          "autoNumber": {
+                            "type": "number",
+                            "description": "Auto number, a unique identifier for each record"
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "description": "Created time, date ISO string (new Date().toISOString)."
+                          },
+                          "lastModifiedTime": {
+                            "type": "string",
+                            "description": "Last modified time, date ISO string (new Date().toISOString)."
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "description": "Created by, user name"
+                          },
+                          "lastModifiedBy": {
+                            "type": "string",
+                            "description": "Last modified by, user name"
+                          },
+                          "permissions": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Permissions for the record"
+                          },
+                          "undeletable": {
+                            "type": "boolean",
+                            "description": "Whether the record is undeletable"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields"
+                        ]
+                      },
+                      "example": [
+                        {
+                          "id": "recXXXXXXX",
+                          "fields": {
+                            "single line text": "text value"
+                          }
+                        }
+                      ],
+                      "description": "Array of record objects "
+                    }
+                  },
+                  "required": [
+                    "records"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"fieldKeyType\":\"id\",\"typecast\":true,\"order\":{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"},\"records\":[{\"fields\":{\"single line text\":\"text value\"}}]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"fieldKeyType\":\"id\",\"typecast\":true,\"order\":{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"},\"records\":[{\"fields\":{\"single line text\":\"text value\"}}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  fieldKeyType: 'id',\n  typecast: true,\n  order: {viewId: 'string', anchorId: 'string', position: 'before'},\n  records: [{fields: {'single line text': 'text value'}}]\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"fieldKeyType\\\":\\\"id\\\",\\\"typecast\\\":true,\\\"order\\\":{\\\"viewId\\\":\\\"string\\\",\\\"anchorId\\\":\\\"string\\\",\\\"position\\\":\\\"before\\\"},\\\"records\\\":[{\\\"fields\\\":{\\\"single line text\\\":\\\"text value\\\"}}]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update multiple records",
+        "description": "Update multiple records in a single request with support for field value typecast and record reordering.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fieldKeyType": {
+                    "type": "string",
+                    "enum": [
+                      "id",
+                      "name",
+                      "dbFieldName"
+                    ],
+                    "default": "name",
+                    "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+                  },
+                  "typecast": {
+                    "type": "boolean",
+                    "description": "Automatic data conversion from cellValues if the typecast parameter is passed in. Automatic conversion is disabled by default to ensure data integrity, but it may be helpful for integrating with 3rd party data sources."
+                  },
+                  "records": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          },
+                          "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "fields"
+                      ]
+                    }
+                  },
+                  "order": {
+                    "type": "object",
+                    "properties": {
+                      "viewId": {
+                        "type": "string",
+                        "description": "You can only specify order in one view when create record (will create a order index automatically)"
+                      },
+                      "anchorId": {
+                        "type": "string",
+                        "description": "The record id to anchor to"
+                      },
+                      "position": {
+                        "type": "string",
+                        "enum": [
+                          "before",
+                          "after"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "viewId",
+                      "anchorId",
+                      "position"
+                    ],
+                    "description": "Where this record to insert to (Optional)"
+                  }
+                },
+                "required": [
+                  "records"
+                ],
+                "description": "Multiple Update records"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the records data after update.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "The record id."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "primary field value"
+                      },
+                      "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "nullable": true
+                        },
+                        "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                      },
+                      "autoNumber": {
+                        "type": "number",
+                        "description": "Auto number, a unique identifier for each record"
+                      },
+                      "createdTime": {
+                        "type": "string",
+                        "description": "Created time, date ISO string (new Date().toISOString)."
+                      },
+                      "lastModifiedTime": {
+                        "type": "string",
+                        "description": "Last modified time, date ISO string (new Date().toISOString)."
+                      },
+                      "createdBy": {
+                        "type": "string",
+                        "description": "Created by, user name"
+                      },
+                      "lastModifiedBy": {
+                        "type": "string",
+                        "description": "Last modified by, user name"
+                      },
+                      "permissions": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "boolean"
+                          }
+                        },
+                        "description": "Permissions for the record"
+                      },
+                      "undeletable": {
+                        "type": "boolean",
+                        "description": "Whether the record is undeletable"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "fields"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"fieldKeyType\":\"id\",\"typecast\":true,\"records\":[{\"id\":\"string\",\"fields\":{\"property1\":null,\"property2\":null}}],\"order\":{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"fieldKeyType\":\"id\",\"typecast\":true,\"records\":[{\"id\":\"string\",\"fields\":{\"property1\":null,\"property2\":null}}],\"order\":{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  fieldKeyType: 'id',\n  typecast: true,\n  records: [{id: 'string', fields: {property1: null, property2: null}}],\n  order: {viewId: 'string', anchorId: 'string', position: 'before'}\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"fieldKeyType\\\":\\\"id\\\",\\\"typecast\\\":true,\\\"records\\\":[{\\\"id\\\":\\\"string\\\",\\\"fields\\\":{\\\"property1\\\":null,\\\"property2\\\":null}}],\\\"order\\\":{\\\"viewId\\\":\\\"string\\\",\\\"anchorId\\\":\\\"string\\\",\\\"position\\\":\\\"before\\\"}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/table/%7BtableId%7D/record\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete records",
+        "description": "Permanently delete multiple records by their IDs in a single request.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": true,
+            "name": "recordIds",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record?recordIds=SOME_ARRAY_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record?recordIds=SOME_ARRAY_VALUE';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record?recordIds=SOME_ARRAY_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/table/%7BtableId%7D/record?recordIds=SOME_ARRAY_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/duplicate": {
+      "post": {
+        "summary": "Duplicate record",
+        "description": "Create a copy of an existing record with optional custom positioning in the view.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "viewId": {
+                    "type": "string",
+                    "description": "You can only specify order in one view when create record (will create a order index automatically)"
+                  },
+                  "anchorId": {
+                    "type": "string",
+                    "description": "The record id to anchor to"
+                  },
+                  "position": {
+                    "type": "string",
+                    "enum": [
+                      "before",
+                      "after"
+                    ]
+                  }
+                },
+                "required": [
+                  "viewId",
+                  "anchorId",
+                  "position"
+                ],
+                "description": "Where this record to insert to (Optional)"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The record id."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "primary field value"
+                          },
+                          "fields": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "nullable": true
+                            },
+                            "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                          },
+                          "autoNumber": {
+                            "type": "number",
+                            "description": "Auto number, a unique identifier for each record"
+                          },
+                          "createdTime": {
+                            "type": "string",
+                            "description": "Created time, date ISO string (new Date().toISOString)."
+                          },
+                          "lastModifiedTime": {
+                            "type": "string",
+                            "description": "Last modified time, date ISO string (new Date().toISOString)."
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "description": "Created by, user name"
+                          },
+                          "lastModifiedBy": {
+                            "type": "string",
+                            "description": "Last modified by, user name"
+                          },
+                          "permissions": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "boolean"
+                              }
+                            },
+                            "description": "Permissions for the record"
+                          },
+                          "undeletable": {
+                            "type": "boolean",
+                            "description": "Whether the record is undeletable"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields"
+                        ]
+                      },
+                      "example": [
+                        {
+                          "id": "recXXXXXXX",
+                          "fields": {
+                            "single line text": "text value"
+                          }
+                        }
+                      ],
+                      "description": "Array of record objects "
+                    }
+                  },
+                  "required": [
+                    "records"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/duplicate \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/duplicate';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"viewId\":\"string\",\"anchorId\":\"string\",\"position\":\"before\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/duplicate',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({viewId: 'string', anchorId: 'string', position: 'before'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"viewId\\\":\\\"string\\\",\\\"anchorId\\\":\\\"string\\\",\\\"position\\\":\\\"before\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/duplicate\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/history": {
+      "get": {
+        "summary": "Get record history",
+        "description": "Retrieve the change history of a specific record, including field modifications and user information.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the history list for a record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "historyList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "recordId": {
+                            "type": "string"
+                          },
+                          "fieldId": {
+                            "type": "string"
+                          },
+                          "before": {
+                            "type": "object",
+                            "properties": {
+                              "meta": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the field. can not be duplicated in the table.",
+                                    "example": "Tags"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "singleLineText",
+                                      "longText",
+                                      "user",
+                                      "attachment",
+                                      "checkbox",
+                                      "multipleSelect",
+                                      "singleSelect",
+                                      "date",
+                                      "number",
+                                      "rating",
+                                      "formula",
+                                      "rollup",
+                                      "conditionalRollup",
+                                      "link",
+                                      "createdTime",
+                                      "lastModifiedTime",
+                                      "createdBy",
+                                      "lastModifiedBy",
+                                      "autoNumber",
+                                      "button"
+                                    ],
+                                    "description": "The field types supported by teable.",
+                                    "example": "singleSelect"
+                                  },
+                                  "cellValueType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "dateTime"
+                                    ],
+                                    "description": "The cell value type of the field."
+                                  },
+                                  "isLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this field is lookup field. witch means cellValue and [fieldType] is looked up from the linked table."
+                                  },
+                                  "isConditionalLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this lookup field applies a conditional filter when resolving linked records."
+                                  },
+                                  "options": {
+                                    "nullable": true
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type",
+                                  "cellValueType"
+                                ]
+                              },
+                              "data": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "meta"
+                            ]
+                          },
+                          "after": {
+                            "type": "object",
+                            "properties": {
+                              "meta": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the field. can not be duplicated in the table.",
+                                    "example": "Tags"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "singleLineText",
+                                      "longText",
+                                      "user",
+                                      "attachment",
+                                      "checkbox",
+                                      "multipleSelect",
+                                      "singleSelect",
+                                      "date",
+                                      "number",
+                                      "rating",
+                                      "formula",
+                                      "rollup",
+                                      "conditionalRollup",
+                                      "link",
+                                      "createdTime",
+                                      "lastModifiedTime",
+                                      "createdBy",
+                                      "lastModifiedBy",
+                                      "autoNumber",
+                                      "button"
+                                    ],
+                                    "description": "The field types supported by teable.",
+                                    "example": "singleSelect"
+                                  },
+                                  "cellValueType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "dateTime"
+                                    ],
+                                    "description": "The cell value type of the field."
+                                  },
+                                  "isLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this field is lookup field. witch means cellValue and [fieldType] is looked up from the linked table."
+                                  },
+                                  "isConditionalLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this lookup field applies a conditional filter when resolving linked records."
+                                  },
+                                  "options": {
+                                    "nullable": true
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type",
+                                  "cellValueType"
+                                ]
+                              },
+                              "data": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "meta"
+                            ]
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "createdBy": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "tableId",
+                          "recordId",
+                          "fieldId",
+                          "before",
+                          "after",
+                          "createdTime",
+                          "createdBy"
+                        ]
+                      }
+                    },
+                    "userMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "avatar",
+                          "id",
+                          "name"
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "historyList",
+                    "userMap"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/history \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/history';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/history',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/history\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/history": {
+      "get": {
+        "summary": "Get table records history",
+        "description": "Retrieve the change history of all records in a table, including field modifications and user information.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the history list of all records in a table",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "historyList": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "recordId": {
+                            "type": "string"
+                          },
+                          "fieldId": {
+                            "type": "string"
+                          },
+                          "before": {
+                            "type": "object",
+                            "properties": {
+                              "meta": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the field. can not be duplicated in the table.",
+                                    "example": "Tags"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "singleLineText",
+                                      "longText",
+                                      "user",
+                                      "attachment",
+                                      "checkbox",
+                                      "multipleSelect",
+                                      "singleSelect",
+                                      "date",
+                                      "number",
+                                      "rating",
+                                      "formula",
+                                      "rollup",
+                                      "conditionalRollup",
+                                      "link",
+                                      "createdTime",
+                                      "lastModifiedTime",
+                                      "createdBy",
+                                      "lastModifiedBy",
+                                      "autoNumber",
+                                      "button"
+                                    ],
+                                    "description": "The field types supported by teable.",
+                                    "example": "singleSelect"
+                                  },
+                                  "cellValueType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "dateTime"
+                                    ],
+                                    "description": "The cell value type of the field."
+                                  },
+                                  "isLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this field is lookup field. witch means cellValue and [fieldType] is looked up from the linked table."
+                                  },
+                                  "isConditionalLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this lookup field applies a conditional filter when resolving linked records."
+                                  },
+                                  "options": {
+                                    "nullable": true
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type",
+                                  "cellValueType"
+                                ]
+                              },
+                              "data": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "meta"
+                            ]
+                          },
+                          "after": {
+                            "type": "object",
+                            "properties": {
+                              "meta": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the field. can not be duplicated in the table.",
+                                    "example": "Tags"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "singleLineText",
+                                      "longText",
+                                      "user",
+                                      "attachment",
+                                      "checkbox",
+                                      "multipleSelect",
+                                      "singleSelect",
+                                      "date",
+                                      "number",
+                                      "rating",
+                                      "formula",
+                                      "rollup",
+                                      "conditionalRollup",
+                                      "link",
+                                      "createdTime",
+                                      "lastModifiedTime",
+                                      "createdBy",
+                                      "lastModifiedBy",
+                                      "autoNumber",
+                                      "button"
+                                    ],
+                                    "description": "The field types supported by teable.",
+                                    "example": "singleSelect"
+                                  },
+                                  "cellValueType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "string",
+                                      "number",
+                                      "boolean",
+                                      "dateTime"
+                                    ],
+                                    "description": "The cell value type of the field."
+                                  },
+                                  "isLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this field is lookup field. witch means cellValue and [fieldType] is looked up from the linked table."
+                                  },
+                                  "isConditionalLookup": {
+                                    "type": "boolean",
+                                    "description": "Whether this lookup field applies a conditional filter when resolving linked records."
+                                  },
+                                  "options": {
+                                    "nullable": true
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type",
+                                  "cellValueType"
+                                ]
+                              },
+                              "data": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "meta"
+                            ]
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "createdBy": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "tableId",
+                          "recordId",
+                          "fieldId",
+                          "before",
+                          "after",
+                          "createdTime",
+                          "createdBy"
+                        ]
+                      }
+                    },
+                    "userMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "avatar",
+                          "id",
+                          "name"
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "historyList",
+                    "userMap"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/history \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/history';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/history',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/record/history\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/{fieldId}/uploadAttachment": {
+      "post": {
+        "summary": "Upload attachment",
+        "description": "Upload an attachment from a file or URL and append it to the cell",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "ID of an attachment field"
+            },
+            "required": true,
+            "description": "ID of an attachment field",
+            "name": "fieldId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "description": "upload attachment",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "fileUrl": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns record data after update.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The record id."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "primary field value"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                    },
+                    "autoNumber": {
+                      "type": "number",
+                      "description": "Auto number, a unique identifier for each record"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "description": "Created time, date ISO string (new Date().toISOString)."
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "Last modified time, date ISO string (new Date().toISOString)."
+                    },
+                    "createdBy": {
+                      "type": "string",
+                      "description": "Created by, user name"
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "Last modified by, user name"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      },
+                      "description": "Permissions for the record"
+                    },
+                    "undeletable": {
+                      "type": "boolean",
+                      "description": "Whether the record is undeletable"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fields"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/uploadAttachment \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: multipart/form-data' \\\n  --form file=string \\\n  --form fileUrl=string"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/uploadAttachment';\nconst form = new FormData();\nform.append('file', 'string');\nform.append('fileUrl', 'string');\n\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\noptions.body = form;\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/uploadAttachment',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write('-----011000010111000001101001\\r\\nContent-Disposition: form-data; name=\"file\"\\r\\n\\r\\nstring\\r\\n-----011000010111000001101001\\r\\nContent-Disposition: form-data; name=\"fileUrl\"\\r\\n\\r\\nstring\\r\\n-----011000010111000001101001--\\r\\n');\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"-----011000010111000001101001\\r\\nContent-Disposition: form-data; name=\\\"file\\\"\\r\\n\\r\\nstring\\r\\n-----011000010111000001101001\\r\\nContent-Disposition: form-data; name=\\\"fileUrl\\\"\\r\\n\\r\\nstring\\r\\n-----011000010111000001101001--\\r\\n\"\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/uploadAttachment\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/{fieldId}/insertAttachment": {
+      "post": {
+        "summary": "Insert attachments at anchor",
+        "description": "Insert attachments after the anchor in the cell (append to end if anchor not found or not provided)",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "ID of an attachment field"
+            },
+            "required": true,
+            "description": "ID of an attachment field",
+            "name": "fieldId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "description": "Attachments to insert and optional anchor position",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "token": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "mimetype": {
+                          "type": "string"
+                        },
+                        "presignedUrl": {
+                          "type": "string"
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "height": {
+                          "type": "number"
+                        },
+                        "smThumbnailUrl": {
+                          "type": "string"
+                        },
+                        "lgThumbnailUrl": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "path",
+                        "token",
+                        "size",
+                        "mimetype"
+                      ]
+                    },
+                    "minItems": 1
+                  },
+                  "anchorId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "attachments"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns record data after update.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The record id."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "primary field value"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                    },
+                    "autoNumber": {
+                      "type": "number",
+                      "description": "Auto number, a unique identifier for each record"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "description": "Created time, date ISO string (new Date().toISOString)."
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "Last modified time, date ISO string (new Date().toISOString)."
+                    },
+                    "createdBy": {
+                      "type": "string",
+                      "description": "Created by, user name"
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "Last modified by, user name"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      },
+                      "description": "Permissions for the record"
+                    },
+                    "undeletable": {
+                      "type": "boolean",
+                      "description": "Whether the record is undeletable"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fields"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/insertAttachment \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"attachments\":[{\"id\":\"string\",\"name\":\"string\",\"path\":\"string\",\"token\":\"string\",\"size\":0,\"mimetype\":\"string\",\"presignedUrl\":\"string\",\"width\":0,\"height\":0,\"smThumbnailUrl\":\"string\",\"lgThumbnailUrl\":\"string\"}],\"anchorId\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/insertAttachment';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"attachments\":[{\"id\":\"string\",\"name\":\"string\",\"path\":\"string\",\"token\":\"string\",\"size\":0,\"mimetype\":\"string\",\"presignedUrl\":\"string\",\"width\":0,\"height\":0,\"smThumbnailUrl\":\"string\",\"lgThumbnailUrl\":\"string\"}],\"anchorId\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/insertAttachment',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  attachments: [\n    {\n      id: 'string',\n      name: 'string',\n      path: 'string',\n      token: 'string',\n      size: 0,\n      mimetype: 'string',\n      presignedUrl: 'string',\n      width: 0,\n      height: 0,\n      smThumbnailUrl: 'string',\n      lgThumbnailUrl: 'string'\n    }\n  ],\n  anchorId: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"attachments\\\":[{\\\"id\\\":\\\"string\\\",\\\"name\\\":\\\"string\\\",\\\"path\\\":\\\"string\\\",\\\"token\\\":\\\"string\\\",\\\"size\\\":0,\\\"mimetype\\\":\\\"string\\\",\\\"presignedUrl\\\":\\\"string\\\",\\\"width\\\":0,\\\"height\\\":0,\\\"smThumbnailUrl\\\":\\\"string\\\",\\\"lgThumbnailUrl\\\":\\\"string\\\"}],\\\"anchorId\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/insertAttachment\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/status": {
+      "get": {
+        "summary": "Get record status",
+        "description": "Retrieve the visibility and deletion status of a specific record.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id"
+            },
+            "required": false,
+            "description": "If you want to get only some fields, pass in this parameter, otherwise all visible fields will be obtained, The parameter value depends on the specified fieldKeyType to determine whether it is name or id",
+            "name": "projection",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json",
+                "text"
+              ],
+              "default": "json",
+              "description": "Define the return value formate, you can set it to text if you only need simple string value"
+            },
+            "required": false,
+            "description": "Define the return value formate, you can set it to text if you only need simple string value",
+            "name": "cellFormat",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "id",
+                "name",
+                "dbFieldName"
+              ],
+              "default": "name",
+              "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details"
+            },
+            "required": false,
+            "description": "Define the key type of record.fields[key], You can click \"systemInfo\" in the field edit box to get fieldId or enter the table design screen with all the field details",
+            "name": "fieldKeyType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "viwXXXXXXX",
+              "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options."
+            },
+            "required": false,
+            "description": "Set the view you want to fetch, default is first view. result will filter and sort by view options.",
+            "name": "viewId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ],
+              "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc"
+            },
+            "required": false,
+            "description": "When a viewId is specified, configure this to true will ignore the view's filter, sort, etc",
+            "name": "ignoreViewQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "{field} = 'Completed' AND {field} > 5",
+              "deprecated": true
+            },
+            "required": false,
+            "name": "filterByTql",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters."
+            },
+            "required": false,
+            "description": "A filter object for complex query conditions based on fields, operators, and values. Use our visual query builder at https://app.teable.ai/developer/tool/query-builder to build filters.",
+            "name": "filter",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "boolean"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              ],
+              "default": [
+                "searchValue",
+                "fieldIdOrName",
+                false
+              ],
+              "description": "Search for records that match the specified field and value"
+            },
+            "required": false,
+            "description": "Search for records that match the specified field and value",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear."
+            },
+            "required": false,
+            "description": "Filter out the records that can be selected by a given link cell from the relational table. For example, if the specified field is one to many or one to one relationship, recordId for which the field has already been selected will not appear.",
+            "name": "filterLinkCellCandidate",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "example": [
+                "fldXXXXXXX",
+                "recXXXXXXX"
+              ],
+              "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field"
+            },
+            "required": false,
+            "description": "Filter out selected records based on this link cell from the relational table. Note that viewId, filter, and orderBy will not take effect in this case because selected records has it own order. Ignoring recordId gets all the selected records for the field",
+            "name": "filterLinkCellSelected",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Filter selected records by record ids"
+            },
+            "required": false,
+            "description": "Filter selected records by record ids",
+            "name": "selectedRecordIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of sort objects that specifies how the records should be ordered."
+            },
+            "required": false,
+            "description": "An array of sort objects that specifies how the records should be ordered.",
+            "name": "orderBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group objects that specifies how the records should be grouped."
+            },
+            "required": false,
+            "description": "An array of group objects that specifies how the records should be grouped.",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "An array of group ids that specifies which groups are collapsed"
+            },
+            "required": false,
+            "description": "An array of group ids that specifies which groups are collapsed",
+            "name": "collapsedGroupIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "qry_xxxxxxxx",
+              "description": "When provided, other query parameters will be merged with the saved ones."
+            },
+            "required": false,
+            "description": "When provided, other query parameters will be merged with the saved ones.",
+            "name": "queryId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 100,
+              "example": 100,
+              "description": "The record count you want to take, maximum is 1000"
+            },
+            "required": false,
+            "description": "The record count you want to take, maximum is 1000",
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "default": 0,
+              "example": 0,
+              "description": "The records count you want to skip"
+            },
+            "required": false,
+            "description": "The records count you want to skip",
+            "name": "skip",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isVisible": {
+                      "type": "boolean"
+                    },
+                    "isDeleted": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "isVisible",
+                    "isDeleted"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/status?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/status?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/status?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/status?projection=SOME_ARRAY_VALUE&cellFormat=SOME_STRING_VALUE&fieldKeyType=SOME_STRING_VALUE&viewId=viwXXXXXXX&ignoreViewQuery=SOME_STRING_VALUE&filterByTql=%7Bfield%7D+%3D+%27Completed%27+AND+%7Bfield%7D+%3E+5&filter=SOME_STRING_VALUE&search=SOME_ARRAY_VALUE&filterLinkCellCandidate=fldXXXXXXX&filterLinkCellCandidate=recXXXXXXX&filterLinkCellSelected=fldXXXXXXX&filterLinkCellSelected=recXXXXXXX&selectedRecordIds=SOME_ARRAY_VALUE&orderBy=SOME_STRING_VALUE&groupBy=SOME_STRING_VALUE&collapsedGroupIds=SOME_STRING_VALUE&queryId=qry_xxxxxxxx&take=100&skip=0\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/{fieldId}/auto-fill": {
+      "post": {
+        "summary": "Auto-fill a cell by AI",
+        "description": "Automatically fill a cell in a specific record and field",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "fieldId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the updated record status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/auto-fill \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/auto-fill';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/auto-fill',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/auto-fill\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/{fieldId}/button-click": {
+      "post": {
+        "summary": "Button click",
+        "description": "Button click",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "fieldId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the clicked cell",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runId": {
+                      "type": "string"
+                    },
+                    "tableId": {
+                      "type": "string"
+                    },
+                    "fieldId": {
+                      "type": "string"
+                    },
+                    "record": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The record id."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "primary field value"
+                        },
+                        "fields": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          },
+                          "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                        },
+                        "autoNumber": {
+                          "type": "number",
+                          "description": "Auto number, a unique identifier for each record"
+                        },
+                        "createdTime": {
+                          "type": "string",
+                          "description": "Created time, date ISO string (new Date().toISOString)."
+                        },
+                        "lastModifiedTime": {
+                          "type": "string",
+                          "description": "Last modified time, date ISO string (new Date().toISOString)."
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "description": "Created by, user name"
+                        },
+                        "lastModifiedBy": {
+                          "type": "string",
+                          "description": "Last modified by, user name"
+                        },
+                        "permissions": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "boolean"
+                            }
+                          },
+                          "description": "Permissions for the record"
+                        },
+                        "undeletable": {
+                          "type": "boolean",
+                          "description": "Whether the record is undeletable"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "fields"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "runId",
+                    "tableId",
+                    "fieldId",
+                    "record"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-click \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-click';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-click',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-click\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/{recordId}/{fieldId}/button-reset": {
+      "post": {
+        "summary": "Button reset",
+        "description": "Button reset",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "fieldId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the reset cell",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The record id."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "primary field value"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                    },
+                    "autoNumber": {
+                      "type": "number",
+                      "description": "Auto number, a unique identifier for each record"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "description": "Created time, date ISO string (new Date().toISOString)."
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "Last modified time, date ISO string (new Date().toISOString)."
+                    },
+                    "createdBy": {
+                      "type": "string",
+                      "description": "Created by, user name"
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "Last modified by, user name"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      },
+                      "description": "Permissions for the record"
+                    },
+                    "undeletable": {
+                      "type": "boolean",
+                      "description": "Whether the record is undeletable"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fields"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-reset \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-reset';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-reset',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/%7BrecordId%7D/%7BfieldId%7D/button-reset\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/collaborators": {
+      "get": {
+        "description": "Get collaborators of a record.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "recordId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "fieldId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "required": false,
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "required": false,
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "string"
+                      },
+                      "userName": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "userId",
+                      "userName",
+                      "email"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/collaborators?fieldId=SOME_STRING_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&search=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/collaborators?fieldId=SOME_STRING_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&search=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/collaborators?fieldId=SOME_STRING_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&search=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/table/%7BtableId%7D/record/collaborators?fieldId=SOME_STRING_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&search=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/record/form-submit": {
+      "post": {
+        "summary": "Submit form",
+        "description": "Submit a record through a form view. This will trigger \"When form submitted\" automations.",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "viewId": {
+                    "type": "string",
+                    "description": "Form view ID"
+                  },
+                  "fields": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "nullable": true
+                    },
+                    "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                  },
+                  "typecast": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "viewId",
+                  "fields"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns the created record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The record id."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "primary field value"
+                    },
+                    "fields": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "nullable": true
+                      },
+                      "description": "Objects with a fields key mapping fieldId or field name to value for that field."
+                    },
+                    "autoNumber": {
+                      "type": "number",
+                      "description": "Auto number, a unique identifier for each record"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "description": "Created time, date ISO string (new Date().toISOString)."
+                    },
+                    "lastModifiedTime": {
+                      "type": "string",
+                      "description": "Last modified time, date ISO string (new Date().toISOString)."
+                    },
+                    "createdBy": {
+                      "type": "string",
+                      "description": "Created by, user name"
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "Last modified by, user name"
+                    },
+                    "permissions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "boolean"
+                        }
+                      },
+                      "description": "Permissions for the record"
+                    },
+                    "undeletable": {
+                      "type": "boolean",
+                      "description": "Whether the record is undeletable"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "fields"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/record/form-submit \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"viewId\":\"string\",\"fields\":{\"property1\":null,\"property2\":null},\"typecast\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/record/form-submit';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"viewId\":\"string\",\"fields\":{\"property1\":null,\"property2\":null},\"typecast\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/record/form-submit',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({viewId: 'string', fields: {property1: null, property2: null}, typecast: true}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"viewId\\\":\\\"string\\\",\\\"fields\\\":{\\\"property1\\\":null,\\\"property2\\\":null},\\\"typecast\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/record/form-submit\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/undo-redo/undo": {
+      "post": {
+        "description": "Undo the last operation",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns data about the undo operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "fulfilled",
+                        "failed",
+                        "empty"
+                      ]
+                    },
+                    "errorMessage": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/undo-redo/undo \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/undo-redo/undo';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/undo-redo/undo',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/undo-redo/undo\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/table/{tableId}/undo-redo/redo": {
+      "post": {
+        "description": "Redo the last operation",
+        "tags": [
+          "record"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns data about the redo operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "fulfilled",
+                        "failed",
+                        "empty"
+                      ]
+                    },
+                    "errorMessage": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/table/%7BtableId%7D/undo-redo/redo \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/table/%7BtableId%7D/undo-redo/redo';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/table/%7BtableId%7D/undo-redo/redo',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/table/%7BtableId%7D/undo-redo/redo\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

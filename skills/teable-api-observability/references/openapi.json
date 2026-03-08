@@ -1,0 +1,781 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/admin/observability/workflow/summary": {
+      "get": {
+        "description": "Retrieves a summary of workflow observability",
+        "tags": [
+          "admin",
+          "observability"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false,
+            "name": "workflowIds",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ]
+            },
+            "required": false,
+            "name": "timeRange",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "30m",
+                "1h",
+                "6h",
+                "1d",
+                "3d",
+                "7d",
+                "30d"
+              ]
+            },
+            "required": false,
+            "name": "relativeTime",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "required": false,
+            "name": "isActive",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false,
+            "name": "baseIds",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false,
+            "name": "spaceIds",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "recordCreated",
+                  "recordUpdated",
+                  "recordCreatedOrUpdated",
+                  "recordMatchesConditions",
+                  "buttonClick",
+                  "formSubmitted",
+                  "scheduledTime",
+                  "webhook"
+                ]
+              }
+            },
+            "required": false,
+            "name": "triggerType",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a summary of workflow observability",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workflow": {
+                      "type": "object",
+                      "properties": {
+                        "activeCount": {
+                          "type": "number"
+                        },
+                        "totalCount": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "activeCount",
+                        "totalCount"
+                      ]
+                    },
+                    "workflowRuns": {
+                      "type": "object",
+                      "properties": {
+                        "totalCount": {
+                          "type": "number"
+                        },
+                        "statusStats": {
+                          "type": "object",
+                          "properties": {
+                            "pending": {
+                              "type": "number"
+                            },
+                            "running": {
+                              "type": "number"
+                            },
+                            "success": {
+                              "type": "number"
+                            },
+                            "failed": {
+                              "type": "number"
+                            },
+                            "canceled": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "pending",
+                            "running",
+                            "success",
+                            "failed",
+                            "canceled"
+                          ]
+                        },
+                        "levelStats": {
+                          "type": "object",
+                          "properties": {
+                            "critical": {
+                              "type": "number"
+                            },
+                            "warning": {
+                              "type": "number"
+                            },
+                            "healthy": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "critical",
+                            "warning",
+                            "healthy"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "totalCount",
+                        "statusStats",
+                        "levelStats"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "workflow",
+                    "workflowRuns"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/admin/observability/workflow/summary \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/observability/workflow/summary';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/observability/workflow/summary',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/observability/workflow/summary\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/observability/workflow": {
+      "get": {
+        "description": "get observability workflow list",
+        "tags": [
+          "admin",
+          "observability"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false,
+            "name": "workflowIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ]
+            },
+            "required": false,
+            "name": "timeRange",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "30m",
+                "1h",
+                "6h",
+                "1d",
+                "3d",
+                "7d",
+                "30d"
+              ]
+            },
+            "required": false,
+            "name": "relativeTime",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "required": false,
+            "name": "isActive",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false,
+            "name": "baseIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false,
+            "name": "spaceIds",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "recordCreated",
+                  "recordUpdated",
+                  "recordCreatedOrUpdated",
+                  "recordMatchesConditions",
+                  "buttonClick",
+                  "formSubmitted",
+                  "scheduledTime",
+                  "webhook"
+                ]
+              }
+            },
+            "required": false,
+            "name": "triggerType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "required": false,
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "required": false,
+            "name": "take",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "base": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "icon": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "triggerType": {
+                            "type": "string",
+                            "enum": [
+                              "recordCreated",
+                              "recordUpdated",
+                              "recordCreatedOrUpdated",
+                              "recordMatchesConditions",
+                              "buttonClick",
+                              "formSubmitted",
+                              "scheduledTime",
+                              "webhook"
+                            ]
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          },
+                          "lastRunTime": {
+                            "type": "string"
+                          },
+                          "runStats": {
+                            "type": "object",
+                            "properties": {
+                              "statusStats": {
+                                "type": "object",
+                                "properties": {
+                                  "pending": {
+                                    "type": "number"
+                                  },
+                                  "running": {
+                                    "type": "number"
+                                  },
+                                  "success": {
+                                    "type": "number"
+                                  },
+                                  "failed": {
+                                    "type": "number"
+                                  },
+                                  "canceled": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "pending",
+                                  "running",
+                                  "success",
+                                  "failed",
+                                  "canceled"
+                                ]
+                              },
+                              "avgSpent": {
+                                "type": "number"
+                              },
+                              "totalCount": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "statusStats",
+                              "avgSpent",
+                              "totalCount"
+                            ]
+                          },
+                          "level": {
+                            "type": "string",
+                            "enum": [
+                              "healthy",
+                              "warning",
+                              "critical"
+                            ]
+                          },
+                          "isActive": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "base",
+                          "triggerType",
+                          "createdTime",
+                          "runStats",
+                          "level"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "total"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/admin/observability/workflow?workflowIds=SOME_ARRAY_VALUE&timeRange=SOME_OBJECT_VALUE&relativeTime=SOME_STRING_VALUE&isActive=SOME_BOOLEAN_VALUE&baseIds=SOME_ARRAY_VALUE&spaceIds=SOME_ARRAY_VALUE&triggerType=SOME_ARRAY_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/observability/workflow?workflowIds=SOME_ARRAY_VALUE&timeRange=SOME_OBJECT_VALUE&relativeTime=SOME_STRING_VALUE&isActive=SOME_BOOLEAN_VALUE&baseIds=SOME_ARRAY_VALUE&spaceIds=SOME_ARRAY_VALUE&triggerType=SOME_ARRAY_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/observability/workflow?workflowIds=SOME_ARRAY_VALUE&timeRange=SOME_OBJECT_VALUE&relativeTime=SOME_STRING_VALUE&isActive=SOME_BOOLEAN_VALUE&baseIds=SOME_ARRAY_VALUE&spaceIds=SOME_ARRAY_VALUE&triggerType=SOME_ARRAY_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/observability/workflow?workflowIds=SOME_ARRAY_VALUE&timeRange=SOME_OBJECT_VALUE&relativeTime=SOME_STRING_VALUE&isActive=SOME_BOOLEAN_VALUE&baseIds=SOME_ARRAY_VALUE&spaceIds=SOME_ARRAY_VALUE&triggerType=SOME_ARRAY_VALUE&skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/observability/workflow/{workflowId}/deactivate": {
+      "post": {
+        "description": "Deactivate a workflow observability",
+        "tags": [
+          "admin",
+          "observability"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workflowId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow observability deactivated successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/admin/observability/workflow/%7BworkflowId%7D/deactivate \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/observability/workflow/%7BworkflowId%7D/deactivate';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/observability/workflow/%7BworkflowId%7D/deactivate',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/admin/observability/workflow/%7BworkflowId%7D/deactivate\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/observability/workflow/{workflowId}": {
+      "delete": {
+        "description": "Delete a workflow observability",
+        "tags": [
+          "admin",
+          "observability"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workflowId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow observability deleted successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/admin/observability/workflow/%7BworkflowId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/observability/workflow/%7BworkflowId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/observability/workflow/%7BworkflowId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/admin/observability/workflow/%7BworkflowId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/observability/workflow/{workflowId}/run-history": {
+      "get": {
+        "description": "get workflow run history",
+        "tags": [
+          "admin",
+          "observability"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "workflowId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "required": false,
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "required": false,
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "success",
+                "failed",
+                "running",
+                "canceled",
+                "pending"
+              ]
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "success",
+                              "failed",
+                              "running",
+                              "canceled",
+                              "pending"
+                            ]
+                          },
+                          "errorMsg": {
+                            "type": "object",
+                            "properties": {
+                              "i18nKey": {
+                                "type": "string"
+                              },
+                              "context": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "nullable": true
+                                }
+                              }
+                            },
+                            "required": [
+                              "i18nKey"
+                            ]
+                          },
+                          "spent": {
+                            "type": "number"
+                          },
+                          "createdTime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "status",
+                          "createdTime"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "runs",
+                    "total"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/admin/observability/workflow/%7BworkflowId%7D/run-history?skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&status=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/observability/workflow/%7BworkflowId%7D/run-history?skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&status=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/observability/workflow/%7BworkflowId%7D/run-history?skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&status=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/observability/workflow/%7BworkflowId%7D/run-history?skip=SOME_NUMBER_VALUE&take=SOME_NUMBER_VALUE&status=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

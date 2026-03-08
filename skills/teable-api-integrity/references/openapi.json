@@ -1,0 +1,257 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/integrity/base/{baseId}/link-check": {
+      "get": {
+        "description": "Check integrity of link fields in a base",
+        "tags": [
+          "integrity"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns integrity check results for the base",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hasIssues": {
+                      "type": "boolean"
+                    },
+                    "linkFieldIssues": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "baseId": {
+                            "type": "string",
+                            "description": "The base id of the link field with is cross-base"
+                          },
+                          "baseName": {
+                            "type": "string"
+                          },
+                          "tableId": {
+                            "type": "string"
+                          },
+                          "tableName": {
+                            "type": "string"
+                          },
+                          "issues": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "ForeignTableNotFound",
+                                    "ForeignKeyNotFound",
+                                    "SelfKeyNotFound",
+                                    "SymmetricFieldNotFound",
+                                    "MissingRecordReference",
+                                    "InvalidLinkReference",
+                                    "ForeignKeyHostTableNotFound",
+                                    "ReferenceFieldNotFound",
+                                    "UniqueIndexNotFound",
+                                    "EmptyString"
+                                  ]
+                                },
+                                "message": {
+                                  "type": "string"
+                                },
+                                "fieldId": {
+                                  "type": "string"
+                                },
+                                "tableId": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "message",
+                                "fieldId"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "issues"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "hasIssues",
+                    "linkFieldIssues"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/integrity/base/%7BbaseId%7D/link-check?tableId=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/integrity/base/%7BbaseId%7D/link-check?tableId=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/integrity/base/%7BbaseId%7D/link-check?tableId=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/integrity/base/%7BbaseId%7D/link-check?tableId=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/integrity/base/{baseId}/link-fix?tableId={tableId}": {
+      "post": {
+        "description": "Fix integrity of link fields in a base",
+        "tags": [
+          "integrity"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "tableId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "ForeignTableNotFound",
+                          "ForeignKeyNotFound",
+                          "SelfKeyNotFound",
+                          "SymmetricFieldNotFound",
+                          "MissingRecordReference",
+                          "InvalidLinkReference",
+                          "ForeignKeyHostTableNotFound",
+                          "ReferenceFieldNotFound",
+                          "UniqueIndexNotFound",
+                          "EmptyString"
+                        ]
+                      },
+                      "message": {
+                        "type": "string"
+                      },
+                      "fieldId": {
+                        "type": "string"
+                      },
+                      "tableId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "message",
+                      "fieldId"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url 'http://127.0.0.1:3000/api/integrity/base/%7BbaseId%7D/link-fix?tableId=%7BtableId%7D' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/integrity/base/%7BbaseId%7D/link-fix?tableId=%7BtableId%7D';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/integrity/base/%7BbaseId%7D/link-fix?tableId=%7BtableId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/integrity/base/%7BbaseId%7D/link-fix?tableId=%7BtableId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

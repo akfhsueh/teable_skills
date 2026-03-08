@@ -1,0 +1,969 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/admin/setting/test-llm": {
+      "post": {
+        "description": "Test LLM provider configuration",
+        "tags": [
+          "admin",
+          "setting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "openai",
+                      "anthropic",
+                      "google",
+                      "azure",
+                      "cohere",
+                      "mistral",
+                      "deepseek",
+                      "qwen",
+                      "zhipu",
+                      "lingyiwanwu",
+                      "xai",
+                      "togetherai",
+                      "ollama",
+                      "amazonBedrock",
+                      "openRouter",
+                      "openaiCompatible",
+                      "aiGateway"
+                    ]
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "apiKey": {
+                    "type": "string"
+                  },
+                  "baseUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "models": {
+                    "type": "string",
+                    "default": ""
+                  },
+                  "modelKey": {
+                    "type": "string"
+                  },
+                  "ability": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "image",
+                        "pdf",
+                        "webSearch",
+                        "toolCall",
+                        "reasoning",
+                        "imageGeneration"
+                      ]
+                    }
+                  },
+                  "testImageGeneration": {
+                    "type": "boolean"
+                  },
+                  "testImageToImage": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "name",
+                  "apiKey",
+                  "baseUrl"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "response": {
+                      "type": "string"
+                    },
+                    "ability": {
+                      "type": "object",
+                      "properties": {
+                        "image": {
+                          "anyOf": [
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "boolean"
+                                },
+                                "base64": {
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "pdf": {
+                          "anyOf": [
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "boolean"
+                                },
+                                "base64": {
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "webSearch": {
+                          "type": "boolean"
+                        },
+                        "toolCall": {
+                          "type": "boolean"
+                        },
+                        "reasoning": {
+                          "type": "boolean"
+                        },
+                        "imageGeneration": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/admin/setting/test-llm \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"type\":\"openai\",\"name\":\"string\",\"apiKey\":\"string\",\"baseUrl\":\"http://example.com\",\"models\":\"\",\"modelKey\":\"string\",\"ability\":[\"image\"],\"testImageGeneration\":true,\"testImageToImage\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/setting/test-llm';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"type\":\"openai\",\"name\":\"string\",\"apiKey\":\"string\",\"baseUrl\":\"http://example.com\",\"models\":\"\",\"modelKey\":\"string\",\"ability\":[\"image\"],\"testImageGeneration\":true,\"testImageToImage\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/setting/test-llm',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  type: 'openai',\n  name: 'string',\n  apiKey: 'string',\n  baseUrl: 'http://example.com',\n  models: '',\n  modelKey: 'string',\n  ability: ['image'],\n  testImageGeneration: true,\n  testImageToImage: true\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"type\\\":\\\"openai\\\",\\\"name\\\":\\\"string\\\",\\\"apiKey\\\":\\\"string\\\",\\\"baseUrl\\\":\\\"http://example.com\\\",\\\"models\\\":\\\"\\\",\\\"modelKey\\\":\\\"string\\\",\\\"ability\\\":[\\\"image\\\"],\\\"testImageGeneration\\\":true,\\\"testImageToImage\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/admin/setting/test-llm\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/setting/batch-test-llm": {
+      "post": {
+        "description": "Batch test all configured LLM models to verify compatibility with AI field features",
+        "tags": [
+          "admin",
+          "setting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "providers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "openai",
+                            "anthropic",
+                            "google",
+                            "azure",
+                            "cohere",
+                            "mistral",
+                            "deepseek",
+                            "qwen",
+                            "zhipu",
+                            "lingyiwanwu",
+                            "xai",
+                            "togetherai",
+                            "ollama",
+                            "amazonBedrock",
+                            "openRouter",
+                            "openaiCompatible",
+                            "aiGateway"
+                          ]
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "apiKey": {
+                          "type": "string"
+                        },
+                        "baseUrl": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "models": {
+                          "type": "string",
+                          "default": ""
+                        },
+                        "isInstance": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "name",
+                        "apiKey",
+                        "baseUrl",
+                        "isInstance"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch test results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalModels": {
+                      "type": "number"
+                    },
+                    "testedModels": {
+                      "type": "number"
+                    },
+                    "successCount": {
+                      "type": "number"
+                    },
+                    "failedCount": {
+                      "type": "number"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "modelKey": {
+                            "type": "string"
+                          },
+                          "providerName": {
+                            "type": "string"
+                          },
+                          "providerType": {
+                            "type": "string",
+                            "enum": [
+                              "openai",
+                              "anthropic",
+                              "google",
+                              "azure",
+                              "cohere",
+                              "mistral",
+                              "deepseek",
+                              "qwen",
+                              "zhipu",
+                              "lingyiwanwu",
+                              "xai",
+                              "togetherai",
+                              "ollama",
+                              "amazonBedrock",
+                              "openRouter",
+                              "openaiCompatible",
+                              "aiGateway"
+                            ]
+                          },
+                          "model": {
+                            "type": "string"
+                          },
+                          "success": {
+                            "type": "boolean"
+                          },
+                          "error": {
+                            "type": "string"
+                          },
+                          "ability": {
+                            "type": "object",
+                            "properties": {
+                              "image": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "pdf": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "boolean"
+                                      },
+                                      "base64": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "webSearch": {
+                                "type": "boolean"
+                              },
+                              "toolCall": {
+                                "type": "boolean"
+                              },
+                              "reasoning": {
+                                "type": "boolean"
+                              },
+                              "imageGeneration": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "modelKey",
+                          "providerName",
+                          "providerType",
+                          "model",
+                          "success"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "totalModels",
+                    "testedModels",
+                    "successCount",
+                    "failedCount",
+                    "results"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/admin/setting/batch-test-llm \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"providers\":[{\"type\":\"openai\",\"name\":\"string\",\"apiKey\":\"string\",\"baseUrl\":\"http://example.com\",\"models\":\"\",\"isInstance\":true}]}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/setting/batch-test-llm';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"providers\":[{\"type\":\"openai\",\"name\":\"string\",\"apiKey\":\"string\",\"baseUrl\":\"http://example.com\",\"models\":\"\",\"isInstance\":true}]}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/setting/batch-test-llm',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  providers: [\n    {\n      type: 'openai',\n      name: 'string',\n      apiKey: 'string',\n      baseUrl: 'http://example.com',\n      models: '',\n      isInstance: true\n    }\n  ]\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"providers\\\":[{\\\"type\\\":\\\"openai\\\",\\\"name\\\":\\\"string\\\",\\\"apiKey\\\":\\\"string\\\",\\\"baseUrl\\\":\\\"http://example.com\\\",\\\"models\\\":\\\"\\\",\\\"isInstance\\\":true}]}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/admin/setting/batch-test-llm\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/setting/test-api-key": {
+      "post": {
+        "description": "Test API key validity for AI Gateway or v0, optionally test attachment transfer modes",
+        "tags": [
+          "admin",
+          "setting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "aiGateway",
+                      "v0",
+                      "vercel"
+                    ]
+                  },
+                  "apiKey": {
+                    "type": "string"
+                  },
+                  "baseUrl": {
+                    "type": "string"
+                  },
+                  "testAttachment": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "apiKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "unauthorized",
+                            "forbidden",
+                            "need_credit_card",
+                            "insufficient_quota",
+                            "network_error",
+                            "unknown"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    "attachmentTest": {
+                      "type": "object",
+                      "properties": {
+                        "urlMode": {
+                          "type": "object",
+                          "properties": {
+                            "success": {
+                              "type": "boolean"
+                            },
+                            "errorMessage": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "success"
+                          ]
+                        },
+                        "base64Mode": {
+                          "type": "object",
+                          "properties": {
+                            "success": {
+                              "type": "boolean"
+                            },
+                            "errorMessage": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "success"
+                          ]
+                        },
+                        "recommendedMode": {
+                          "type": "string",
+                          "enum": [
+                            "url",
+                            "base64"
+                          ]
+                        },
+                        "testedOrigin": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/admin/setting/test-api-key \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"type\":\"aiGateway\",\"apiKey\":\"string\",\"baseUrl\":\"string\",\"testAttachment\":true}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/setting/test-api-key';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"type\":\"aiGateway\",\"apiKey\":\"string\",\"baseUrl\":\"string\",\"testAttachment\":true}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/setting/test-api-key',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({type: 'aiGateway', apiKey: 'string', baseUrl: 'string', testAttachment: true}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"type\\\":\\\"aiGateway\\\",\\\"apiKey\\\":\\\"string\\\",\\\"baseUrl\\\":\\\"string\\\",\\\"testAttachment\\\":true}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/admin/setting/test-api-key\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/setting/test-public-access": {
+      "get": {
+        "description": "Test if this Teable instance is publicly accessible from the internet",
+        "tags": [
+          "admin",
+          "setting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public access test result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "publicOrigin": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "storageCheck": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean"
+                        },
+                        "storageUrl": {
+                          "type": "string"
+                        },
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "success"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/admin/setting/test-public-access \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/setting/test-public-access';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/setting/test-public-access',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/setting/test-public-access\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/setting/set-mail-transport-config": {
+      "put": {
+        "description": "Set mail transporter",
+        "tags": [
+          "admin",
+          "setting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "notifyMailTransportConfig"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "automationMailTransportConfig"
+                        ]
+                      }
+                    ]
+                  },
+                  "transportConfig": {
+                    "type": "object",
+                    "properties": {
+                      "senderName": {
+                        "type": "string"
+                      },
+                      "sender": {
+                        "type": "string"
+                      },
+                      "host": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "number"
+                      },
+                      "secure": {
+                        "type": "boolean"
+                      },
+                      "auth": {
+                        "type": "object",
+                        "properties": {
+                          "user": {
+                            "type": "string"
+                          },
+                          "pass": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "user",
+                          "pass"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "sender",
+                      "host",
+                      "port",
+                      "auth"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "transportConfig"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Set mail transporter successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "notifyMailTransportConfig"
+                          ]
+                        },
+                        {
+                          "type": "string",
+                          "enum": [
+                            "automationMailTransportConfig"
+                          ]
+                        }
+                      ]
+                    },
+                    "transportConfig": {
+                      "type": "object",
+                      "properties": {
+                        "senderName": {
+                          "type": "string"
+                        },
+                        "sender": {
+                          "type": "string"
+                        },
+                        "host": {
+                          "type": "string"
+                        },
+                        "port": {
+                          "type": "number"
+                        },
+                        "secure": {
+                          "type": "boolean"
+                        },
+                        "auth": {
+                          "type": "object",
+                          "properties": {
+                            "user": {
+                              "type": "string"
+                            },
+                            "pass": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "user",
+                            "pass"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "sender",
+                        "host",
+                        "port",
+                        "auth"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "transportConfig"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PUT \\\n  --url http://127.0.0.1:3000/api/admin/setting/set-mail-transport-config \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"notifyMailTransportConfig\",\"transportConfig\":{\"senderName\":\"string\",\"sender\":\"string\",\"host\":\"string\",\"port\":0,\"secure\":true,\"auth\":{\"user\":\"string\",\"pass\":\"string\"}}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/setting/set-mail-transport-config';\nconst options = {\n  method: 'PUT',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"notifyMailTransportConfig\",\"transportConfig\":{\"senderName\":\"string\",\"sender\":\"string\",\"host\":\"string\",\"port\":0,\"secure\":true,\"auth\":{\"user\":\"string\",\"pass\":\"string\"}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PUT',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/setting/set-mail-transport-config',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  name: 'notifyMailTransportConfig',\n  transportConfig: {\n    senderName: 'string',\n    sender: 'string',\n    host: 'string',\n    port: 0,\n    secure: true,\n    auth: {user: 'string', pass: 'string'}\n  }\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"notifyMailTransportConfig\\\",\\\"transportConfig\\\":{\\\"senderName\\\":\\\"string\\\",\\\"sender\\\":\\\"string\\\",\\\"host\\\":\\\"string\\\",\\\"port\\\":0,\\\"secure\\\":true,\\\"auth\\\":{\\\"user\\\":\\\"string\\\",\\\"pass\\\":\\\"string\\\"}}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PUT\", \"/api/admin/setting/set-mail-transport-config\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/admin/setting/ai-key-stats": {
+      "get": {
+        "description": "Get per-key usage statistics for AI Gateway API keys",
+        "tags": [
+          "admin",
+          "setting"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Key statistics by group",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "groups": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "keys": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "index": {
+                                  "type": "number"
+                                },
+                                "fingerprint": {
+                                  "type": "string"
+                                },
+                                "totalRequests": {
+                                  "type": "number"
+                                },
+                                "totalFailures": {
+                                  "type": "number"
+                                },
+                                "activeRequests": {
+                                  "type": "number"
+                                },
+                                "lastUsedAt": {
+                                  "type": "number",
+                                  "nullable": true
+                                },
+                                "isActive": {
+                                  "type": "boolean"
+                                },
+                                "lastError": {
+                                  "type": "string",
+                                  "nullable": true
+                                }
+                              },
+                              "required": [
+                                "index",
+                                "fingerprint",
+                                "totalRequests",
+                                "totalFailures",
+                                "activeRequests",
+                                "lastUsedAt",
+                                "isActive",
+                                "lastError"
+                              ]
+                            }
+                          },
+                          "totalSlots": {
+                            "type": "number"
+                          },
+                          "activeSlots": {
+                            "type": "number"
+                          },
+                          "waitingCount": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "keys",
+                          "totalSlots",
+                          "activeSlots",
+                          "waitingCount"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "groups"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/admin/setting/ai-key-stats \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/admin/setting/ai-key-stats';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/admin/setting/ai-key-stats',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/admin/setting/ai-key-stats\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

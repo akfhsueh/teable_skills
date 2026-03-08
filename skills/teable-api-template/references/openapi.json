@@ -1,0 +1,1708 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/template/create": {
+      "post": {
+        "description": "create a template",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create template."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/template/create \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\",\"description\":\"string\",\"category\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/create';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\",\"description\":\"string\",\"category\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/create',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({name: 'string', description: 'string', category: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\",\\\"description\\\":\\\"string\\\",\\\"category\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/template/create\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/{templateId}": {
+      "patch": {
+        "description": "update a template",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "categoryId": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cover": {
+                    "type": "object",
+                    "nullable": true,
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "example": "xxxxxxxxxxx",
+                        "description": "Token for the uploaded file"
+                      },
+                      "size": {
+                        "type": "number",
+                        "example": 1024,
+                        "description": "File size in bytes"
+                      },
+                      "url": {
+                        "type": "string",
+                        "example": "/bucket/xxxxx",
+                        "description": "URL of the uploaded file"
+                      },
+                      "path": {
+                        "type": "string",
+                        "example": "/table/xxxxxx",
+                        "description": "file path"
+                      },
+                      "mimetype": {
+                        "type": "string",
+                        "example": "video/mp4",
+                        "description": "MIME type of the uploaded file"
+                      },
+                      "width": {
+                        "type": "number",
+                        "example": 100,
+                        "description": "Image width of the uploaded file"
+                      },
+                      "height": {
+                        "type": "number",
+                        "example": 100,
+                        "description": "Image height of the uploaded file"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "thumbnailPath": {
+                        "type": "object",
+                        "properties": {
+                          "lg": {
+                            "type": "string"
+                          },
+                          "sm": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "lg",
+                          "sm"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "token",
+                      "size",
+                      "url",
+                      "path",
+                      "mimetype",
+                      "name",
+                      "id"
+                    ]
+                  },
+                  "isPublished": {
+                    "type": "boolean"
+                  },
+                  "featured": {
+                    "type": "boolean"
+                  },
+                  "isSystem": {
+                    "type": "boolean"
+                  },
+                  "baseId": {
+                    "type": "string"
+                  },
+                  "markdownDescription": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully update template."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/template/%7BtemplateId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\",\"description\":\"string\",\"categoryId\":[\"string\"],\"cover\":{\"token\":\"xxxxxxxxxxx\",\"size\":1024,\"url\":\"/bucket/xxxxx\",\"path\":\"/table/xxxxxx\",\"mimetype\":\"video/mp4\",\"width\":100,\"height\":100,\"name\":\"string\",\"id\":\"string\",\"thumbnailPath\":{\"lg\":\"string\",\"sm\":\"string\"}},\"isPublished\":true,\"featured\":true,\"isSystem\":true,\"baseId\":\"string\",\"markdownDescription\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\",\"description\":\"string\",\"categoryId\":[\"string\"],\"cover\":{\"token\":\"xxxxxxxxxxx\",\"size\":1024,\"url\":\"/bucket/xxxxx\",\"path\":\"/table/xxxxxx\",\"mimetype\":\"video/mp4\",\"width\":100,\"height\":100,\"name\":\"string\",\"id\":\"string\",\"thumbnailPath\":{\"lg\":\"string\",\"sm\":\"string\"}},\"isPublished\":true,\"featured\":true,\"isSystem\":true,\"baseId\":\"string\",\"markdownDescription\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  name: 'string',\n  description: 'string',\n  categoryId: ['string'],\n  cover: {\n    token: 'xxxxxxxxxxx',\n    size: 1024,\n    url: '/bucket/xxxxx',\n    path: '/table/xxxxxx',\n    mimetype: 'video/mp4',\n    width: 100,\n    height: 100,\n    name: 'string',\n    id: 'string',\n    thumbnailPath: {lg: 'string', sm: 'string'}\n  },\n  isPublished: true,\n  featured: true,\n  isSystem: true,\n  baseId: 'string',\n  markdownDescription: 'string'\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\",\\\"description\\\":\\\"string\\\",\\\"categoryId\\\":[\\\"string\\\"],\\\"cover\\\":{\\\"token\\\":\\\"xxxxxxxxxxx\\\",\\\"size\\\":1024,\\\"url\\\":\\\"/bucket/xxxxx\\\",\\\"path\\\":\\\"/table/xxxxxx\\\",\\\"mimetype\\\":\\\"video/mp4\\\",\\\"width\\\":100,\\\"height\\\":100,\\\"name\\\":\\\"string\\\",\\\"id\\\":\\\"string\\\",\\\"thumbnailPath\\\":{\\\"lg\\\":\\\"string\\\",\\\"sm\\\":\\\"string\\\"}},\\\"isPublished\\\":true,\\\"featured\\\":true,\\\"isSystem\\\":true,\\\"baseId\\\":\\\"string\\\",\\\"markdownDescription\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/template/%7BtemplateId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "delete": {
+        "description": "delete a template",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully delete template."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/template/%7BtemplateId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/template/%7BtemplateId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "get": {
+        "description": "get template detail by templateId",
+        "summary": "get template detail by templateId",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "required": false,
+            "name": "featured",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "categoryId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully get template detail.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "categoryId": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "isSystem": {
+                      "type": "boolean"
+                    },
+                    "featured": {
+                      "type": "boolean"
+                    },
+                    "isPublished": {
+                      "type": "boolean"
+                    },
+                    "snapshot": {
+                      "type": "object",
+                      "properties": {
+                        "baseId": {
+                          "type": "string"
+                        },
+                        "snapshotTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "spaceId": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseId",
+                        "snapshotTime",
+                        "spaceId",
+                        "name"
+                      ]
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "cover": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "example": "xxxxxxxxxxx",
+                          "description": "Token for the uploaded file"
+                        },
+                        "size": {
+                          "type": "number",
+                          "example": 1024,
+                          "description": "File size in bytes"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "/bucket/xxxxx",
+                          "description": "URL of the uploaded file"
+                        },
+                        "path": {
+                          "type": "string",
+                          "example": "/table/xxxxxx",
+                          "description": "file path"
+                        },
+                        "mimetype": {
+                          "type": "string",
+                          "example": "video/mp4",
+                          "description": "MIME type of the uploaded file"
+                        },
+                        "width": {
+                          "type": "number",
+                          "example": 100,
+                          "description": "Image width of the uploaded file"
+                        },
+                        "height": {
+                          "type": "number",
+                          "example": 100,
+                          "description": "Image height of the uploaded file"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "thumbnailPath": {
+                          "type": "object",
+                          "properties": {
+                            "lg": {
+                              "type": "string"
+                            },
+                            "sm": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "lg",
+                            "sm"
+                          ]
+                        },
+                        "presignedUrl": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "token",
+                        "size",
+                        "url",
+                        "path",
+                        "mimetype",
+                        "name",
+                        "id",
+                        "presignedUrl"
+                      ]
+                    },
+                    "usageCount": {
+                      "type": "number"
+                    },
+                    "markdownDescription": {
+                      "type": "string"
+                    },
+                    "publishInfo": {
+                      "type": "object",
+                      "properties": {
+                        "nodes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "includeData": {
+                          "type": "boolean"
+                        },
+                        "defaultActiveNodeId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "defaultUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "visitCount": {
+                      "type": "number"
+                    },
+                    "createdBy": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "snapshot",
+                    "cover",
+                    "usageCount",
+                    "visitCount",
+                    "createdBy"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D?featured=SOME_BOOLEAN_VALUE&categoryId=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D?featured=SOME_BOOLEAN_VALUE&categoryId=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D?featured=SOME_BOOLEAN_VALUE&categoryId=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/template/%7BtemplateId%7D?featured=SOME_BOOLEAN_VALUE&categoryId=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template": {
+      "get": {
+        "description": "get template list",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "default": 0,
+              "example": 0,
+              "description": "The templates count you want to skip"
+            },
+            "required": false,
+            "description": "The templates count you want to skip",
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "default": 300,
+              "example": 300,
+              "description": "The templates count you want to take"
+            },
+            "required": false,
+            "description": "The templates count you want to take",
+            "name": "take",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully get template list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "categoryId": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "isSystem": {
+                        "type": "boolean"
+                      },
+                      "featured": {
+                        "type": "boolean"
+                      },
+                      "isPublished": {
+                        "type": "boolean"
+                      },
+                      "snapshot": {
+                        "type": "object",
+                        "properties": {
+                          "baseId": {
+                            "type": "string"
+                          },
+                          "snapshotTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "spaceId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "baseId",
+                          "snapshotTime",
+                          "spaceId",
+                          "name"
+                        ]
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "baseId": {
+                        "type": "string"
+                      },
+                      "cover": {
+                        "type": "object",
+                        "properties": {
+                          "token": {
+                            "type": "string",
+                            "example": "xxxxxxxxxxx",
+                            "description": "Token for the uploaded file"
+                          },
+                          "size": {
+                            "type": "number",
+                            "example": 1024,
+                            "description": "File size in bytes"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "/bucket/xxxxx",
+                            "description": "URL of the uploaded file"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "/table/xxxxxx",
+                            "description": "file path"
+                          },
+                          "mimetype": {
+                            "type": "string",
+                            "example": "video/mp4",
+                            "description": "MIME type of the uploaded file"
+                          },
+                          "width": {
+                            "type": "number",
+                            "example": 100,
+                            "description": "Image width of the uploaded file"
+                          },
+                          "height": {
+                            "type": "number",
+                            "example": 100,
+                            "description": "Image height of the uploaded file"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "thumbnailPath": {
+                            "type": "object",
+                            "properties": {
+                              "lg": {
+                                "type": "string"
+                              },
+                              "sm": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "lg",
+                              "sm"
+                            ]
+                          },
+                          "presignedUrl": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "token",
+                          "size",
+                          "url",
+                          "path",
+                          "mimetype",
+                          "name",
+                          "id",
+                          "presignedUrl"
+                        ]
+                      },
+                      "usageCount": {
+                        "type": "number"
+                      },
+                      "markdownDescription": {
+                        "type": "string"
+                      },
+                      "publishInfo": {
+                        "type": "object",
+                        "properties": {
+                          "nodes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "includeData": {
+                            "type": "boolean"
+                          },
+                          "defaultActiveNodeId": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "defaultUrl": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "visitCount": {
+                        "type": "number"
+                      },
+                      "createdBy": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "snapshot",
+                      "cover",
+                      "usageCount",
+                      "visitCount",
+                      "createdBy"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/template?skip=0&take=300' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template?skip=0&take=300';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template?skip=0&take=300',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/template?skip=0&take=300\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/published": {
+      "get": {
+        "description": "get published template list",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": true,
+              "example": true,
+              "description": "Whether to get featured templates"
+            },
+            "required": false,
+            "description": "Whether to get featured templates",
+            "name": "featured",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "example": "tc_123",
+              "description": "The template category id"
+            },
+            "required": false,
+            "description": "The template category id",
+            "name": "categoryId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "default": 0,
+              "example": 0,
+              "description": "The templates count you want to skip"
+            },
+            "required": false,
+            "description": "The templates count you want to skip",
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "default": 100,
+              "example": 100,
+              "description": "The templates count you want to take"
+            },
+            "required": false,
+            "description": "The templates count you want to take",
+            "name": "take",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "template",
+              "description": "The search keyword for template name"
+            },
+            "required": false,
+            "description": "The search keyword for template name",
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully get published template list."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/template/published?featured=true&categoryId=tc_123&skip=0&take=100&search=template' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/published?featured=true&categoryId=tc_123&skip=0&take=100&search=template';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/published?featured=true&categoryId=tc_123&skip=0&take=100&search=template',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/template/published?featured=true&categoryId=tc_123&skip=0&take=100&search=template\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/{templateId}/snapshot": {
+      "post": {
+        "description": "create a template snapshot",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully create template snapshot."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/template/%7BtemplateId%7D/snapshot \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D/snapshot';\nconst options = {method: 'POST', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D/snapshot',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"POST\", \"/api/template/%7BtemplateId%7D/snapshot\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/category/create": {
+      "post": {
+        "description": "create a template category",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create template category."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/template/category/create \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/category/create';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/category/create',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({name: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/template/category/create\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/category/list": {
+      "get": {
+        "description": "get template category list",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get template category list."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/template/category/list \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/category/list';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/category/list',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/template/category/list\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/category/{templateCategoryId}": {
+      "delete": {
+        "description": "delete a template category",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateCategoryId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully delete template category."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/template/category/%7BtemplateCategoryId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/category/%7BtemplateCategoryId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/category/%7BtemplateCategoryId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/template/category/%7BtemplateCategoryId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      },
+      "patch": {
+        "description": "update a template category name",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateCategoryId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully update template category name."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/template/category/%7BtemplateCategoryId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"name\":\"string\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/category/%7BtemplateCategoryId%7D';\nconst options = {\n  method: 'PATCH',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"name\":\"string\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/category/%7BtemplateCategoryId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({name: 'string'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"name\\\":\\\"string\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PATCH\", \"/api/template/category/%7BtemplateCategoryId%7D\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/category/{templateCategoryId}/order": {
+      "put": {
+        "description": "Update template category order",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateCategoryId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "anchorId": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string",
+                    "enum": [
+                      "before",
+                      "after"
+                    ]
+                  }
+                },
+                "required": [
+                  "anchorId",
+                  "position"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PUT \\\n  --url http://127.0.0.1:3000/api/template/category/%7BtemplateCategoryId%7D/order \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"anchorId\":\"string\",\"position\":\"before\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/category/%7BtemplateCategoryId%7D/order';\nconst options = {\n  method: 'PUT',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"anchorId\":\"string\",\"position\":\"before\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PUT',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/category/%7BtemplateCategoryId%7D/order',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({anchorId: 'string', position: 'before'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"anchorId\\\":\\\"string\\\",\\\"position\\\":\\\"before\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PUT\", \"/api/template/category/%7BtemplateCategoryId%7D/order\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/{templateId}/pin-top": {
+      "patch": {
+        "description": "pin top a template",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully pin top a template."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/template/%7BtemplateId%7D/pin-top \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D/pin-top';\nconst options = {method: 'PATCH', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D/pin-top',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"PATCH\", \"/api/template/%7BtemplateId%7D/pin-top\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/{templateId}/order": {
+      "put": {
+        "description": "Update template order",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "anchorId": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string",
+                    "enum": [
+                      "before",
+                      "after"
+                    ]
+                  }
+                },
+                "required": [
+                  "anchorId",
+                  "position"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PUT \\\n  --url http://127.0.0.1:3000/api/template/%7BtemplateId%7D/order \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"anchorId\":\"string\",\"position\":\"before\"}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D/order';\nconst options = {\n  method: 'PUT',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"anchorId\":\"string\",\"position\":\"before\"}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PUT',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D/order',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({anchorId: 'string', position: 'before'}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"anchorId\\\":\\\"string\\\",\\\"position\\\":\\\"before\\\"}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"PUT\", \"/api/template/%7BtemplateId%7D/order\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/by-base/{baseId}": {
+      "get": {
+        "description": "get template by baseId",
+        "summary": "get template by baseId",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get template.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "categoryId": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "isSystem": {
+                      "type": "boolean"
+                    },
+                    "featured": {
+                      "type": "boolean"
+                    },
+                    "isPublished": {
+                      "type": "boolean"
+                    },
+                    "snapshot": {
+                      "type": "object",
+                      "properties": {
+                        "baseId": {
+                          "type": "string"
+                        },
+                        "snapshotTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "spaceId": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseId",
+                        "snapshotTime",
+                        "spaceId",
+                        "name"
+                      ]
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "baseId": {
+                      "type": "string"
+                    },
+                    "cover": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "example": "xxxxxxxxxxx",
+                          "description": "Token for the uploaded file"
+                        },
+                        "size": {
+                          "type": "number",
+                          "example": 1024,
+                          "description": "File size in bytes"
+                        },
+                        "url": {
+                          "type": "string",
+                          "example": "/bucket/xxxxx",
+                          "description": "URL of the uploaded file"
+                        },
+                        "path": {
+                          "type": "string",
+                          "example": "/table/xxxxxx",
+                          "description": "file path"
+                        },
+                        "mimetype": {
+                          "type": "string",
+                          "example": "video/mp4",
+                          "description": "MIME type of the uploaded file"
+                        },
+                        "width": {
+                          "type": "number",
+                          "example": 100,
+                          "description": "Image width of the uploaded file"
+                        },
+                        "height": {
+                          "type": "number",
+                          "example": 100,
+                          "description": "Image height of the uploaded file"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "thumbnailPath": {
+                          "type": "object",
+                          "properties": {
+                            "lg": {
+                              "type": "string"
+                            },
+                            "sm": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "lg",
+                            "sm"
+                          ]
+                        },
+                        "presignedUrl": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "token",
+                        "size",
+                        "url",
+                        "path",
+                        "mimetype",
+                        "name",
+                        "id",
+                        "presignedUrl"
+                      ]
+                    },
+                    "usageCount": {
+                      "type": "number"
+                    },
+                    "markdownDescription": {
+                      "type": "string"
+                    },
+                    "publishInfo": {
+                      "type": "object",
+                      "properties": {
+                        "nodes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "includeData": {
+                          "type": "boolean"
+                        },
+                        "defaultActiveNodeId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "defaultUrl": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "visitCount": {
+                      "type": "number"
+                    },
+                    "createdBy": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "snapshot",
+                    "cover",
+                    "usageCount",
+                    "visitCount",
+                    "createdBy"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/template/by-base/%7BbaseId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/by-base/%7BbaseId%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/by-base/%7BbaseId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/template/by-base/%7BbaseId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/unpublish/{templateId}": {
+      "delete": {
+        "description": "unpublish a template",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully unpublish template."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/template/unpublish/%7BtemplateId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/unpublish/%7BtemplateId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/unpublish/%7BtemplateId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/template/unpublish/%7BtemplateId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/{templateId}/visit": {
+      "patch": {
+        "description": "Increment template visit count",
+        "summary": "Increment template visit count",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "templateId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully incremented template visit count."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request PATCH \\\n  --url http://127.0.0.1:3000/api/template/%7BtemplateId%7D/visit \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/%7BtemplateId%7D/visit';\nconst options = {method: 'PATCH', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'PATCH',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/%7BtemplateId%7D/visit',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"PATCH\", \"/api/template/%7BtemplateId%7D/visit\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/template/permalink/{identifier}": {
+      "get": {
+        "description": "Get template redirect URL for permalink",
+        "summary": "Get template permalink redirect URL",
+        "tags": [
+          "template"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "identifier",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully resolved template permalink.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "redirectUrl": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "redirectUrl"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/template/permalink/%7Bidentifier%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/template/permalink/%7Bidentifier%7D';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/template/permalink/%7Bidentifier%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/template/permalink/%7Bidentifier%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

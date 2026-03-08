@@ -1,0 +1,825 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/trash/{trashId}": {
+      "delete": {
+        "description": "Permanently delete a trash item by trashId",
+        "tags": [
+          "trash"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "trashId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Permanently deleted successfully"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request DELETE \\\n  --url http://127.0.0.1:3000/api/trash/%7BtrashId%7D \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/trash/%7BtrashId%7D';\nconst options = {method: 'DELETE', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'DELETE',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/trash/%7BtrashId%7D',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"DELETE\", \"/api/trash/%7BtrashId%7D\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/trash": {
+      "get": {
+        "description": "Get trash list for spaces or bases",
+        "tags": [
+          "trash"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "spaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "space",
+                "base"
+              ]
+            },
+            "required": true,
+            "name": "resourceType",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get trash successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trashItems": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "resourceId": {
+                                "type": "string"
+                              },
+                              "resourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "space",
+                                  "base",
+                                  "table",
+                                  "app",
+                                  "workflow"
+                                ]
+                              },
+                              "deletedTime": {
+                                "type": "string"
+                              },
+                              "deletedBy": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "resourceId",
+                              "resourceType",
+                              "deletedTime",
+                              "deletedBy"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "resourceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "resourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "view",
+                                  "field",
+                                  "record"
+                                ]
+                              },
+                              "deletedTime": {
+                                "type": "string"
+                              },
+                              "deletedBy": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "resourceIds",
+                              "resourceType",
+                              "deletedTime",
+                              "deletedBy"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "userMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "avatar",
+                          "id",
+                          "name"
+                        ]
+                      }
+                    },
+                    "resourceMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "spaceId": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "spaceId",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "grid",
+                                  "calendar",
+                                  "kanban",
+                                  "form",
+                                  "gallery",
+                                  "plugin"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "type"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "singleLineText",
+                                  "longText",
+                                  "user",
+                                  "attachment",
+                                  "checkbox",
+                                  "multipleSelect",
+                                  "singleSelect",
+                                  "date",
+                                  "number",
+                                  "rating",
+                                  "formula",
+                                  "rollup",
+                                  "conditionalRollup",
+                                  "link",
+                                  "createdTime",
+                                  "lastModifiedTime",
+                                  "createdBy",
+                                  "lastModifiedBy",
+                                  "autoNumber",
+                                  "button"
+                                ]
+                              },
+                              "isLookup": {
+                                "type": "boolean",
+                                "nullable": true
+                              },
+                              "isConditionalLookup": {
+                                "type": "boolean",
+                                "nullable": true
+                              },
+                              "options": {
+                                "type": "array",
+                                "nullable": true,
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "type",
+                              "isLookup"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "trashItems",
+                    "userMap",
+                    "resourceMap"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/trash?spaceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/trash?spaceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/trash?spaceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/trash?spaceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/trash/items": {
+      "get": {
+        "description": "Get trash items for base or table",
+        "tags": [
+          "trash"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "resourceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base",
+                "table"
+              ]
+            },
+            "required": true,
+            "name": "resourceType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "default": 20
+            },
+            "required": false,
+            "name": "pageSize",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get trash successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trashItems": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "resourceId": {
+                                "type": "string"
+                              },
+                              "resourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "space",
+                                  "base",
+                                  "table",
+                                  "app",
+                                  "workflow"
+                                ]
+                              },
+                              "deletedTime": {
+                                "type": "string"
+                              },
+                              "deletedBy": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "resourceId",
+                              "resourceType",
+                              "deletedTime",
+                              "deletedBy"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "resourceIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "resourceType": {
+                                "type": "string",
+                                "enum": [
+                                  "view",
+                                  "field",
+                                  "record"
+                                ]
+                              },
+                              "deletedTime": {
+                                "type": "string"
+                              },
+                              "deletedBy": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "resourceIds",
+                              "resourceType",
+                              "deletedTime",
+                              "deletedBy"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "userMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "email",
+                          "avatar",
+                          "id",
+                          "name"
+                        ]
+                      }
+                    },
+                    "resourceMap": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "spaceId": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "spaceId",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "grid",
+                                  "calendar",
+                                  "kanban",
+                                  "form",
+                                  "gallery",
+                                  "plugin"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "type"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "singleLineText",
+                                  "longText",
+                                  "user",
+                                  "attachment",
+                                  "checkbox",
+                                  "multipleSelect",
+                                  "singleSelect",
+                                  "date",
+                                  "number",
+                                  "rating",
+                                  "formula",
+                                  "rollup",
+                                  "conditionalRollup",
+                                  "link",
+                                  "createdTime",
+                                  "lastModifiedTime",
+                                  "createdBy",
+                                  "lastModifiedBy",
+                                  "autoNumber",
+                                  "button"
+                                ]
+                              },
+                              "isLookup": {
+                                "type": "boolean",
+                                "nullable": true
+                              },
+                              "isConditionalLookup": {
+                                "type": "boolean",
+                                "nullable": true
+                              },
+                              "options": {
+                                "type": "array",
+                                "nullable": true,
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "type",
+                              "isLookup"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "trashItems",
+                    "userMap",
+                    "resourceMap"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url 'http://127.0.0.1:3000/api/trash/items?resourceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE&cursor=SOME_STRING_VALUE&pageSize=SOME_INTEGER_VALUE' \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/trash/items?resourceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE&cursor=SOME_STRING_VALUE&pageSize=SOME_INTEGER_VALUE';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/trash/items?resourceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE&cursor=SOME_STRING_VALUE&pageSize=SOME_INTEGER_VALUE',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/trash/items?resourceId=SOME_STRING_VALUE&resourceType=SOME_STRING_VALUE&cursor=SOME_STRING_VALUE&pageSize=SOME_INTEGER_VALUE\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

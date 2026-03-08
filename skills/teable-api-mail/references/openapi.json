@@ -1,0 +1,130 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/mail-sender/test-transport-config": {
+      "post": {
+        "description": "Test mail transporter",
+        "tags": [
+          "mail"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "to": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "transportConfig": {
+                    "type": "object",
+                    "properties": {
+                      "senderName": {
+                        "type": "string"
+                      },
+                      "sender": {
+                        "type": "string"
+                      },
+                      "host": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "number"
+                      },
+                      "secure": {
+                        "type": "boolean"
+                      },
+                      "auth": {
+                        "type": "object",
+                        "properties": {
+                          "user": {
+                            "type": "string"
+                          },
+                          "pass": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "user",
+                          "pass"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "sender",
+                      "host",
+                      "port",
+                      "auth"
+                    ]
+                  }
+                },
+                "required": [
+                  "to",
+                  "transportConfig"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test mail transporter successfully."
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request POST \\\n  --url http://127.0.0.1:3000/api/mail-sender/test-transport-config \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data '{\"to\":\"user@example.com\",\"message\":\"string\",\"transportConfig\":{\"senderName\":\"string\",\"sender\":\"string\",\"host\":\"string\",\"port\":0,\"secure\":true,\"auth\":{\"user\":\"string\",\"pass\":\"string\"}}}'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/mail-sender/test-transport-config';\nconst options = {\n  method: 'POST',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  },\n  body: '{\"to\":\"user@example.com\",\"message\":\"string\",\"transportConfig\":{\"senderName\":\"string\",\"sender\":\"string\",\"host\":\"string\",\"port\":0,\"secure\":true,\"auth\":{\"user\":\"string\",\"pass\":\"string\"}}}'\n};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'POST',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/mail-sender/test-transport-config',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN',\n    'content-type': 'application/json'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.write(JSON.stringify({\n  to: 'user@example.com',\n  message: 'string',\n  transportConfig: {\n    senderName: 'string',\n    sender: 'string',\n    host: 'string',\n    port: 0,\n    secure: true,\n    auth: {user: 'string', pass: 'string'}\n  }\n}));\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\npayload = \"{\\\"to\\\":\\\"user@example.com\\\",\\\"message\\\":\\\"string\\\",\\\"transportConfig\\\":{\\\"senderName\\\":\\\"string\\\",\\\"sender\\\":\\\"string\\\",\\\"host\\\":\\\"string\\\",\\\"port\\\":0,\\\"secure\\\":true,\\\"auth\\\":{\\\"user\\\":\\\"string\\\",\\\"pass\\\":\\\"string\\\"}}}\"\n\nheaders = {\n    'Authorization': \"Bearer REPLACE_BEARER_TOKEN\",\n    'content-type': \"application/json\"\n}\n\nconn.request(\"POST\", \"/api/mail-sender/test-transport-config\", payload, headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}

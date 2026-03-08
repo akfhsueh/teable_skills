@@ -1,0 +1,606 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Teable App",
+    "description": "Manage Data as easy as drink a cup of tea",
+    "x-logo": {
+      "backgroundColor": "#F0F0F0",
+      "altText": "Teable logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/api"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/space/{spaceId}/usage": {
+      "get": {
+        "description": "Get usage information for the space",
+        "tags": [
+          "usage"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "spaceId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns usage information for the space.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "free",
+                        "pro",
+                        "business",
+                        "enterprise"
+                      ]
+                    },
+                    "limit": {
+                      "type": "object",
+                      "properties": {
+                        "maxRows": {
+                          "type": "number"
+                        },
+                        "maxSizeAttachments": {
+                          "type": "number"
+                        },
+                        "maxNumDatabaseConnections": {
+                          "type": "number"
+                        },
+                        "maxRevisionHistoryDays": {
+                          "type": "number"
+                        },
+                        "maxAutomationHistoryDays": {
+                          "type": "number"
+                        },
+                        "automationEnable": {
+                          "type": "boolean"
+                        },
+                        "auditLogEnable": {
+                          "type": "boolean"
+                        },
+                        "adminPanelEnable": {
+                          "type": "boolean"
+                        },
+                        "rowColoringEnable": {
+                          "type": "boolean"
+                        },
+                        "buttonFieldEnable": {
+                          "type": "boolean"
+                        },
+                        "fieldAIEnable": {
+                          "type": "boolean"
+                        },
+                        "userGroupEnable": {
+                          "type": "boolean"
+                        },
+                        "advancedExtensionsEnable": {
+                          "type": "boolean"
+                        },
+                        "advancedPermissionsEnable": {
+                          "type": "boolean"
+                        },
+                        "passwordRestrictedSharesEnable": {
+                          "type": "boolean"
+                        },
+                        "authenticationEnable": {
+                          "type": "boolean"
+                        },
+                        "domainVerificationEnable": {
+                          "type": "boolean"
+                        },
+                        "organizationEnable": {
+                          "type": "boolean"
+                        },
+                        "apiRateLimit": {
+                          "type": "number"
+                        },
+                        "chatAIEnable": {
+                          "type": "boolean"
+                        },
+                        "appEnable": {
+                          "type": "boolean"
+                        },
+                        "customDomainEnable": {
+                          "type": "boolean"
+                        },
+                        "maxNumAutomationSendEmail": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "maxRows",
+                        "maxSizeAttachments",
+                        "maxNumDatabaseConnections",
+                        "maxRevisionHistoryDays",
+                        "maxAutomationHistoryDays",
+                        "automationEnable",
+                        "auditLogEnable",
+                        "adminPanelEnable",
+                        "rowColoringEnable",
+                        "buttonFieldEnable",
+                        "fieldAIEnable",
+                        "userGroupEnable",
+                        "advancedExtensionsEnable",
+                        "advancedPermissionsEnable",
+                        "passwordRestrictedSharesEnable",
+                        "authenticationEnable",
+                        "domainVerificationEnable",
+                        "organizationEnable",
+                        "apiRateLimit",
+                        "chatAIEnable",
+                        "appEnable",
+                        "customDomainEnable",
+                        "maxNumAutomationSendEmail"
+                      ]
+                    },
+                    "appSumoTier": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            2
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            3
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            4
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "limit"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/space/%7BspaceId%7D/usage \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/space/%7BspaceId%7D/usage';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/space/%7BspaceId%7D/usage',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/space/%7BspaceId%7D/usage\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/instance/usage": {
+      "get": {
+        "description": "Get usage information for the instance",
+        "tags": [
+          "usage"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns usage information for the instance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "free",
+                        "pro",
+                        "business",
+                        "enterprise"
+                      ]
+                    },
+                    "limit": {
+                      "type": "object",
+                      "properties": {
+                        "maxRows": {
+                          "type": "number"
+                        },
+                        "maxSizeAttachments": {
+                          "type": "number"
+                        },
+                        "maxNumDatabaseConnections": {
+                          "type": "number"
+                        },
+                        "maxRevisionHistoryDays": {
+                          "type": "number"
+                        },
+                        "maxAutomationHistoryDays": {
+                          "type": "number"
+                        },
+                        "automationEnable": {
+                          "type": "boolean"
+                        },
+                        "auditLogEnable": {
+                          "type": "boolean"
+                        },
+                        "adminPanelEnable": {
+                          "type": "boolean"
+                        },
+                        "rowColoringEnable": {
+                          "type": "boolean"
+                        },
+                        "buttonFieldEnable": {
+                          "type": "boolean"
+                        },
+                        "fieldAIEnable": {
+                          "type": "boolean"
+                        },
+                        "userGroupEnable": {
+                          "type": "boolean"
+                        },
+                        "advancedExtensionsEnable": {
+                          "type": "boolean"
+                        },
+                        "advancedPermissionsEnable": {
+                          "type": "boolean"
+                        },
+                        "passwordRestrictedSharesEnable": {
+                          "type": "boolean"
+                        },
+                        "authenticationEnable": {
+                          "type": "boolean"
+                        },
+                        "domainVerificationEnable": {
+                          "type": "boolean"
+                        },
+                        "organizationEnable": {
+                          "type": "boolean"
+                        },
+                        "apiRateLimit": {
+                          "type": "number"
+                        },
+                        "chatAIEnable": {
+                          "type": "boolean"
+                        },
+                        "appEnable": {
+                          "type": "boolean"
+                        },
+                        "customDomainEnable": {
+                          "type": "boolean"
+                        },
+                        "maxNumAutomationSendEmail": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "maxRows",
+                        "maxSizeAttachments",
+                        "maxNumDatabaseConnections",
+                        "maxRevisionHistoryDays",
+                        "maxAutomationHistoryDays",
+                        "automationEnable",
+                        "auditLogEnable",
+                        "adminPanelEnable",
+                        "rowColoringEnable",
+                        "buttonFieldEnable",
+                        "fieldAIEnable",
+                        "userGroupEnable",
+                        "advancedExtensionsEnable",
+                        "advancedPermissionsEnable",
+                        "passwordRestrictedSharesEnable",
+                        "authenticationEnable",
+                        "domainVerificationEnable",
+                        "organizationEnable",
+                        "apiRateLimit",
+                        "chatAIEnable",
+                        "appEnable",
+                        "customDomainEnable",
+                        "maxNumAutomationSendEmail"
+                      ]
+                    },
+                    "appSumoTier": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            2
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            3
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            4
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "limit"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/instance/usage \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/instance/usage';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/instance/usage',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/instance/usage\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    },
+    "/base/{baseId}/usage": {
+      "get": {
+        "description": "Get usage information for the base",
+        "tags": [
+          "usage"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "baseId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns usage information for the base.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "type": "string",
+                      "enum": [
+                        "free",
+                        "pro",
+                        "business",
+                        "enterprise"
+                      ]
+                    },
+                    "limit": {
+                      "type": "object",
+                      "properties": {
+                        "maxRows": {
+                          "type": "number"
+                        },
+                        "maxSizeAttachments": {
+                          "type": "number"
+                        },
+                        "maxNumDatabaseConnections": {
+                          "type": "number"
+                        },
+                        "maxRevisionHistoryDays": {
+                          "type": "number"
+                        },
+                        "maxAutomationHistoryDays": {
+                          "type": "number"
+                        },
+                        "automationEnable": {
+                          "type": "boolean"
+                        },
+                        "auditLogEnable": {
+                          "type": "boolean"
+                        },
+                        "adminPanelEnable": {
+                          "type": "boolean"
+                        },
+                        "rowColoringEnable": {
+                          "type": "boolean"
+                        },
+                        "buttonFieldEnable": {
+                          "type": "boolean"
+                        },
+                        "fieldAIEnable": {
+                          "type": "boolean"
+                        },
+                        "userGroupEnable": {
+                          "type": "boolean"
+                        },
+                        "advancedExtensionsEnable": {
+                          "type": "boolean"
+                        },
+                        "advancedPermissionsEnable": {
+                          "type": "boolean"
+                        },
+                        "passwordRestrictedSharesEnable": {
+                          "type": "boolean"
+                        },
+                        "authenticationEnable": {
+                          "type": "boolean"
+                        },
+                        "domainVerificationEnable": {
+                          "type": "boolean"
+                        },
+                        "organizationEnable": {
+                          "type": "boolean"
+                        },
+                        "apiRateLimit": {
+                          "type": "number"
+                        },
+                        "chatAIEnable": {
+                          "type": "boolean"
+                        },
+                        "appEnable": {
+                          "type": "boolean"
+                        },
+                        "customDomainEnable": {
+                          "type": "boolean"
+                        },
+                        "maxNumAutomationSendEmail": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "maxRows",
+                        "maxSizeAttachments",
+                        "maxNumDatabaseConnections",
+                        "maxRevisionHistoryDays",
+                        "maxAutomationHistoryDays",
+                        "automationEnable",
+                        "auditLogEnable",
+                        "adminPanelEnable",
+                        "rowColoringEnable",
+                        "buttonFieldEnable",
+                        "fieldAIEnable",
+                        "userGroupEnable",
+                        "advancedExtensionsEnable",
+                        "advancedPermissionsEnable",
+                        "passwordRestrictedSharesEnable",
+                        "authenticationEnable",
+                        "domainVerificationEnable",
+                        "organizationEnable",
+                        "apiRateLimit",
+                        "chatAIEnable",
+                        "appEnable",
+                        "customDomainEnable",
+                        "maxNumAutomationSendEmail"
+                      ]
+                    },
+                    "appSumoTier": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "enum": [
+                            1
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            2
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            3
+                          ]
+                        },
+                        {
+                          "type": "number",
+                          "enum": [
+                            4
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "limit"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Shell",
+            "source": "curl --request GET \\\n  --url http://127.0.0.1:3000/api/base/%7BbaseId%7D/usage \\\n  --header 'Authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "const url = 'http://127.0.0.1:3000/api/base/%7BbaseId%7D/usage';\nconst options = {method: 'GET', headers: {Authorization: 'Bearer REPLACE_BEARER_TOKEN'}};\n\ntry {\n  const response = await fetch(url, options);\n  const data = await response.json();\n  console.log(data);\n} catch (error) {\n  console.error(error);\n}"
+          },
+          {
+            "lang": "Node.js",
+            "source": "const http = require('http');\n\nconst options = {\n  method: 'GET',\n  hostname: '127.0.0.1',\n  port: '3000',\n  path: '/api/base/%7BbaseId%7D/usage',\n  headers: {\n    Authorization: 'Bearer REPLACE_BEARER_TOKEN'\n  }\n};\n\nconst req = http.request(options, function (res) {\n  const chunks = [];\n\n  res.on('data', function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on('end', function () {\n    const body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python",
+            "source": "import http.client\n\nconn = http.client.HTTPConnection(\"127.0.0.1:3000\")\n\nheaders = { 'Authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/base/%7BbaseId%7D/usage\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "security": []
+}
